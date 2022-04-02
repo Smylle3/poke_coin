@@ -1,0 +1,132 @@
+:root {
+    --primary-color: #07677a;
+    --secondary-color: #08596a;
+    --tertiary-color: #0f4652;
+}
+
+.container {
+    background-color: var(--primary-color);
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+}
+
+.title {
+    margin: 25px 0px;
+}
+
+.leftContainer {
+    background-color: var(--tertiary-color);
+
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+}
+
+.rightContainer {
+    background-color: var(--secondary-color);
+
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+}
+
+form {
+    background-color: transparent;
+    width: 80%;
+    padding: 30px 15px;
+    margin: 15px 0px;
+    border: 1px solid azure;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+input {
+    color: var(--tertiary-color);
+    border: 0 none;
+    outline: 0;
+
+    height: 30px;
+    width: 25rem;
+    padding: 0px 0px 0px 10px;
+    margin: 10px 5px;
+
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+button {
+    color: azure;
+    width: 40%;
+    height: 30px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid azure;
+    cursor: pointer;
+    margin: 15px 0px;
+}
+
+label {
+    font-weight: bold;
+    font-size: x-large;
+    margin: 15px 0px;
+}
+
+.boxContainer{
+    background-color: transparent;
+    width: 100%;
+    height: 50%;
+    border-top: 2px solid azure;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.outMap {
+    width: 90%;
+    height: 55%;
+    max-height: 60%;
+    overflow-y: scroll;
+    padding: 5px 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.inMap {
+    width: 95%;
+
+    padding: 10px 10px;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid azure;
+    border-radius: 10px;
+}
+
+.table {
+    width: 85%;
+    
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
