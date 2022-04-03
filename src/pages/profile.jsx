@@ -103,9 +103,9 @@ function Profile() {
                         <div>Nome da ação</div>
                         <div>Valor (USD)</div>
                     </div>
-                    <div className="outMap">
+                    <div className="outMap2">
                         {pokeListCot.map((pokemon) => (
-                            <div className="inMap" key={key}>
+                            <div className="inMap2" key={key}>
                                 <div>{pokemon.name}</div>
                                 <div>
                                     {(valorUsd =
@@ -117,7 +117,7 @@ function Profile() {
                         ))}
                     </div>
                 </div>
-                <div className="boxContainer">
+                <div className="boxContainer2">
                     <h1 className="title">
                         Histórico de compras e vendas
                     </h1>
