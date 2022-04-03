@@ -114,7 +114,7 @@ export default function Profile() {
     return (
         <div className="container">
             <div className="leftContainer">
-                {/*<div className='imagens'>
+                <div className="imagens">
                     <img
                         className="banner"
                         alt="Pokemon"
@@ -125,7 +125,7 @@ export default function Profile() {
                         alt="Pokemon"
                         src="https://s2.coinmarketcap.com/static/img/coins/200x200/1.png"
                     />
-    </div>*/}
+                </div>
                 <h1 className="title">HUB de Negociação</h1>
                 <form>
                     <label>Comprar pokemon</label>
