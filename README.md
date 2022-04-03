@@ -36,6 +36,9 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 ## 🛠️ Construído com
 
 * [React Js](https://pt-br.reactjs.org/) - O framework web usado
+* Tempo de produção em aproximadamente 7 horas dispostas da seguinte forma:
+* * 01/04/22 das 12:20 às 14:40 e das 16:00 às 17:22
+* * 03/04/22 das 14:49 às 18:25
 
 ## ✒️ Autor
 
