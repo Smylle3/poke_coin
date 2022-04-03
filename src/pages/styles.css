@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #07677a;
-    --secondary-color: #08596a;
-    --tertiary-color: #0f4652;
+    --primary-color: #f0f0f0;
+    --secondary-color: #222224;
+    --tertiary-color: #ee1515;
 }
 
 .container {
@@ -89,15 +89,57 @@ label {
 }
 
 .boxContainer{
-    background-color: transparent;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     width: 100%;
     height: 50%;
-    border-top: 2px solid azure;
 
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.boxContainer h1{
+    color: var(--secondary-color);
+}
+.boxContainer div{
+    color: var(--secondary-color);
+}
+
+.boxContainer2{
+    background-color: transparent;
+    width: 100%;
+    height: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.outMap2 {
+    color: var(--secondary-color);
+    width: 90%;
+    height: 55%;
+    max-height: 60%;
+    overflow-y: scroll;
+    padding: 5px 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.inMap2 {
+    color: var(--secondary-color);
+    width: 95%;
+
+    padding: 10px 10px;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
 }
 
 .outMap {
