@@ -13,6 +13,23 @@
     display: flex;
 }
 
+.imagens {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.banner {
+    width: 250px;
+    padding: 0px 25px;
+}
+
+.banner2 {
+    width: 75px;
+}
+
 .title {
     margin: 25px 0px;
 }
@@ -88,7 +105,7 @@ label {
     margin: 15px 0px;
 }
 
-.boxContainer{
+.boxContainer {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     width: 100%;
@@ -100,14 +117,14 @@ label {
     flex-direction: column;
 }
 
-.boxContainer h1{
+.boxContainer h1 {
     color: var(--secondary-color);
 }
-.boxContainer div{
+.boxContainer div {
     color: var(--secondary-color);
 }
 
-.boxContainer2{
+.boxContainer2 {
     background-color: transparent;
     width: 100%;
     height: 50%;
@@ -150,7 +167,8 @@ label {
     padding: 5px 15px;
 
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
+    flex-direction: column-reverse;
 }
 
 .inMap {
@@ -166,7 +184,7 @@ label {
 
 .table {
     width: 85%;
-    
+
     padding: 10px 20px;
     display: flex;
     flex-direction: row;
