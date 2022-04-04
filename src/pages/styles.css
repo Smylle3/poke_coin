@@ -31,7 +31,7 @@
 }
 
 .title {
-    margin: 10px 0px;
+    margin: 10px 15px;
 }
 
 .leftContainer {
@@ -190,4 +190,21 @@ label {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.titleDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.titleDiv button {
+    color: var(--secondary-color);
+    min-width: 65px;
+    width: 75px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    cursor: pointer;
 }
