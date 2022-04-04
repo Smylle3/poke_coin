@@ -11,13 +11,21 @@ export default function Profile() {
     const [pokeValue, setPokeValue] = useState(0)
 
     /*UseEffect responsavel pela busca dos valor do dolar em bitcoin*/
+    function handleRefresh() {
+        fetch(moneyUrl)
+            .then((response) => response.json())
+            .then((data) => {
+                setCotacao(data.data.amount)
+            })
+        alert("Atualizado!")
+    }
     useEffect(() => {
         fetch(moneyUrl)
             .then((response) => response.json())
             .then((data) => {
                 setCotacao(data.data.amount)
             })
-    }, [pokeName, pokeNameSale])
+    }, [])
 
     /*UseEffect responsável por atualizar o valor da carteira em dolar*/
     useEffect(() => {
@@ -51,6 +59,7 @@ export default function Profile() {
                                 id: pokeList.length + 1,
                                 action: 'Buy',
                                 name: data.name,
+                                exp: data.base_experience,
                                 cotacao: (
                                     data.base_experience *
                                     0.00000001 *
@@ -171,7 +180,17 @@ export default function Profile() {
             </div>
             <div className="rightContainer">
                 <div className="boxContainer">
-                    <h1 className="title">Suas ordens</h1>
+                    <div className="titleDiv">
+                        <h1 className="title">Suas ordens</h1>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleRefresh()
+                            }}
+                        >
+                            Atualizar
+                        </button>
+                    </div>
                     <div className="table">
                         <div>Nome da ação</div>
                         <div>Valor (USD)</div>
@@ -180,7 +199,14 @@ export default function Profile() {
                         {pokeList.map((pokemon) => (
                             <div className="inMap2" key={pokemon.id}>
                                 <div>{pokemon.name}</div>
-                                <div>$ {pokemon.cotacao}</div>
+                                <div>
+                                    ${' '}
+                                    {(
+                                        pokemon.exp *
+                                        0.00000001 *
+                                        cotacao
+                                    ).toFixed(5)}
+                                </div>
                             </div>
                         ))}
                     </div>
