@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { baseUrl, moneyUrl } from 'utils/api'
+import { BsFillArrowDownCircleFill } from 'react-icons/bs'
 import './styles.css'
 
 export default function Profile() {
@@ -17,7 +18,7 @@ export default function Profile() {
             .then((data) => {
                 setCotacao(data.data.amount)
             })
-        alert("Atualizado!")
+        alert('Atualizado!')
     }
     useEffect(() => {
         fetch(moneyUrl)
@@ -52,6 +53,7 @@ export default function Profile() {
                 ) /*Consome a API de pokemon buscando pelo pokemon digitado*/
                     .then((response) => response.json())
                     .then((data) => {
+                        console.log(data)
                         setpokeList((arr) => [
                             /*Preenche o array com as informações: id, ação feita, nome do pokemon e seu valor em dolar*/
                             ...arr,
@@ -177,8 +179,11 @@ export default function Profile() {
                         Vender
                     </button>
                 </form>
+                <a href="#orders" className="scroll">
+                    <BsFillArrowDownCircleFill size="40" />
+                </a>
             </div>
-            <div className="rightContainer">
+            <div className="rightContainer" id="orders">
                 <div className="boxContainer">
                     <div className="titleDiv">
                         <h1 className="title">Suas ordens</h1>
