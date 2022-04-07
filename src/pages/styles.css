@@ -8,9 +8,12 @@
     background-color: var(--primary-color);
 
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .imagens {
@@ -42,7 +45,7 @@
     justify-content: center;
 
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 
     display: flex;
 }
@@ -55,7 +58,7 @@
     justify-content: center;
 
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 
     display: flex;
 }
@@ -80,13 +83,14 @@ input {
     outline: 0;
 
     height: 30px;
-    width: 25rem;
+    width: 60%;
+    min-width: 13rem;
     padding: 0px 0px 0px 10px;
     margin: 10px 5px;
 
     font-size: 16px;
     border-radius: 10px;
-    text-transform: lowercase
+    text-transform: lowercase;
 }
 
 button {
@@ -150,7 +154,6 @@ label {
 
 .inMap2 {
     color: var(--secondary-color);
-    width: 95%;
 
     padding: 10px 10px;
     margin: 5px 0px;
@@ -173,8 +176,6 @@ label {
 }
 
 .inMap {
-    width: 95%;
-
     padding: 10px 10px;
     margin: 5px 0px;
     display: flex;
@@ -198,6 +199,7 @@ label {
     justify-content: center;
     flex-direction: row;
 }
+
 .titleDiv button {
     color: var(--secondary-color);
     min-width: 65px;
@@ -207,4 +209,34 @@ label {
     background-color: transparent;
     border: 1px solid var(--secondary-color);
     cursor: pointer;
+}
+
+.scroll {
+    display: none;
+}
+
+@media (max-width: 540px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 200vh;
+    }
+    .leftContainer {
+        background-color: var(--tertiary-color);
+    
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    
+        height: 100%;
+    
+    }
+    .rightContainer {
+        display: flex;
+        height: 100%;
+    }
+    .scroll {
+        display: flex;
+    }
 }
