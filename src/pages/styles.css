@@ -110,7 +110,7 @@ label {
     margin: 15px 0px;
 }
 
-.boxContainer {
+.orderContainer {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     width: 100%;
@@ -122,10 +122,10 @@ label {
     flex-direction: column;
 }
 
-.boxContainer h1 {
+.orderContainer h1 {
     color: var(--secondary-color);
 }
-.boxContainer div {
+.orderContainer div {
     color: var(--secondary-color);
 }
 
