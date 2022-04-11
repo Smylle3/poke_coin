@@ -3,6 +3,9 @@
 Projeto desenvolvido em React Js e simula uma calculadora de trades de pokémon, onde o usuário possa
 calcular se sua carteira de Pokémon está valorizando.
 
+O deploy dessa aplicação foi feita através do [Heroku](https://www.heroku.com) e pode ser acessado através do link:
+[https://poke-coin.herokuapp.com/](https://poke-coin.herokuapp.com/)
+
 ## 🚀 Começando
 
 Você pode rodar esse projeto direto da sua máquina seguindo as instruções:
