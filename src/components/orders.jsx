@@ -1,11 +1,27 @@
-import { Center, Flex, Heading, IconButton } from '@chakra-ui/react'
-import { IoReload } from 'react-icons/io5'
 import React from 'react'
-import MyTable from './myTable'
-import { SearchBitcoin } from 'context/searchBitcoin'
-import { MdDeleteForever } from 'react-icons/md'
+import { useAuth } from 'context/auth'
 
-export default function Orders(props) {
+import { IoReload } from 'react-icons/io5'
+import { MdDeleteForever } from 'react-icons/md'
+import { Center, Flex, Heading, IconButton } from '@chakra-ui/react'
+
+import MyTable from './myTable'
+
+import { SearchBitcoin } from 'functions/searchBitcoin'
+import { DeletePokemons } from 'functions/deletePokemons'
+
+export default function Orders() {
+    const {
+        pokemonList,
+        bitcoinValue,
+        setBitcointValue,
+        setPokemonHistory
+    } = useAuth()
+
+    function deletePokemon(data) {
+        DeletePokemons(data, pokemonList, setPokemonHistory)
+    }
+
     return (
         <>
             <Flex
@@ -13,8 +29,8 @@ export default function Orders(props) {
                 h="mid"
                 w="full"
                 flexDirection="column"
-                alignItems="center"
-                padding="20px 0px"
+                alignItems="flex-start"
+                padding="20px 10px"
             >
                 <Center marginBottom={5}>
                     <Heading
@@ -24,10 +40,9 @@ export default function Orders(props) {
                         Ordens
                     </Heading>
                     <IconButton
-                        onClick={(event) => {
-                            SearchBitcoin(props.setCotacao)
-                            alert('Atualizado!')
-                        }}
+                        onClick={(event) =>
+                            SearchBitcoin(setBitcointValue)
+                        }
                         isRound
                         colorScheme="green"
                         aria-label="Refresh"
@@ -36,35 +51,47 @@ export default function Orders(props) {
                         margin="0px 10px"
                     />
                 </Center>
-                <Flex w="95%" flexDirection="column">
-                    <MyTable
-                        Avatar={null}
-                        Nome={null}
-                        Action={null}
-                        Valor={null}
-                        Sell={null}
-                        BGColor="defaultColor.500"
-                        Color="defaultColor.400"
-                    />
-                    {props.pokeList.map((pokemon) => (
+                <MyTable
+                    Avatar={null}
+                    Nome={null}
+                    Action={null}
+                    Valor={null}
+                    Sell={null}
+                    BGColor="defaultColor.500"
+                    Color="defaultColor.400"
+                    Width="84%"
+                />
+                <Flex
+                    display="flex"
+                    direction="column"
+                    
+                    margin="10px 0px"
+                    overflowY="scroll"
+
+                    h="90%"
+                    w="100%"
+                    maxH="90%"
+                >
+                    {pokemonList.map((pokemon) => (
                         <Flex alignItems="center" key={pokemon.id}>
                             <MyTable
-                                Avatar={null}
+                                Avatar={pokemon.avatar}
                                 Nome={pokemon.name}
                                 Action={pokemon.action}
-                                Valor={(
+                                Valor={`$ ${(
                                     pokemon.exp *
-                                    0.00000001 *
-                                    props.cotacao
-                                ).toFixed(5)}
+                                    0.000001 *
+                                    bitcoinValue
+                                ).toFixed(2)}`}
                                 Sell="yes"
                                 Color="defaultColor.500"
+                                Width="85%"
                             />
                             <IconButton
                                 id={`${pokemon.id}`}
-                                onClick={(event) => {
-                                    props.onClick(pokemon)
-                                }}
+                                onClick={(event) =>
+                                    deletePokemon(pokemon)
+                                }
                                 margin="0px 10px"
                                 isRound
                                 colorScheme="red"
