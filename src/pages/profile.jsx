@@ -1,242 +1,162 @@
-import React, { useEffect, useState } from 'react'
-import { baseUrl, moneyUrl } from 'utils/api'
-import { BsFillArrowDownCircleFill } from 'react-icons/bs'
-import './styles.css'
+import React from 'react'
+import { FaBtc, FaBackspace, FaArrowCircleDown } from 'react-icons/fa'
+import {
+    Button,
+    Center,
+    Flex,
+    FormControl,
+    FormLabel,
+    Heading,
+    IconButton,
+    Image,
+    Input,
+    InputGroup,
+    InputRightElement,
+    Stack,
+    useToast
+} from '@chakra-ui/react'
+
+import { useAuth } from 'context/auth'
+import Orders from 'components/orders'
+import History from 'components/history'
+import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
+import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
+import SearchPokemons from 'functions/searchPokemons'
 
 export default function Profile() {
-    const [pokeName, setPokeName] = useState('')
-    const [pokeNameSale, setPokeNameSale] = useState('')
-    const [pokeList, setpokeList] = useState([])
-    const [pokeFullList, setPokeFullList] = useState([])
-    const [cotacao, setCotacao] = useState(0)
-    const [pokeValue, setPokeValue] = useState(0)
+    const {
+        setPokemonList,
+        pokemonName,
+        setPokemonName,
+        setPokemonHistory
+    } = useAuth()
+    const isError = pokemonName === ''
+    const toast = useToast()
 
-    /*UseEffect responsavel pela busca dos valor do dolar em bitcoin*/
-    function handleRefresh() {
-        fetch(moneyUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                setCotacao(data.data.amount)
-            })
-        alert('Atualizado!')
+    function keyboardKey(event) {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            if (pokemonName.length === 0) {
+                toast({
+                    title: 'Digite o nome do pokemon!',
+                    status: 'error',
+                    isClosable: true,
+                    duration: 3000,
+                    position: 'top-right',
+                    variant: 'left-accent'
+                })
+            } else buyPokemon(event)
+        }
     }
-    useEffect(() => {
-        fetch(moneyUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                setCotacao(data.data.amount)
-            })
-    }, [])
 
-    /*UseEffect responsável por atualizar o valor da carteira em dolar*/
-    useEffect(() => {
-        var valorUsd = 0
-        for (let index = 0; index < pokeList.length; index++) {
-            valorUsd += parseFloat(pokeList[index].cotacao)
-            setPokeValue(valorUsd.toFixed(5))
-        }
-    }, [pokeFullList.length, pokeList])
-
-    /*Função assincrona responsavel por todo sistema*/
-    async function handleRegister(event) {
-        if (pokeName.length === 0 && pokeNameSale.length === 0) {
-            /*Verifica se os campos dos inputs estão vazios*/
-            alert('Digite o nome do pokemon!')
-        } else {
-            setPokeName('') /*Reseta os valores no input*/
-            setPokeNameSale('')
-
-            if (event.target.id === 'Compra') {
-                /*Verifica se o usuário efetuou uma compra ou uma venda*/
-                fetch(
-                    `${baseUrl}${pokeName}`
-                ) /*Consome a API de pokemon buscando pelo pokemon digitado*/
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data)
-                        setpokeList((arr) => [
-                            /*Preenche o array com as informações: id, ação feita, nome do pokemon e seu valor em dolar*/
-                            ...arr,
-                            {
-                                id: pokeList.length + 1,
-                                action: 'Buy',
-                                name: data.name,
-                                exp: data.base_experience,
-                                cotacao: (
-                                    data.base_experience *
-                                    0.00000001 *
-                                    cotacao
-                                ).toFixed(5)
-                            }
-                        ])
-                        setPokeFullList((arr) => [
-                            /*Preenche o array de histórico com id, ação feita, nome do pokemon e sua base de experiencia*/
-                            ...arr,
-                            {
-                                id: pokeList.length ^ 8,
-                                action: 'Buy',
-                                name: data.name,
-                                exp: data.base_experience
-                            }
-                        ])
-                    })
-                    .catch((err) =>
-                        alert('Pokemon não encontrado!')
-                    ) /*Informa que o pokemon não foi encontrado*/
-            } else if (event.target.id === 'Venda') {
-                let flag = false
-                for (let index = 0; index < pokeList.length; index++) {
-                    /*Busca pelo pokemon que o usuário deseja vender*/
-                    if (pokeList[index].name === pokeNameSale) {
-                        flag = true
-                        pokeList.splice(
-                            index,
-                            1
-                        ) /*Remove o pokemon do array de pokemons que o usuário possui*/
-                        break
-                    }
-                }
-                if (flag === false) {
-                    alert('Você não possui esse pokemon!')
-                } else {
-                    fetch(`${baseUrl}${pokeNameSale}`)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            setPokeFullList((arr) => [
-                                /*Insere o pokemon vendido no array de histórico com a ação "Sale indicando a venda dele"*/
-                                ...arr,
-                                {
-                                    id: pokeList.length ^ 2,
-                                    action: 'Sale',
-                                    name: data.name,
-                                    exp: data.base_experience
-                                }
-                            ])
-                        })
-                        .catch((err) =>
-                            alert('Pokemon não encontrado!')
-                        )
-                }
-                flag = false
-            }
-        }
+    function buyPokemon(event) {
+        SearchPokemons(
+            event,
+            pokemonName,
+            setPokemonName,
+            setPokemonList,
+            setPokemonHistory,
+            toast
+        )
     }
 
     return (
-        <div className="container">
-            <div className="leftContainer">
-                <div className="imagens">
-                    <img
-                        className="banner"
-                        alt="Pokemon"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/1200px-International_Pok%C3%A9mon_logo.svg.png"
-                    />
-                    <img
-                        className="banner2"
-                        alt="Pokemon"
-                        src="https://s2.coinmarketcap.com/static/img/coins/200x200/1.png"
-                    />
-                </div>
-                <h1 className="title">HUB de Negociação</h1>
-                <form>
-                    <label>Comprar pokemon</label>
-                    <input
-                        onChange={(e) => setPokeName(e.target.value)}
-                        value={pokeName}
-                        type="text"
-                        placeholder="Digite o nome do Pokemon"
-                        required
-                    />
-                    <button
+        <Flex w="100%" h="100vh" display={{ md: 'flex' }}>
+            <Center
+                w={{ base: 'full', md: 'mid' }}
+                h="full"
+                flexDirection="column"
+                bg="defaultColor.600"
+            >
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                    margin={10}
+                >
+                    <Image h={100} alt="Pokemon" src={pokemonLogo} />
+                    <Image h={90} alt="Bitcoin" src={bitcoinLogo} />
+                </Stack>
+                <Heading fontFamily="body" color="defaultColor.400">
+                    HUB de Negociação
+                </Heading>
+                <FormControl
+                    isRequired
+                    isInvalid={isError}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    flexDirection="column"
+                    margin="40px 0px"
+                >
+                    <FormLabel
+                        htmlFor="pokename"
+                        color="defaultColor.400"
+                    >
+                        Comprar pokemon
+                    </FormLabel>
+                    <InputGroup
+                        width="75%"
+                        size="lg"
+                        onKeyDown={(e) => keyboardKey(e)}
+                    >
+                        <Input
+                            textTransform="lowercase"
+                            onChange={(e) =>
+                                setPokemonName(e.target.value)
+                            }
+                            value={pokemonName}
+                            bg="defaultColor.400"
+                            placeholder="Digite o nome do pokemon que deseja comprar."
+                            id="pokename"
+                            type="text"
+                            margin="0px 0px 15px 0px"
+                        />
+                        <InputRightElement>
+                            <IconButton
+                                icon={
+                                    <FaBackspace
+                                        color="red"
+                                        size={25}
+                                    />
+                                }
+                                onClick={() => setPokemonName('')}
+                            />
+                        </InputRightElement>
+                    </InputGroup>
+                    <Button
+                        width="75%"
+                        isDisabled={isError}
+                        leftIcon={<FaBtc />}
+                        colorScheme="green"
                         id="Compra"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            handleRegister(e)
-                        }}
+                        onClick={(event) => buyPokemon(event)}
                     >
                         Comprar
-                    </button>
-                </form>
-
-                <form>
-                    <label>Vender pokemon</label>
-                    <input
-                        onChange={(e) =>
-                            setPokeNameSale(e.target.value)
+                    </Button>
+                </FormControl>
+                <a href="#orders">
+                    <IconButton
+                        colorScheme="red"
+                        icon={
+                            <FaArrowCircleDown
+                                size={40}
+                                color="#f0f0f0"
+                            />
                         }
-                        value={pokeNameSale}
-                        type="text"
-                        placeholder="Digite o nome do Pokemon"
-                        required
+                        isRound
+                        display={{ md: 'none' }}
                     />
-                    <button
-                        id="Venda"
-                        onClick={(e) => {
-                            e.preventDefault()
-                            handleRegister(e)
-                        }}
-                    >
-                        Vender
-                    </button>
-                </form>
-                <a href="#orders" className="scroll">
-                    <BsFillArrowDownCircleFill size="40" />
                 </a>
-            </div>
-            <div className="rightContainer" id="orders">
-                <div className="boxContainer">
-                    <div className="titleDiv">
-                        <h1 className="title">Suas ordens</h1>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault()
-                                handleRefresh()
-                            }}
-                        >
-                            Atualizar
-                        </button>
-                    </div>
-                    <div className="table">
-                        <div>Nome da ação</div>
-                        <div>Valor (USD)</div>
-                    </div>
-                    <div className="outMap2">
-                        {pokeList.map((pokemon) => (
-                            <div className="inMap2" key={pokemon.id}>
-                                <div>{pokemon.name}</div>
-                                <div>
-                                    ${' '}
-                                    {(
-                                        pokemon.exp *
-                                        0.00000001 *
-                                        cotacao
-                                    ).toFixed(5)}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    Valor total da sua carteira: $ {pokeValue}
-                </div>
-                <div className="boxContainer2">
-                    <h1 className="title">
-                        Histórico de compras e vendas
-                    </h1>
-                    <div className="table">
-                        <div>Ação</div>
-                        <div>Nome</div>
-                        <div>Base Exp</div>
-                    </div>
-                    <div className="outMap">
-                        {pokeFullList.map((pokemon) => (
-                            <div className="inMap" key={-pokemon.id}>
-                                <div>{pokemon.action}</div>
-                                <div>{pokemon.name}</div>
-                                <div>{pokemon.exp}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+            </Center>
+            <Center
+                id="orders"
+                w={{ base: 'full', md: 'mid' }}
+                h="100vh"
+                flexDirection="column"
+            >
+                <Orders />
+                <History />
+            </Center>
+        </Flex>
     )
 }
