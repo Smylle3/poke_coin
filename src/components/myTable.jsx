@@ -1,4 +1,4 @@
-import { Grid, GridItem } from '@chakra-ui/react'
+import { Grid, GridItem, Image } from '@chakra-ui/react'
 import React from 'react'
 
 export default function MyTable(props) {
@@ -6,7 +6,7 @@ export default function MyTable(props) {
         <Grid
             templateColumns="repeat(4, 1fr)"
             gap={0}
-            w="85%"
+            w={props.Width}
             margin="2px 0px"
         >
             <GridItem
@@ -22,7 +22,11 @@ export default function MyTable(props) {
                 color={props.Color}
                 bg={props.BGColor}
             >
-                {props.Avatar === null ? <>Avatar</> : props.Avatar}
+                {props.Avatar === null ? (
+                    <>Avatar</>
+                ) : (
+                    <Image name={props.Name} src={props.Avatar} boxSize={50}/>
+                )}
             </GridItem>
             <GridItem
                 display="flex"
