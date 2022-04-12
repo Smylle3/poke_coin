@@ -4,18 +4,18 @@ const DeletePokemons = (data, pokemonList, setPokemonHistory) => {
     const deleteIndex = pokemonList.findIndex(
         (element) => element.id === data.id
     )
-
     pokemonList.splice(deleteIndex, 1)
-        setPokemonHistory((arr) => [
-            ...arr,
-            {
-                id: RandomNumber,
-                avatar: data.avatar,
-                name: data.name,
-                exp: data.exp,
-                action: 'Sale',
-            }
-        ])
+
+    setPokemonHistory((arr) => [
+        ...arr,
+        {
+            id: RandomNumber,
+            avatar: data.avatar,
+            name: data.name,
+            exp: data.exp,
+            action: 'Sale'
+        }
+    ])
 }
 
 export { DeletePokemons }
