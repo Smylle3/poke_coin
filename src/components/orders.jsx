@@ -3,7 +3,13 @@ import { useAuth } from 'context/auth'
 
 import { IoReload } from 'react-icons/io5'
 import { MdDeleteForever } from 'react-icons/md'
-import { Center, Flex, Heading, IconButton } from '@chakra-ui/react'
+import {
+    Center,
+    Flex,
+    Heading,
+    IconButton,
+    useToast
+} from '@chakra-ui/react'
 
 import MyTable from './myTable'
 
@@ -17,6 +23,7 @@ export default function Orders() {
         setBitcointValue,
         setPokemonHistory
     } = useAuth()
+    const toast = useToast()
 
     function deletePokemon(data) {
         DeletePokemons(data, pokemonList, setPokemonHistory)
@@ -40,9 +47,16 @@ export default function Orders() {
                         Ordens
                     </Heading>
                     <IconButton
-                        onClick={(event) =>
+                        onClick={(event) => {
                             SearchBitcoin(setBitcointValue)
-                        }
+                            toast({
+                                title: 'Atualizado!',
+                                status: 'success',
+                                isClosable: true,
+                                duration: 3000,
+                                position: 'top-right',
+                            })
+                        }}
                         isRound
                         colorScheme="green"
                         aria-label="Refresh"
@@ -64,10 +78,8 @@ export default function Orders() {
                 <Flex
                     display="flex"
                     direction="column"
-                    
                     margin="10px 0px"
                     overflowY="scroll"
-
                     h="90%"
                     w="100%"
                     maxH="90%"
@@ -82,7 +94,9 @@ export default function Orders() {
                                     pokemon.exp *
                                     0.000001 *
                                     bitcoinValue
-                                ).toFixed(2).replace(".", ",")}`}
+                                )
+                                    .toFixed(2)
+                                    .replace('.', ',')}`}
                                 Sell="yes"
                                 Color="defaultColor.500"
                                 Width="85%"
