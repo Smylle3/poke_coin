@@ -82,7 +82,7 @@ export default function Orders() {
                                     pokemon.exp *
                                     0.000001 *
                                     bitcoinValue
-                                ).toFixed(2)}`}
+                                ).toFixed(2).replace(".", ",")}`}
                                 Sell="yes"
                                 Color="defaultColor.500"
                                 Width="85%"
