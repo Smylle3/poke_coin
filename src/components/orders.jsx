@@ -1,33 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAuth } from 'context/auth'
 
-import { IoReload } from 'react-icons/io5'
-import { MdDeleteForever } from 'react-icons/md'
 import {
     Center,
     Flex,
     Heading,
     IconButton,
+    useDisclosure,
     useToast
 } from '@chakra-ui/react'
+import { IoReload } from 'react-icons/io5'
+import { MdDeleteForever } from 'react-icons/md'
 
 import MyTable from './myTable'
 
 import { SearchBitcoin } from 'functions/searchBitcoin'
-import { DeletePokemons } from 'functions/deletePokemons'
+import AlertSale from './alertDialog'
 
 export default function Orders() {
-    const {
-        pokemonList,
-        bitcoinValue,
-        setBitcointValue,
-        setPokemonHistory
-    } = useAuth()
+    const { pokemonList, bitcoinValue, setBitcointValue } = useAuth()
     const toast = useToast()
-
-    function deletePokemon(data) {
-        DeletePokemons(data, pokemonList, setPokemonHistory)
-    }
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [pokeNameSell, setPokeNameSell] = useState('')
 
     return (
         <>
@@ -54,7 +48,7 @@ export default function Orders() {
                                 status: 'success',
                                 isClosable: true,
                                 duration: 3000,
-                                position: 'top-right',
+                                position: 'top-right'
                             })
                         }}
                         isRound
@@ -103,9 +97,10 @@ export default function Orders() {
                             />
                             <IconButton
                                 id={`${pokemon.id}`}
-                                onClick={(event) =>
-                                    deletePokemon(pokemon)
-                                }
+                                onClick={() => {
+                                    setPokeNameSell(pokemon)
+                                    onOpen()
+                                }}
                                 margin="0px 10px"
                                 isRound
                                 colorScheme="red"
@@ -115,6 +110,12 @@ export default function Orders() {
                         </Flex>
                     ))}
                 </Flex>
+                <AlertSale
+                    isOpen={isOpen}
+                    onOpen={onOpen}
+                    onClose={onClose}
+                    pokeNameSell={pokeNameSell}
+                />
             </Flex>
         </>
     )
