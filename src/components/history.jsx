@@ -1,5 +1,5 @@
 import { Center, Flex, Heading } from '@chakra-ui/react'
-import { useAuth } from 'context/auth'
+import { useAuth } from 'context/authContext'
 import React from 'react'
 import MyTable from './myTable'
 
