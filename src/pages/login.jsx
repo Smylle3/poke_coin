@@ -41,13 +41,13 @@ export default function Login() {
 
     const loginFunction = (isProvider) => {
         setLoading(true)
-        if (email.length === 0 || password.length === 0) {
-            setInputValidation(true)
-            setLoading(false)
-            return
-        }
         switch (isProvider) {
             case 'emailLogin':
+                if (email.length === 0 || password.length === 0) {
+                    setInputValidation(true)
+                    setLoading(false)
+                    return
+                }
                 handleLogin(
                     setLoading,
                     setError,
