@@ -1,13 +1,13 @@
 import React from 'react'
-import Profile from 'pages/profile'
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from 'themes/defaultThemes'
 
-function App() {
+import AppRoutes from 'routes/routes'
 
+function App() {
     return (
         <ChakraProvider theme={theme}>
-            <Profile />
+            <AppRoutes />
         </ChakraProvider>
     )
 }

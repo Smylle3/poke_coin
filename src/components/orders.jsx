@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from 'context/auth'
+import { useAuth } from 'context/authContext'
 
 import {
     Center,
@@ -16,6 +16,7 @@ import MyTable from './myTable'
 
 import { SearchBitcoin } from 'functions/searchBitcoin'
 import AlertSale from './alertDialog'
+import MyToast from './myToast'
 
 export default function Orders() {
     const { pokemonList, bitcoinValue, setBitcointValue } = useAuth()
@@ -43,13 +44,7 @@ export default function Orders() {
                     <IconButton
                         onClick={(event) => {
                             SearchBitcoin(setBitcointValue)
-                            toast({
-                                title: 'Atualizado!',
-                                status: 'success',
-                                isClosable: true,
-                                duration: 3000,
-                                position: 'top-right'
-                            })
+                            MyToast(toast, "Atualizado com sucesso", "success")
                         }}
                         isRound
                         colorScheme="green"
