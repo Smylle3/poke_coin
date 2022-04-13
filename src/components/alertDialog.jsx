@@ -7,7 +7,7 @@ import {
     AlertDialogOverlay,
     Button
 } from '@chakra-ui/react'
-import { useAuth } from 'context/auth'
+import { useAuth } from 'context/authContext'
 import { DeletePokemons } from 'functions/deletePokemons'
 import React from 'react'
 
