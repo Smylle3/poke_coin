@@ -4,7 +4,7 @@ const MyToast = (toast, title, status) => {
         status: status,
         isClosable: true,
         duration: 2000,
-        position: 'top-right',
+        position: "top",
     })
 }
 
