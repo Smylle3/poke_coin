@@ -165,7 +165,6 @@ export default function Login() {
                     />
                     <Button
                         isLoading={loading}
-                        loadingText="Aguarde"
                         w="100%"
                         margin="20px 0px 0px 0px"
                         colorScheme="green"
@@ -208,7 +207,6 @@ export default function Login() {
                     <Link to={'/cadastro'}>
                         <Button
                             isLoading={loading}
-                            loadingText="Aguarde"
                             w="100%"
                             variant="outline"
                             colorScheme="whiteAlpha"
@@ -218,7 +216,6 @@ export default function Login() {
                     </Link>
                     <Button
                         isLoading={loading}
-                        loadingText="Aguarde"
                         w="100%"
                         margin="10px 0px"
                         variant="outline"
