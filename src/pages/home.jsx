@@ -8,24 +8,20 @@ import {
     FormLabel,
     Heading,
     IconButton,
-    Image,
     Input,
     InputGroup,
     InputRightElement,
-    Stack,
     useToast
 } from '@chakra-ui/react'
 
 import { useAuth } from 'context/authContext'
 import Orders from 'components/orders'
 import History from 'components/history'
-import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
-import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import SearchPokemons from 'functions/searchPokemons'
 import Header from 'components/header'
 import MyToast from 'components/myToast'
 
-export default function Profile() {
+export default function Home() {
     const {
         setPokemonList,
         pokemonName,
@@ -57,26 +53,14 @@ export default function Profile() {
     return (
         <Flex w="100%" h="100vh" display="flex" direction="column">
             <Header />
-            <Flex w="100%" h="100%" display={{ md: 'flex' }}>
+            <Flex h="7%" />
+            <Flex w="100%" h="93%" display={{ md: 'flex' }}>
                 <Center
                     w={{ base: 'full', md: 'mid' }}
                     h="full"
                     flexDirection="column"
                     bg="defaultColor.600"
                 >
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="center"
-                        margin={10}
-                    >
-                        <Image
-                            h={100}
-                            alt="Pokemon"
-                            src={pokemonLogo}
-                        />
-                        <Image h={90} alt="Bitcoin" src={bitcoinLogo} />
-                    </Stack>
                     <Heading fontFamily="body" color="defaultColor.400">
                         HUB de Negociação
                     </Heading>
@@ -152,7 +136,7 @@ export default function Profile() {
                 <Center
                     id="orders"
                     w={{ base: 'full', md: 'mid' }}
-                    h="100vh"
+                    h={{ base: '100%', md: '100%' }}
                     flexDirection="column"
                 >
                     <Orders />
