@@ -5,7 +5,7 @@ import { useAuth } from 'context/authContext'
 import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import Options from './options'
-import useMobile from 'utils/useMobile'
+import useMobile from 'functions/useMobile'
 
 export default function Header() {
     const { user } = useAuth()
