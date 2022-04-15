@@ -17,12 +17,14 @@ import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
+import PasswordInput from 'components/passwordInput'
 
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
     const [loading, setLoading] = useState(false)
+    const [inputValidation, setInputValidation] = useState(true)
     const { createUser } = useAuth()
     const toast = useToast()
     const navigate = useNavigate()
@@ -36,6 +38,15 @@ export default function Login() {
     const handleSignUp = async (event) => {
         event.preventDefault()
         if (
+            email.length === 0 ||
+            password.length === 0 ||
+            passwordConfirm.length === 0
+        ) {
+            setInputValidation(true)
+            MyToast(toast, 'Preencha todos os campos!', 'error')
+            setLoading(false)
+            return
+        } else if (
             email.length < 6 ||
             password.length < 6 ||
             passwordConfirm.length < 6
@@ -47,17 +58,7 @@ export default function Login() {
             )
             setLoading(false)
             return
-        }
-        if (
-            email.length === 0 ||
-            password.length === 0 ||
-            passwordConfirm.length === 0
-        ) {
-            MyToast(toast, 'Preencha todos os campos!', 'error')
-            setLoading(false)
-            return
-        }
-        if (password === passwordConfirm) {
+        } else if (password === passwordConfirm) {
             setLoading(true)
             try {
                 await createUser(email, password)
@@ -122,36 +123,35 @@ export default function Login() {
                         type="email"
                         placeholder="Digite seu Email"
                         margin="0px 0px 20px 0px"
-                        bg="defaultColor.400"
-                        color="defaultColor.500"
-                        onChange={(e) => setEmail(e.target.value)}
+                        color="defaultColor.400"
+                        onChange={(e) => {
+                            setInputValidation(false)
+                            setEmail(e.target.value)
+                        }}
                         value={email}
                     />
                     <FormLabel htmlFor="senha">
                         Crie uma senha:
                     </FormLabel>
-                    <Input
+                    <PasswordInput
                         id="senha"
-                        type="password"
                         placeholder="Digite sua senha"
-                        margin="0px 0px 20px 0px"
-                        bg="defaultColor.400"
-                        color="defaultColor.500"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            setInputValidation(false)
+                            setPassword(e.target.value)
+                        }}
                         value={password}
                     />
-                    <FormLabel htmlFor="senha">
+                    <FormLabel htmlFor="confirmaçãoSenha">
                         Confirme a sua senha:
                     </FormLabel>
-                    <Input
+                    <PasswordInput
                         id="confirmaçãoSenha"
-                        type="password"
                         placeholder="Digite sua senha novamente"
-                        bg="defaultColor.400"
-                        color="defaultColor.500"
-                        onChange={(e) =>
+                        onChange={(e) => {
+                            setInputValidation(false)
                             setPasswordConfirm(e.target.value)
-                        }
+                        }}
                         value={passwordConfirm}
                     />
                     <Button
@@ -160,6 +160,7 @@ export default function Login() {
                         margin="20px 0px"
                         colorScheme="yellow"
                         onClick={handleSignUp}
+                        isDisabled={inputValidation}
                     >
                         CADASTRAR
                     </Button>
