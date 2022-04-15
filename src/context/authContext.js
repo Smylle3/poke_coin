@@ -13,12 +13,18 @@ import {
     signInWithPopup,
     updateProfile
 } from 'firebase/auth'
-import { auth, googleProvider, gitProvider, twitterProvider } from 'config/firebaseConfig'
+import {
+    auth,
+    googleProvider,
+    gitProvider,
+    twitterProvider
+} from 'config/firebaseConfig'
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
+    const [providerUser, setProviderUser] = useState(null)
 
     const [pokemonList, setPokemonList] = useState([])
     const [pokemonHistory, setPokemonHistory] = useState([])
@@ -31,8 +37,9 @@ export const AuthProvider = (props) => {
 
     const updateUser = (userName, photoUrl) => {
         return updateProfile(auth.currentUser, {
-            displayName: userName, photoURL: "https://example.com/jane-q-user/profile.jpg"
-          })
+            displayName: userName,
+            photoURL: null
+        })
     }
 
     const logIn = (email, password) => {
@@ -54,17 +61,16 @@ export const AuthProvider = (props) => {
     const logOut = () => {
         return signOut(auth)
     }
-
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            console.log(currentUser)
+            setProviderUser(currentUser.providerData[0].providerId)
+            SearchBitcoin(setBitcointValue)
         })
-        SearchBitcoin(setBitcointValue)
         return () => {
             unSubscribe()
         }
-    }, [])
+    }, [providerUser])
 
     return (
         <AuthContext.Provider
@@ -79,12 +85,13 @@ export const AuthProvider = (props) => {
                 setPokemonHistory,
                 createUser,
                 user,
+                providerUser,
                 logOut,
                 logIn,
                 loginWithGoogle,
                 loginWithGitHub,
                 loginWithTwitter,
-                updateUser,
+                updateUser
             }}
         >
             {props.children}
