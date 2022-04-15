@@ -1,4 +1,11 @@
-const logInGitHub = async (setLoading, setError, navigate, loginWithGitHub) => {
+import MyToast from 'components/myToast'
+
+const logInGitHub = async (
+    setLoading,
+    setError,
+    navigate,
+    loginWithGitHub
+) => {
     try {
         await loginWithGitHub()
         navigate('/')
@@ -10,7 +17,12 @@ const logInGitHub = async (setLoading, setError, navigate, loginWithGitHub) => {
     }
 }
 
-const logInTwitter = async (setLoading, setError, navigate, loginWithTwitter) => {
+const logInTwitter = async (
+    setLoading,
+    setError,
+    navigate,
+    loginWithTwitter
+) => {
     try {
         await loginWithTwitter()
         navigate('/')
@@ -22,7 +34,12 @@ const logInTwitter = async (setLoading, setError, navigate, loginWithTwitter) =>
     }
 }
 
-const logInGoogle = async (setLoading, setError, navigate, loginWithGoogle) => {
+const logInGoogle = async (
+    setLoading,
+    setError,
+    navigate,
+    loginWithGoogle
+) => {
     try {
         await loginWithGoogle()
         navigate('/')
@@ -34,16 +51,24 @@ const logInGoogle = async (setLoading, setError, navigate, loginWithGoogle) => {
     }
 }
 
-const handleLogin = async (setLoading, setError, navigate, logIn, email, password) => {
+const handleLogin = async (
+    setLoading,
+    setError,
+    navigate,
+    logIn,
+    email,
+    password,
+    toast
+) => {
     try {
         await logIn(email, password)
         navigate('/')
     } catch (error) {
         setError(error.message)
-        console.log(error.message)
+        MyToast(toast, 'Email ou senha inválido!', 'error')
     } finally {
         setLoading(false)
     }
 }
 
-export {logInGitHub, logInTwitter, logInGoogle, handleLogin}
+export { logInGitHub, logInTwitter, logInGoogle, handleLogin }
