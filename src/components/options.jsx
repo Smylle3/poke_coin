@@ -1,15 +1,16 @@
 import {
+    Link as LinkChakra,
     Avatar,
     Flex,
     Icon,
     IconButton,
-    Link as LinkChakra,
     Menu,
     MenuButton,
     MenuDivider,
     MenuGroup,
     MenuItem,
-    MenuList
+    MenuList,
+    useDisclosure
 } from '@chakra-ui/react'
 import React from 'react'
 import {
@@ -24,9 +25,11 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { FaUserEdit } from 'react-icons/fa'
 import { useAuth } from 'context/authContext'
 import { Link, Navigate } from 'react-router-dom'
+import AboutUs from './aboutUs'
 
 function Options(props) {
     const { user, logOut } = useAuth()
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const handleLogOut = async () => {
         try {
@@ -69,7 +72,10 @@ function Options(props) {
                                         Repositório do App
                                     </MenuItem>
                                 </LinkChakra>
-                                <MenuItem icon={<ImFileText2 />}>
+                                <MenuItem
+                                    icon={<ImFileText2 />}
+                                    onClick={onOpen}
+                                >
                                     Sobre o App
                                 </MenuItem>
                             </MenuGroup>
@@ -87,6 +93,11 @@ function Options(props) {
                             </MenuGroup>
                         </MenuList>
                     </Menu>
+                    <AboutUs
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                    />
                 </Flex>
             )
         case false:
@@ -120,6 +131,7 @@ function Options(props) {
                         w={9}
                         h={9}
                         margin="0px 0px 0px 15px"
+                        onClick={onOpen}
                     />
                     <Link to="/">
                         <Menu>
@@ -157,6 +169,11 @@ function Options(props) {
                             </MenuList>
                         </Menu>
                     </Link>
+                    <AboutUs
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                    />
                 </Flex>
             )
         default:
