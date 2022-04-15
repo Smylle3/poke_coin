@@ -30,7 +30,9 @@ export const AuthProvider = (props) => {
     }
 
     const updateUser = (userName, photoUrl) => {
-        console.log("Quis Updatear")
+        return updateProfile(auth.currentUser, {
+            displayName: userName, photoURL: "https://example.com/jane-q-user/profile.jpg"
+          })
     }
 
     const logIn = (email, password) => {
