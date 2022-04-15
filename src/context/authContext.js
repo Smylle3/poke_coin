@@ -35,10 +35,15 @@ export const AuthProvider = (props) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const updateUser = (userName, photoUrl) => {
+    const updateUser = (userName) => {
         return updateProfile(auth.currentUser, {
-            displayName: userName,
-            photoURL: null
+            displayName: userName
+        })
+    }
+
+    const updateAvatar = (photoUrl) => {
+        return updateProfile(auth.currentUser, {
+            photoURL: photoUrl
         })
     }
 
@@ -91,7 +96,8 @@ export const AuthProvider = (props) => {
                 loginWithGoogle,
                 loginWithGitHub,
                 loginWithTwitter,
-                updateUser
+                updateUser,
+                updateAvatar
             }}
         >
             {props.children}
