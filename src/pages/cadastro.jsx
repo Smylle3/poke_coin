@@ -22,28 +22,57 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
-    const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const { createUser } = useAuth()
     const toast = useToast()
     const navigate = useNavigate()
 
+    const keySubmit = (event) => {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            handleSignUp(event)
+        }
+    }
+
     const handleSignUp = async (event) => {
+        event.preventDefault()
+        if (
+            email.length < 6 ||
+            password.length < 6 ||
+            passwordConfirm.length < 6
+        ) {
+            MyToast(
+                toast,
+                'A senha deve ter pelo menos 6 caracteres!',
+                'error'
+            )
+            setLoading(false)
+            return
+        }
+        if (
+            email.length === 0 ||
+            password.length === 0 ||
+            passwordConfirm.length === 0
+        ) {
+            MyToast(toast, 'Preencha todos os campos!', 'error')
+            setLoading(false)
+            return
+        }
         if (password === passwordConfirm) {
             setLoading(true)
-            event.preventDefault()
-            setError('')
             try {
                 await createUser(email, password)
                 navigate('/')
             } catch (err) {
-                setError(err.message)
-                console.log(error)
+                if (
+                    err.message ===
+                    'Firebase: Error (auth/email-already-in-use).'
+                )
+                    MyToast(toast, 'Email ou senha inválidos!', 'error')
             } finally {
                 setLoading(false)
             }
         } else {
-            MyToast(toast, "As senhas devem ser iguais!", "error")
+            MyToast(toast, 'As senhas devem ser iguais!', 'error')
         }
     }
 
@@ -81,9 +110,11 @@ export default function Login() {
                     w="100%"
                     padding={5}
                     borderRadius={10}
-                    isRequired
                     margin="20px 0px 0px 0px"
                     border="2px solid White"
+                    onKeyDown={(e) => {
+                        keySubmit(e)
+                    }}
                 >
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <Input
@@ -125,7 +156,6 @@ export default function Login() {
                     />
                     <Button
                         isLoading={loading}
-                        loadingText="Aguarde"
                         w="100%"
                         margin="20px 0px"
                         colorScheme="yellow"
@@ -135,6 +165,7 @@ export default function Login() {
                     </Button>
                     <Link to={'/login '}>
                         <Button
+                            isLoading={loading}
                             w="100%"
                             variant="outline"
                             colorScheme="whiteAlpha"
