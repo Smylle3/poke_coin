@@ -28,7 +28,22 @@ const Profile = () => {
     const [oldPassword, setOldPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
+    const { updateUser } = useAuth()
     const toast = useToast()
+
+    const updateProfile = async () => {
+        if (userName.length === 0) {
+            MyToast(toast, 'Digite um user name válido!', 'error')
+        } else {
+            try {
+                await updateUser(userName)
+                MyToast(toast, 'Nome de usuário alterado com sucesso!', 'success')
+                setEditProfile(null)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 
     const changePass = () => {
         setOldPassword('')
@@ -116,6 +131,9 @@ const Profile = () => {
                                 aria-label="Send"
                                 icon={<FcCheckmark />}
                                 marginRight="5px"
+                                onClick={() => {
+                                    updateProfile()
+                                }}
                             />
                             <IconButton
                                 isRound
