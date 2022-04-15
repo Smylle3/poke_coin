@@ -79,11 +79,11 @@ function Options(props) {
                             </MenuGroup>
                             <MenuDivider />
                             <MenuGroup title="Perfil">
-                                <MenuItem icon={<ImUser />}>
-                                    <Link to="/profile">
+                                <Link to="/profile">
+                                    <MenuItem icon={<ImUser />}>
                                         Minha conta
-                                    </Link>
-                                </MenuItem>
+                                    </MenuItem>
+                                </Link>
                                 <MenuItem
                                     icon={<ImExit />}
                                     onClick={handleLogOut}
