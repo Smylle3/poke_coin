@@ -10,7 +10,8 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
-    signInWithPopup
+    signInWithPopup,
+    updateProfile
 } from 'firebase/auth'
 import { auth, googleProvider, gitProvider, twitterProvider } from 'config/firebaseConfig'
 
@@ -26,6 +27,10 @@ export const AuthProvider = (props) => {
 
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
+    }
+
+    const updateUser = (userName, photoUrl) => {
+        console.log("Quis Updatear")
     }
 
     const logIn = (email, password) => {
@@ -76,7 +81,8 @@ export const AuthProvider = (props) => {
                 logIn,
                 loginWithGoogle,
                 loginWithGitHub,
-                loginWithTwitter
+                loginWithTwitter,
+                updateUser,
             }}
         >
             {props.children}
