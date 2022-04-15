@@ -17,13 +17,14 @@ import Header from 'components/header'
 import PasswordInput from 'components/passwordInput'
 import { useAuth } from 'context/authContext'
 import { FcCheckmark } from 'react-icons/fc'
-import { MdOutlineClear, MdCameraAlt } from 'react-icons/md'
+import { MdOutlineClear } from 'react-icons/md'
 import { BiEditAlt } from 'react-icons/bi'
 import MyToast from 'components/myToast'
 
 const Profile = () => {
-    const { user, providerUser } = useAuth()
+    const { user, providerUser, updateAvatar } = useAuth()
     const [userName, setUserName] = useState('')
+    const [userAvatar, setUserAvatar] = useState('')
     const [editProfile, setEditProfile] = useState(null)
     const [oldPassword, setOldPassword] = useState('')
     const [password, setPassword] = useState('')
@@ -31,28 +32,34 @@ const Profile = () => {
     const { updateUser } = useAuth()
     const toast = useToast()
 
-    const KeyDown = (event) => {
-        if (event === 'Enter' || event === 'NumpadEnter')
-            updateProfile()
-        else if(event === "Escape" && user.displayName)
+    const KeyDown = (event, isUpdate) => {
+        if (event === 'Enter' || event === 'NumpadEnter') {
+            updateProfile(isUpdate)
+        } else if (event === 'Escape' && user.displayName)
             setEditProfile(null)
     }
 
-    const updateProfile = async () => {
-        if (userName.length === 0) {
-            MyToast(toast, 'Digite um user name válido!', 'error')
-        } else {
-            try {
+    const updateProfile = async (isUpdate) => {
+        setUserName('')
+        setUserAvatar('')
+        try {
+            if (isUpdate === 'photo') {
+                await updateAvatar(userAvatar)
+            } else if (isUpdate === 'username') {
+                if (userName.length === 0) {
+                    MyToast(
+                        toast,
+                        'Digite um user name válido!',
+                        'error'
+                    )
+                    return
+                }
                 await updateUser(userName)
-                MyToast(
-                    toast,
-                    'Nome de usuário alterado com sucesso!',
-                    'success'
-                )
-                setEditProfile(null)
-            } catch (error) {
-                console.log(error)
             }
+            MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
+            setEditProfile(null)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -112,21 +119,48 @@ const Profile = () => {
                         alt={user.displayName}
                         margin="0px 0px 30px 0px"
                     />
-                    <Button
-                        leftIcon={<MdCameraAlt />}
-                        colorScheme="whiteAlpha"
-                        variant="outline"
-                        marginBottom="20px"
+                    <Flex
+                        w="100%"
+                        justify="center"
+                        margin="0px 0px 20px 0px"
+                        onKeyDown={(e) => {
+                            KeyDown(e.code, 'photo')
+                            setEditProfile(false)
+                        }}
                     >
-                        Mudar imagem de perfil
-                    </Button>
+                        <Input
+                            w={{ base: '60%', md: '50%' }}
+                            color="defaultColor.400"
+                            variant="flushed"
+                            placeholder="Coloque aqui o link da imagem"
+                            textAlign="center"
+                            colorScheme="blackAlpha"
+                            onChange={(e) => {
+                                setUserAvatar(e.target.value)
+                            }}
+                            value={userAvatar}
+                        />
+                        <IconButton
+                            isRound
+                            variant="link"
+                            colorScheme="green"
+                            aria-label="Send"
+                            icon={<FcCheckmark />}
+                            marginRight="5px"
+                            onClick={() => {
+                                updateProfile('photo')
+                                setEditProfile(false)
+                            }}
+                        />
+                    </Flex>
                     {user.displayName === null || editProfile ? (
                         <Flex
                             w="100%"
                             justify="center"
                             margin="0px 0px 20px 0px"
                             onKeyDown={(e) => {
-                                KeyDown(e.code)
+                                KeyDown(e.code, 'username')
+                                setEditProfile(false)
                             }}
                         >
                             <Input
@@ -150,7 +184,7 @@ const Profile = () => {
                                 icon={<FcCheckmark />}
                                 marginRight="5px"
                                 onClick={() => {
-                                    updateProfile()
+                                    updateProfile('username')
                                 }}
                             />
                             <IconButton
@@ -160,7 +194,7 @@ const Profile = () => {
                                 arial-label="Erease"
                                 icon={<MdOutlineClear />}
                                 onClick={() => {
-                                    KeyDown("Escape")
+                                    KeyDown('Escape')
                                 }}
                             />
                         </Flex>
