@@ -36,6 +36,9 @@ export default function Login() {
     }
 
     const handleSignUp = async (event) => {
+        setEmail('')
+        setPassword('')
+        setPasswordConfirm('')
         event.preventDefault()
         if (
             email.length === 0 ||
