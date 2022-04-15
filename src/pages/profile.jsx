@@ -31,6 +31,13 @@ const Profile = () => {
     const { updateUser } = useAuth()
     const toast = useToast()
 
+    const KeyDown = (event) => {
+        if (event === 'Enter' || event === 'NumpadEnter')
+            updateProfile()
+        else if(event === "Escape" && user.displayName)
+            setEditProfile(null)
+    }
+
     const updateProfile = async () => {
         if (userName.length === 0) {
             MyToast(toast, 'Digite um user name válido!', 'error')
@@ -118,6 +125,9 @@ const Profile = () => {
                             w="100%"
                             justify="center"
                             margin="0px 0px 20px 0px"
+                            onKeyDown={(e) => {
+                                KeyDown(e.code)
+                            }}
                         >
                             <Input
                                 w={{ base: '75%', md: '50%' }}
@@ -134,8 +144,8 @@ const Profile = () => {
                             />
                             <IconButton
                                 isRound
-                                variant="outline"
-                                colorScheme="teal"
+                                variant="link"
+                                colorScheme="green"
                                 aria-label="Send"
                                 icon={<FcCheckmark />}
                                 marginRight="5px"
@@ -145,10 +155,13 @@ const Profile = () => {
                             />
                             <IconButton
                                 isRound
-                                variant="outline"
+                                variant="link"
                                 colorScheme="pink"
                                 arial-label="Erease"
                                 icon={<MdOutlineClear />}
+                                onClick={() => {
+                                    KeyDown("Escape")
+                                }}
                             />
                         </Flex>
                     ) : (
@@ -161,8 +174,8 @@ const Profile = () => {
                                 {user.displayName}
                             </Heading>
                             <IconButton
-                            marginLeft="5px"
-                            isRound
+                                marginLeft="5px"
+                                isRound
                                 variant="ghost"
                                 arial-label="Edit"
                                 colorScheme="whiteAlpha"
