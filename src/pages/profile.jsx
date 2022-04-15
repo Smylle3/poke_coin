@@ -10,7 +10,8 @@ import {
     Image,
     Input,
     Text,
-    Textarea
+    Textarea,
+    useToast
 } from '@chakra-ui/react'
 import Header from 'components/header'
 import PasswordInput from 'components/passwordInput'
@@ -18,11 +19,42 @@ import { useAuth } from 'context/authContext'
 import { FcCheckmark } from 'react-icons/fc'
 import { MdOutlineClear, MdCameraAlt } from 'react-icons/md'
 import { BiEditAlt } from 'react-icons/bi'
+import MyToast from 'components/myToast'
 
 const Profile = () => {
     const { user } = useAuth()
     const [userName, setUserName] = useState('')
     const [editProfile, setEditProfile] = useState(null)
+    const [oldPassword, setOldPassword] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
+    const toast = useToast()
+
+    const changePass = () => {
+        setOldPassword('')
+        setPassword('')
+        setPasswordConfirm('')
+        if (
+            password.length === 0 ||
+            passwordConfirm.length === 0 ||
+            oldPassword.length === 0
+        ) {
+            MyToast(
+                toast,
+                'Para altera a senha, preencha todos os campos!',
+                'error'
+            )
+            return
+        }
+        if (password !== passwordConfirm) {
+            MyToast(
+                toast,
+                'A nova senha e sua confirmação devem ser iguais!',
+                'error'
+            )
+            return
+        }
+    }
 
     return (
         <Flex w="100%" h="100%" direction="column">
@@ -148,7 +180,10 @@ const Profile = () => {
                             <PasswordInput
                                 id="senhaAntiga"
                                 placeholder="Digite sua senha atual"
-                                onChange={(e) => {}}
+                                onChange={(e) => {
+                                    setOldPassword(e.target.value)
+                                }}
+                                value={oldPassword}
                             />
                             <FormLabel htmlFor="senha">
                                 Crie uma nova senha:
@@ -156,7 +191,10 @@ const Profile = () => {
                             <PasswordInput
                                 id="senha"
                                 placeholder="Digite a nova senha"
-                                onChange={(e) => {}}
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                }}
+                                value={password}
                             />
                             <FormLabel htmlFor="confirmaçãoSenha">
                                 Confirme a nova senha:
@@ -164,12 +202,16 @@ const Profile = () => {
                             <PasswordInput
                                 id="confirmaçãoSenha"
                                 placeholder="Digite a nova senha novamente"
-                                onChange={(e) => {}}
+                                onChange={(e) => {
+                                    setPasswordConfirm(e.target.value)
+                                }}
+                                value={passwordConfirm}
                             />
                             <Button
                                 w="100%"
                                 margin="10px 0px"
                                 colorScheme="yellow"
+                                onClick={() => changePass()}
                             >
                                 MUDAR SENHA
                             </Button>
