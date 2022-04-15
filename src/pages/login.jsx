@@ -9,7 +9,8 @@ import {
     IconButton,
     Image,
     Input,
-    Stack
+    Stack,
+    useToast
 } from '@chakra-ui/react'
 import { ImGoogle3, ImGithub, ImTwitter } from 'react-icons/im'
 import React, { useState } from 'react'
@@ -34,10 +35,17 @@ export default function Login() {
     } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
+    const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [inputValidation, setInputValidation] = useState(true)
     const navigate = useNavigate()
+    const toast = useToast()
+
+    const keySubmit = (event) => {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            loginFunction('emailLogin')
+        }
+    }
 
     const loginFunction = (isProvider) => {
         setLoading(true)
@@ -54,7 +62,8 @@ export default function Login() {
                     navigate,
                     logIn,
                     email,
-                    password
+                    password,
+                    toast
                 )
                 break
             case 'googleLogin':
@@ -125,6 +134,9 @@ export default function Login() {
                     borderRadius={10}
                     margin="20px 0px 0px 0px"
                     border="2px solid White"
+                    onKeyDown={(e) => {
+                        keySubmit(e)
+                    }}
                 >
                     <FormLabel
                         htmlFor="email"
