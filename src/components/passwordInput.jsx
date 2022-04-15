@@ -13,7 +13,7 @@ const PasswordInput = (props) => {
                 placeholder={props.placeholder}
                 margin="0px 0px 20px 0px"
                 color="defaultColor.400"
-                value={props.password}
+                value={props.value}
                 onChange={props.onChange}
             />
             <InputRightElement
