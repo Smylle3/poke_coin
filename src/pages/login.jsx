@@ -178,7 +178,7 @@ export default function Login() {
                             isRound
                             isLoading={loading}
                             margin="10px 0px 20px 0px"
-                            colorScheme="green"
+                            colorScheme="whiteAlpha"
                             onClick={() => loginFunction('googleLogin')}
                             icon={<ImGoogle3 size={25} />}
                             aria-label="Google Login"
@@ -187,7 +187,7 @@ export default function Login() {
                             isRound
                             isLoading={loading}
                             margin="10px 0px 20px 0px"
-                            colorScheme="green"
+                            colorScheme="blackAlpha"
                             onClick={() => loginFunction('githubLogin')}
                             icon={<ImGithub size={25} />}
                             aria-label="GitHub Login"
@@ -196,7 +196,7 @@ export default function Login() {
                             isRound
                             isLoading={loading}
                             margin="10px 0px 20px 0px"
-                            colorScheme="green"
+                            colorScheme="blue"
                             onClick={() =>
                                 loginFunction('twitterLogin')
                             }
