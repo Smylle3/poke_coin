@@ -1,9 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import Profile from 'pages/home'
+import Home from 'pages/home'
 import Login from 'pages/login'
 import SignUp from 'pages/cadastro'
+import Profile from 'pages/profile'
 import ProtectedRoutes from './protectedRoutes'
 
 function AppRoutes() {
@@ -13,6 +14,14 @@ function AppRoutes() {
                 <Route
                     exact
                     path="/"
+                    element={
+                        <ProtectedRoutes>
+                            <Home />
+                        </ProtectedRoutes>
+                    }
+                />
+                <Route
+                    path="/profile"
                     element={
                         <ProtectedRoutes>
                             <Profile />

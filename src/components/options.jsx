@@ -23,17 +23,15 @@ import {
 } from 'react-icons/im'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { FaUserEdit } from 'react-icons/fa'
-import { useAuth } from 'context/authContext'
 import { Link, Navigate } from 'react-router-dom'
 import AboutUs from './aboutUs'
 
 function Options(props) {
-    const { user, logOut } = useAuth()
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const handleLogOut = async () => {
         try {
-            await logOut()
+            await props.logOut()
             Navigate('/login')
         } catch (error) {
             console.log(error.message)
@@ -81,9 +79,11 @@ function Options(props) {
                             </MenuGroup>
                             <MenuDivider />
                             <MenuGroup title="Perfil">
-                                <MenuItem icon={<ImUser />}>
-                                    <Link to="/">Minha conta</Link>
-                                </MenuItem>
+                                <Link to="/profile">
+                                    <MenuItem icon={<ImUser />}>
+                                        Minha conta
+                                    </MenuItem>
+                                </Link>
                                 <MenuItem
                                     icon={<ImExit />}
                                     onClick={handleLogOut}
@@ -133,21 +133,21 @@ function Options(props) {
                         margin="0px 0px 0px 15px"
                         onClick={onOpen}
                     />
-                    <Link to="/">
-                        <Menu>
-                            <MenuButton>
-                                <Avatar
-                                    name=""
-                                    w={10}
-                                    h={10}
-                                    margin="0px 0px 0px 15px"
-                                    src={user.photoURL}
-                                />
-                            </MenuButton>
-                            <MenuList
-                                border="2px solid #222224"
-                                padding={2}
-                            >
+                    <Menu>
+                        <MenuButton>
+                            <Avatar
+                                name=""
+                                w={10}
+                                h={10}
+                                margin="0px 0px 0px 15px"
+                                src={props.user.photoURL}
+                            />
+                        </MenuButton>
+                        <MenuList
+                            border="2px solid #222224"
+                            padding={2}
+                        >
+                            <Link to="/profile">
                                 <MenuItem
                                     icon={<FaUserEdit />}
                                     color="defaultColor.500"
@@ -156,19 +156,19 @@ function Options(props) {
                                 >
                                     Editar perfil
                                 </MenuItem>
-                                <MenuItem
-                                    icon={<ImExit />}
-                                    marginTop={2}
-                                    color="defaultColor.600"
-                                    onClick={handleLogOut}
-                                    border="2px solid #222224"
-                                    borderRadius={5}
-                                >
-                                    Sair
-                                </MenuItem>
-                            </MenuList>
-                        </Menu>
-                    </Link>
+                            </Link>
+                            <MenuItem
+                                icon={<ImExit />}
+                                marginTop={2}
+                                color="defaultColor.600"
+                                onClick={handleLogOut}
+                                border="2px solid #222224"
+                                borderRadius={5}
+                            >
+                                Sair
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
                     <AboutUs
                         isOpen={isOpen}
                         onOpen={onOpen}

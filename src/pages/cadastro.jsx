@@ -17,33 +17,66 @@ import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
+import PasswordInput from 'components/passwordInput'
 
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
-    const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [inputValidation, setInputValidation] = useState(true)
     const { createUser } = useAuth()
     const toast = useToast()
     const navigate = useNavigate()
 
+    const keySubmit = (event) => {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            handleSignUp(event)
+        }
+    }
+
     const handleSignUp = async (event) => {
-        if (password === passwordConfirm) {
+        setEmail('')
+        setPassword('')
+        setPasswordConfirm('')
+        event.preventDefault()
+        if (
+            email.length === 0 ||
+            password.length === 0 ||
+            passwordConfirm.length === 0
+        ) {
+            setInputValidation(true)
+            MyToast(toast, 'Preencha todos os campos!', 'error')
+            setLoading(false)
+            return
+        } else if (
+            email.length < 6 ||
+            password.length < 6 ||
+            passwordConfirm.length < 6
+        ) {
+            MyToast(
+                toast,
+                'A senha deve ter pelo menos 6 caracteres!',
+                'error'
+            )
+            setLoading(false)
+            return
+        } else if (password === passwordConfirm) {
             setLoading(true)
-            event.preventDefault()
-            setError('')
             try {
                 await createUser(email, password)
                 navigate('/')
             } catch (err) {
-                setError(err.message)
-                console.log(error)
+                if (
+                    err.message ===
+                    'Firebase: Error (auth/email-already-in-use).'
+                )
+                    MyToast(toast, 'Email ou senha inválidos!', 'error')
             } finally {
                 setLoading(false)
             }
         } else {
-            MyToast(toast, "As senhas devem ser iguais!", "error")
+            MyToast(toast, 'As senhas devem ser iguais!', 'error')
         }
     }
 
@@ -81,9 +114,11 @@ export default function Login() {
                     w="100%"
                     padding={5}
                     borderRadius={10}
-                    isRequired
                     margin="20px 0px 0px 0px"
                     border="2px solid White"
+                    onKeyDown={(e) => {
+                        keySubmit(e)
+                    }}
                 >
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <Input
@@ -91,50 +126,50 @@ export default function Login() {
                         type="email"
                         placeholder="Digite seu Email"
                         margin="0px 0px 20px 0px"
-                        bg="defaultColor.400"
-                        color="defaultColor.500"
-                        onChange={(e) => setEmail(e.target.value)}
+                        color="defaultColor.400"
+                        onChange={(e) => {
+                            setInputValidation(false)
+                            setEmail(e.target.value)
+                        }}
                         value={email}
                     />
                     <FormLabel htmlFor="senha">
                         Crie uma senha:
                     </FormLabel>
-                    <Input
+                    <PasswordInput
                         id="senha"
-                        type="password"
                         placeholder="Digite sua senha"
-                        margin="0px 0px 20px 0px"
-                        bg="defaultColor.400"
-                        color="defaultColor.500"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            setInputValidation(false)
+                            setPassword(e.target.value)
+                        }}
                         value={password}
                     />
-                    <FormLabel htmlFor="senha">
+                    <FormLabel htmlFor="confirmaçãoSenha">
                         Confirme a sua senha:
                     </FormLabel>
-                    <Input
+                    <PasswordInput
                         id="confirmaçãoSenha"
-                        type="password"
                         placeholder="Digite sua senha novamente"
-                        bg="defaultColor.400"
-                        color="defaultColor.500"
-                        onChange={(e) =>
+                        onChange={(e) => {
+                            setInputValidation(false)
                             setPasswordConfirm(e.target.value)
-                        }
+                        }}
                         value={passwordConfirm}
                     />
                     <Button
                         isLoading={loading}
-                        loadingText="Aguarde"
                         w="100%"
                         margin="20px 0px"
                         colorScheme="yellow"
                         onClick={handleSignUp}
+                        isDisabled={inputValidation}
                     >
                         CADASTRAR
                     </Button>
                     <Link to={'/login '}>
                         <Button
+                            isLoading={loading}
                             w="100%"
                             variant="outline"
                             colorScheme="whiteAlpha"

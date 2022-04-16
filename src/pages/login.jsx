@@ -9,7 +9,8 @@ import {
     IconButton,
     Image,
     Input,
-    Stack
+    Stack,
+    useToast
 } from '@chakra-ui/react'
 import { ImGoogle3, ImGithub, ImTwitter } from 'react-icons/im'
 import React, { useState } from 'react'
@@ -24,6 +25,8 @@ import {
     logInGoogle,
     logInTwitter
 } from 'functions/loginFunctions'
+import PasswordInput from 'components/passwordInput'
+import MyToast from 'components/myToast'
 
 export default function Login() {
     const {
@@ -34,17 +37,27 @@ export default function Login() {
     } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
+    const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [inputValidation, setInputValidation] = useState(true)
     const navigate = useNavigate()
+    const toast = useToast()
+
+    const keySubmit = (event) => {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            loginFunction('emailLogin')
+        }
+    }
 
     const loginFunction = (isProvider) => {
         setLoading(true)
+        setPassword('')
+        setEmail('')
         switch (isProvider) {
             case 'emailLogin':
                 if (email.length === 0 || password.length === 0) {
                     setInputValidation(true)
+                    MyToast(toast, 'Preencha todos os campos!', 'error')
                     setLoading(false)
                     return
                 }
@@ -54,7 +67,8 @@ export default function Login() {
                     navigate,
                     logIn,
                     email,
-                    password
+                    password,
+                    toast
                 )
                 break
             case 'googleLogin':
@@ -117,7 +131,6 @@ export default function Login() {
                     LOGIN
                 </Heading>
                 <FormControl
-                    isInvalid={inputValidation}
                     color="defaultColor.400"
                     bg="defaultColor.500"
                     w="100%"
@@ -125,13 +138,11 @@ export default function Login() {
                     borderRadius={10}
                     margin="20px 0px 0px 0px"
                     border="2px solid White"
+                    onKeyDown={(e) => {
+                        keySubmit(e)
+                    }}
                 >
-                    <FormLabel
-                        htmlFor="email"
-                        color={inputValidation ? 'red' : 'white'}
-                    >
-                        Email:
-                    </FormLabel>
+                    <FormLabel htmlFor="email">Email:</FormLabel>
                     <Input
                         id="email"
                         type="email"
@@ -145,18 +156,10 @@ export default function Login() {
                         }}
                         value={email}
                     />
-                    <FormLabel
-                        htmlFor="senha"
-                        color={inputValidation ? 'red' : 'white'}
-                    >
-                        Senha:
-                    </FormLabel>
-                    <Input
+                    <FormLabel htmlFor="senha">Senha:</FormLabel>
+                    <PasswordInput
                         id="senha"
-                        type="password"
                         placeholder="Digite sua senha"
-                        bg="transparent"
-                        color="defaultColor.400"
                         onChange={(e) => {
                             setInputValidation(false)
                             setPassword(e.target.value)

@@ -5,10 +5,10 @@ import { useAuth } from 'context/authContext'
 import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import Options from './options'
-import useMobile from 'utils/useMobile'
+import useMobile from 'functions/useMobile'
 
 export default function Header() {
-    const { user } = useAuth()
+    const { user, logOut } = useAuth()
     const isMobile = useMobile()
 
     return (
@@ -39,7 +39,11 @@ export default function Header() {
             </Flex>
             <Text>Olá {user.displayName}!</Text>
             <Flex padding="0px 10px 0px 0px">
-                <Options isMobile={isMobile} />
+                <Options
+                    isMobile={isMobile}
+                    user={user}
+                    logOut={logOut}
+                />
             </Flex>
         </Box>
     )
