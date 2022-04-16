@@ -62,6 +62,9 @@ export default function Home() {
                     bg="defaultColor.600"
                 >
                     <Heading fontFamily="body" color="defaultColor.400">
+                        PokeCoin
+                    </Heading>
+                    <Heading fontFamily="body" color="defaultColor.400">
                         HUB de Negociação
                     </Heading>
                     <FormControl
