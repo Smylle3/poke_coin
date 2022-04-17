@@ -43,20 +43,14 @@ const Profile = () => {
         setUserName('')
         setUserAvatar('')
         try {
-            if (isUpdate === 'photo') {
+            if (isUpdate === 'photo' && userAvatar.length !== 0) {
                 await updateAvatar(userAvatar)
-            } else if (isUpdate === 'username') {
-                if (userName.length === 0) {
-                    MyToast(
-                        toast,
-                        'Digite um user name válido!',
-                        'error'
-                    )
-                    return
-                }
+                MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
+            } else if (isUpdate === 'username' &&  userName.length !== 0) {
                 await updateUser(userName)
+                MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
             }
-            MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
+            MyToast(toast, 'Preencha os campos corretamente!', 'error')
             setEditProfile(null)
         } catch (error) {
             console.log(error)
