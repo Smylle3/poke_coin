@@ -35,8 +35,7 @@ const Profile = () => {
     const KeyDown = (event, isUpdate) => {
         if (event === 'Enter' || event === 'NumpadEnter') {
             updateProfile(isUpdate)
-        } else if (event === 'Escape' && user.displayName)
-            setEditProfile(null)
+        } else if (event === 'Escape' && user.displayName) setEditProfile(null)
     }
 
     const updateProfile = async (isUpdate) => {
@@ -48,7 +47,7 @@ const Profile = () => {
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
                 setEditProfile(null)
                 return
-            } else if (isUpdate === 'username' &&  userName.length !== 0) {
+            } else if (isUpdate === 'username' && userName.length !== 0) {
                 await updateUser(userName)
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
                 setEditProfile(null)
@@ -69,19 +68,11 @@ const Profile = () => {
             passwordConfirm.length === 0 ||
             oldPassword.length === 0
         ) {
-            MyToast(
-                toast,
-                'Para altera a senha, preencha todos os campos!',
-                'error'
-            )
+            MyToast(toast, 'Para altera a senha, preencha todos os campos!', 'error')
             return
         }
         if (password !== passwordConfirm) {
-            MyToast(
-                toast,
-                'A nova senha e sua confirmação devem ser iguais!',
-                'error'
-            )
+            MyToast(toast, 'A nova senha e sua confirmação devem ser iguais!', 'error')
             return
         }
     }
@@ -196,14 +187,8 @@ const Profile = () => {
                             />
                         </Flex>
                     ) : (
-                        <Flex
-                            w="100%"
-                            justify="center"
-                            margin="0px 0px 20px 0px"
-                        >
-                            <Heading color="defaultColor.400">
-                                {user.displayName}
-                            </Heading>
+                        <Flex w="100%" justify="center" margin="0px 0px 20px 0px">
+                            <Heading color="defaultColor.400">{user.displayName}</Heading>
                             <IconButton
                                 marginLeft="5px"
                                 isRound
@@ -217,9 +202,7 @@ const Profile = () => {
                     )}
 
                     {user.emailVerified ? (
-                        <Text color="defaultColor.400">
-                            {user.email}
-                        </Text>
+                        <Text color="defaultColor.400">{user.email}</Text>
                     ) : (
                         <Text color="red.400">
                             {user.email} (Seu email não foi verificado!)
@@ -243,10 +226,7 @@ const Profile = () => {
                     >
                         <Heading>Danger Zone</Heading>
                         {providerUser === 'password' ? (
-                            <FormControl
-                                onKeyDown={(e) => {}}
-                                marginTop="15px"
-                            >
+                            <FormControl onKeyDown={(e) => {}} marginTop="15px">
                                 <FormLabel htmlFor="senhaAntiga">
                                     Digite a senha atual
                                 </FormLabel>
@@ -276,9 +256,7 @@ const Profile = () => {
                                     id="confirmaçãoSenha"
                                     placeholder="Digite a nova senha novamente"
                                     onChange={(e) => {
-                                        setPasswordConfirm(
-                                            e.target.value
-                                        )
+                                        setPasswordConfirm(e.target.value)
                                     }}
                                     value={passwordConfirm}
                                 />
@@ -292,11 +270,7 @@ const Profile = () => {
                                 </Button>
                             </FormControl>
                         ) : null}
-                        <Button
-                            w="100%"
-                            margin="10px 0px"
-                            colorScheme="red"
-                        >
+                        <Button w="100%" margin="10px 0px" colorScheme="red">
                             DELETAR MINHA CONTA
                         </Button>
                     </Box>
