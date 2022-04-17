@@ -46,9 +46,11 @@ const Profile = () => {
             if (isUpdate === 'photo' && userAvatar.length !== 0) {
                 await updateAvatar(userAvatar)
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
+                return
             } else if (isUpdate === 'username' &&  userName.length !== 0) {
                 await updateUser(userName)
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
+                return
             }
             MyToast(toast, 'Preencha os campos corretamente!', 'error')
             setEditProfile(null)
