@@ -13,12 +13,12 @@ import {
     Textarea,
     useToast
 } from '@chakra-ui/react'
+import { FcCheckmark } from 'react-icons/fc'
+import { MdOutlineClear, MdPhotoCamera } from 'react-icons/md'
+import { BiEditAlt } from 'react-icons/bi'
 import Header from 'components/header'
 import PasswordInput from 'components/passwordInput'
 import { useAuth } from 'context/authContext'
-import { FcCheckmark } from 'react-icons/fc'
-import { MdOutlineClear } from 'react-icons/md'
-import { BiEditAlt } from 'react-icons/bi'
 import MyToast from 'components/myToast'
 
 const Profile = () => {
@@ -26,6 +26,7 @@ const Profile = () => {
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
     const [editProfile, setEditProfile] = useState(null)
+    const [editPhoto, setEditPhoto] = useState(null)
     const [oldPassword, setOldPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -35,7 +36,10 @@ const Profile = () => {
     const KeyDown = (event, isUpdate) => {
         if (event === 'Enter' || event === 'NumpadEnter') {
             updateProfile(isUpdate)
-        } else if (event === 'Escape' && user.displayName) setEditProfile(null)
+        } else if (event === 'Escape' && user.displayName) {
+            setEditProfile(null)
+            setEditPhoto(null)
+        }
     }
 
     const updateProfile = async (isUpdate) => {
@@ -46,16 +50,21 @@ const Profile = () => {
                 await updateAvatar(userAvatar)
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
                 setEditProfile(null)
+                setEditPhoto(null)
                 return
             } else if (isUpdate === 'username' && userName.length !== 0) {
                 await updateUser(userName)
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
                 setEditProfile(null)
+                setEditPhoto(null)
                 return
             }
             MyToast(toast, 'Preencha os campos corretamente!', 'error')
+            setEditProfile(null)
+            setEditPhoto(null)
         } catch (error) {
             console.log(error)
+            MyToast(toast, 'Algo deu errado, tente novamente!', 'error')
         }
     }
 
@@ -107,40 +116,63 @@ const Profile = () => {
                         alt={user.displayName}
                         margin="0px 0px 30px 0px"
                     />
-                    <Flex
-                        w="100%"
-                        justify="center"
-                        margin="0px 0px 20px 0px"
-                        onKeyDown={(e) => {
-                            KeyDown(e.code, 'photo')
-                            setEditProfile(false)
-                        }}
-                    >
-                        <Input
-                            w={{ base: '60%', md: '50%' }}
-                            color="defaultColor.400"
-                            variant="flushed"
-                            placeholder="Coloque aqui o link da imagem"
-                            textAlign="center"
-                            colorScheme="blackAlpha"
-                            onChange={(e) => {
-                                setUserAvatar(e.target.value)
-                            }}
-                            value={userAvatar}
-                        />
-                        <IconButton
-                            isRound
-                            variant="link"
-                            colorScheme="green"
-                            aria-label="Send"
-                            icon={<FcCheckmark />}
-                            marginRight="5px"
-                            onClick={() => {
-                                updateProfile('photo')
+                    {editPhoto ? (
+                        <Flex
+                            w="100%"
+                            justify="center"
+                            margin="0px 0px 20px 0px"
+                            onKeyDown={(e) => {
+                                KeyDown(e.code, 'photo')
                                 setEditProfile(false)
                             }}
-                        />
-                    </Flex>
+                        >
+                            <Input
+                                w={{ base: '60%', md: '50%' }}
+                                color="defaultColor.400"
+                                variant="flushed"
+                                placeholder="Coloque aqui o link da imagem"
+                                textAlign="center"
+                                colorScheme="blackAlpha"
+                                onChange={(e) => {
+                                    setUserAvatar(e.target.value)
+                                }}
+                                value={userAvatar}
+                            />
+                            <IconButton
+                                isRound
+                                variant="link"
+                                colorScheme="green"
+                                aria-label="Send"
+                                icon={<FcCheckmark />}
+                                marginRight="5px"
+                                onClick={() => {
+                                    updateProfile('photo')
+                                    setEditProfile(false)
+                                }}
+                            />
+                            <IconButton
+                                isRound
+                                variant="link"
+                                colorScheme="pink"
+                                arial-label="Erease"
+                                icon={<MdOutlineClear />}
+                                onClick={() => {
+                                    KeyDown('Escape')
+                                }}
+                            />
+                        </Flex>
+                    ) : (
+                        <Button
+                            margin="0px 0px 20px 0px"
+                            variant="outline"
+                            color="defaultColor.400"
+                            colorScheme="blackAlpha"
+                            rightIcon={<MdPhotoCamera />}
+                            onClick={() => setEditPhoto(true)}
+                        >
+                            Mudar foto de perfil via URL
+                        </Button>
+                    )}
                     {user.displayName === null || editProfile ? (
                         <Flex
                             w="100%"
@@ -152,7 +184,7 @@ const Profile = () => {
                             }}
                         >
                             <Input
-                                w={{ base: '75%', md: '50%' }}
+                                w={{ base: '75%', md: '45%' }}
                                 color="defaultColor.400"
                                 variant="flushed"
                                 placeholder="Defina aqui seu nome de usuário."
@@ -195,14 +227,14 @@ const Profile = () => {
                                 variant="ghost"
                                 arial-label="Edit"
                                 colorScheme="whiteAlpha"
-                                icon={<BiEditAlt />}
+                                icon={<BiEditAlt color='white' />}
                                 onClick={() => setEditProfile(true)}
                             />
                         </Flex>
                     )}
 
                     {user.emailVerified ? (
-                        <Text color="defaultColor.400">{user.email}</Text>
+                        <Text color="green.400">{user.email}</Text>
                     ) : (
                         <Text color="red.400">
                             {user.email} (Seu email não foi verificado!)
