@@ -22,14 +22,15 @@ import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
 
 const Profile = () => {
-    const { user, providerUser, updateAvatar, emailVerification } = useAuth()
+    const { user, providerUser, updateAvatar, emailVerification, changePassword, logIn } =
+        useAuth()
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
-    const [editProfile, setEditProfile] = useState(null)
-    const [editPhoto, setEditPhoto] = useState(null)
     const [oldPassword, setOldPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [editProfile, setEditProfile] = useState(null)
+    const [editPhoto, setEditPhoto] = useState(null)
     const { updateUser } = useAuth()
     const toast = useToast()
 
@@ -77,22 +78,28 @@ const Profile = () => {
         }
     }
 
-    const changePass = () => {
+    const changePass = async () => {
+        if (password.length > 5 && password === passwordConfirm) {
+            try {
+                await logIn(user.email, oldPassword).then(async () => {
+                    try {
+                        await changePassword(password)
+                        MyToast(toast, 'Senha alterada com sucesso', 'success')
+                    } catch (error) {
+                        MyToast(toast, 'Algo deu errado, tente novamente!', 'error')
+                    }
+                })
+            } catch (error) {
+                MyToast(toast, 'A sua senha atual está incorreta!', 'error')
+            }
+        } else if (password.length < 6) {
+            MyToast(toast, 'A nova senha deve ter pelo menos 6 caracteres!', 'error')
+        } else if (password !== passwordConfirm) {
+            MyToast(toast, 'A nova senha deve ser igual a sua confirmação!', 'error')
+        }
         setOldPassword('')
         setPassword('')
         setPasswordConfirm('')
-        if (
-            password.length === 0 ||
-            passwordConfirm.length === 0 ||
-            oldPassword.length === 0
-        ) {
-            MyToast(toast, 'Para altera a senha, preencha todos os campos!', 'error')
-            return
-        }
-        if (password !== passwordConfirm) {
-            MyToast(toast, 'A nova senha e sua confirmação devem ser iguais!', 'error')
-            return
-        }
     }
 
     return (
@@ -250,7 +257,11 @@ const Profile = () => {
                         <Box>
                             <Text color="red.400">{user.email}</Text>
                             <Text color="red.400">(Seu email não foi verificado!)</Text>
-                            <Button onClick={() => sendEmailVerify()} colorScheme="green" size="xs">
+                            <Button
+                                onClick={() => sendEmailVerify()}
+                                colorScheme="green"
+                                size="xs"
+                            >
                                 Clique aqui para verificar!
                             </Button>
                         </Box>
