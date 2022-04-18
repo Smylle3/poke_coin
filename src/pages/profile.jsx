@@ -11,6 +11,7 @@ import {
     Input,
     Text,
     Textarea,
+    useDisclosure,
     useToast
 } from '@chakra-ui/react'
 import { FcCheckmark } from 'react-icons/fc'
@@ -20,10 +21,18 @@ import Header from 'components/header'
 import PasswordInput from 'components/passwordInput'
 import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
+import DeleteModal from 'components/deleteModal'
 
 const Profile = () => {
-    const { user, providerUser, updateAvatar, emailVerification, changePassword, logIn } =
-        useAuth()
+    const {
+        user,
+        providerUser,
+        updateAvatar,
+        emailVerification,
+        changePassword,
+        logIn,
+        deleteAccount
+    } = useAuth()
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
     const [oldPassword, setOldPassword] = useState('')
@@ -34,6 +43,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(false)
     const { updateUser } = useAuth()
     const toast = useToast()
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
     const KeyDown = (event, isUpdate) => {
         if ((event === 'Enter' || event === 'NumpadEnter') && isUpdate === 'password') {
@@ -107,6 +117,14 @@ const Profile = () => {
         setPassword('')
         setPasswordConfirm('')
         setLoading(false)
+    }
+
+    const deleteUser = async () => {
+        try {
+            await deleteAccount()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -349,12 +367,14 @@ const Profile = () => {
                             margin="10px 0px"
                             colorScheme="red"
                             isLoading={loading}
+                            onClick={onOpen}
                         >
                             DELETAR MINHA CONTA
                         </Button>
                     </Box>
                 </Box>
             </Flex>
+            <DeleteModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
         </Flex>
     )
 }
