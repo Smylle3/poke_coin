@@ -31,6 +31,7 @@ const Profile = () => {
     const [passwordConfirm, setPasswordConfirm] = useState('')
     const [editProfile, setEditProfile] = useState(null)
     const [editPhoto, setEditPhoto] = useState(null)
+    const [loading, setLoading] = useState(false)
     const { updateUser } = useAuth()
     const toast = useToast()
 
@@ -79,6 +80,7 @@ const Profile = () => {
     }
 
     const changePass = async () => {
+        setLoading(true)
         if (password.length > 5 && password === passwordConfirm) {
             try {
                 await logIn(user.email, oldPassword).then(async () => {
@@ -91,6 +93,8 @@ const Profile = () => {
                 })
             } catch (error) {
                 MyToast(toast, 'A sua senha atual está incorreta!', 'error')
+            } finally {
+                setLoading(false)
             }
         } else if (password.length < 6) {
             MyToast(toast, 'A nova senha deve ter pelo menos 6 caracteres!', 'error')
@@ -100,6 +104,7 @@ const Profile = () => {
         setOldPassword('')
         setPassword('')
         setPasswordConfirm('')
+        setLoading(false)
     }
 
     return (
@@ -289,6 +294,7 @@ const Profile = () => {
                                     Digite a senha atual
                                 </FormLabel>
                                 <PasswordInput
+                                    isDisabled={loading}
                                     id="senhaAntiga"
                                     placeholder="Digite sua senha atual"
                                     onChange={(e) => {
@@ -300,6 +306,7 @@ const Profile = () => {
                                     Crie uma nova senha:
                                 </FormLabel>
                                 <PasswordInput
+                                    isDisabled={loading}
                                     id="senha"
                                     placeholder="Digite a nova senha"
                                     onChange={(e) => {
@@ -311,6 +318,7 @@ const Profile = () => {
                                     Confirme a nova senha:
                                 </FormLabel>
                                 <PasswordInput
+                                    isDisabled={loading}
                                     id="confirmaçãoSenha"
                                     placeholder="Digite a nova senha novamente"
                                     onChange={(e) => {
@@ -319,6 +327,7 @@ const Profile = () => {
                                     value={passwordConfirm}
                                 />
                                 <Button
+                                    isLoading={loading}
                                     w="100%"
                                     margin="10px 0px"
                                     colorScheme="yellow"
@@ -328,7 +337,12 @@ const Profile = () => {
                                 </Button>
                             </FormControl>
                         ) : null}
-                        <Button w="100%" margin="10px 0px" colorScheme="red">
+                        <Button
+                            w="100%"
+                            margin="10px 0px"
+                            colorScheme="red"
+                            isLoading={loading}
+                        >
                             DELETAR MINHA CONTA
                         </Button>
                     </Box>
