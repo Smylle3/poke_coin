@@ -1,6 +1,6 @@
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import React from 'react'
-import { RiEyeCloseFill, RiEyeFill } from "react-icons/ri";
+import { RiEyeCloseFill, RiEyeFill } from 'react-icons/ri'
 
 const PasswordInput = (props) => {
     const [show, setShow] = React.useState(false)
@@ -8,11 +8,14 @@ const PasswordInput = (props) => {
     return (
         <InputGroup>
             <Input
+                isInvalid = {props.isInvalid}
+                errorBorderColor={props.errorBorderColor}
+                isDisabled={props.isDisabled}
                 type={show ? 'text' : 'password'}
                 id={props.id}
                 placeholder={props.placeholder}
                 margin="0px 0px 20px 0px"
-                color="defaultColor.400"
+                color={props.color}
                 value={props.value}
                 onChange={props.onChange}
             />
@@ -20,9 +23,9 @@ const PasswordInput = (props) => {
                 onClick={handleClick}
                 children={
                     show ? (
-                        <RiEyeFill size={20} color="white" />
+                        <RiEyeFill size={20} color={props.color}/>
                     ) : (
-                        <RiEyeCloseFill size={20} color="white" />
+                        <RiEyeCloseFill size={20} color={props.color} />
                     )
                 }
             />
