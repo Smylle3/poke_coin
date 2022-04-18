@@ -13,6 +13,7 @@ import {
     signInWithPopup,
     updateProfile,
     sendEmailVerification,
+    updatePassword,
     getAuth
 } from 'firebase/auth'
 import {
@@ -68,6 +69,9 @@ export const AuthProvider = (props) => {
     const emailVerification = () => {
         return sendEmailVerification(authUser.currentUser)
     }
+    const changePassword = (newPassword) => {
+        return updatePassword(authUser.currentUser, newPassword)
+    }
     const logOut = () => {
         return signOut(auth)
     }
@@ -103,6 +107,7 @@ export const AuthProvider = (props) => {
                 updateUser,
                 updateAvatar,
                 emailVerification,
+                changePassword,
                 logOut,
             }}
         >
