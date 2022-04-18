@@ -29,12 +29,7 @@ import PasswordInput from 'components/passwordInput'
 import MyToast from 'components/myToast'
 
 export default function Login() {
-    const {
-        logIn,
-        loginWithGoogle,
-        loginWithGitHub,
-        loginWithTwitter
-    } = useAuth()
+    const { logIn, loginWithGoogle, loginWithGitHub, loginWithTwitter } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
@@ -61,39 +56,16 @@ export default function Login() {
                     setLoading(false)
                     return
                 }
-                handleLogin(
-                    setLoading,
-                    setError,
-                    navigate,
-                    logIn,
-                    email,
-                    password,
-                    toast
-                )
+                handleLogin(setLoading, setError, navigate, logIn, email, password, toast)
                 break
             case 'googleLogin':
-                logInGoogle(
-                    setLoading,
-                    setError,
-                    navigate,
-                    loginWithGoogle
-                )
+                logInGoogle(setLoading, setError, navigate, loginWithGoogle)
                 break
             case 'githubLogin':
-                logInGitHub(
-                    setLoading,
-                    setError,
-                    navigate,
-                    loginWithGitHub
-                )
+                logInGitHub(setLoading, setError, navigate, loginWithGitHub)
                 break
             case 'twitterLogin':
-                logInTwitter(
-                    setLoading,
-                    setError,
-                    navigate,
-                    loginWithTwitter
-                )
+                logInTwitter(setLoading, setError, navigate, loginWithTwitter)
                 break
             default:
                 console.log(error)
@@ -112,12 +84,7 @@ export default function Login() {
             bgRepeat="no-repeat"
             bgSize="cover"
         >
-            <Center
-                w="25%"
-                minW="300px"
-                h="100vh"
-                flexDirection="column"
-            >
+            <Center w="25%" minW="300px" h="100vh" flexDirection="column">
                 <Stack
                     direction="row"
                     alignItems="center"
@@ -144,6 +111,7 @@ export default function Login() {
                 >
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <Input
+                        isDisabled={loading}
                         id="email"
                         type="email"
                         placeholder="Digite seu email"
@@ -158,6 +126,7 @@ export default function Login() {
                     />
                     <FormLabel htmlFor="senha">Senha:</FormLabel>
                     <PasswordInput
+                        isDisabled={loading}
                         id="senha"
                         placeholder="Digite sua senha"
                         onChange={(e) => {
@@ -200,9 +169,7 @@ export default function Login() {
                             isLoading={loading}
                             margin="10px 0px 20px 0px"
                             colorScheme="blue"
-                            onClick={() =>
-                                loginFunction('twitterLogin')
-                            }
+                            onClick={() => loginFunction('twitterLogin')}
                             icon={<ImTwitter size={25} />}
                             aria-label="Twitter Login"
                         />

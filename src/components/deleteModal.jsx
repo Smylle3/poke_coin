@@ -23,9 +23,11 @@ const DeleteModal = (props) => {
     const { deleteAccount, logIn, user, providerUser } = useAuth()
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
+    const [loading, setLoading] = useState(false)
     const toast = useToast()
 
     const handleDelete = async () => {
+        setLoading(true)
         if (providerUser === 'password') {
             try {
                 await logIn(user.email, password)
@@ -48,6 +50,9 @@ const DeleteModal = (props) => {
                 MyToast(toast, 'Email incorreto, tente novamente!', 'error')
             }
         }
+        setLoading(false)
+        setEmail('')
+        setPassword('')
     }
 
     return (
@@ -70,6 +75,7 @@ const DeleteModal = (props) => {
                                 Para deletar, digite sua senha:
                             </FormLabel>
                             <PasswordInput
+                                isDisabled={loading}
                                 isInvalid
                                 errorBorderColor="red.900"
                                 id="pass"
@@ -83,6 +89,7 @@ const DeleteModal = (props) => {
                                 Para deletar, digite seu email:
                             </FormLabel>
                             <Input
+                                isDisabled={loading}
                                 isInvalid
                                 errorBorderColor="red.900"
                                 id="email"
@@ -94,6 +101,7 @@ const DeleteModal = (props) => {
                 </ModalBody>
                 <ModalFooter flexDirection="column">
                     <Button
+                        isLoading={loading}
                         colorScheme="red"
                         leftIcon={<RiDeleteBin2Line />}
                         w="100%"
@@ -103,6 +111,7 @@ const DeleteModal = (props) => {
                         Deletar conta
                     </Button>
                     <Button
+                        isLoading={loading}
                         leftIcon={<IoIosCloseCircleOutline />}
                         colorScheme="green"
                         onClick={props.onClose}

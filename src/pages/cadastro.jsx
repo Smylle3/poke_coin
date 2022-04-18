@@ -40,11 +40,7 @@ export default function Login() {
         setPassword('')
         setPasswordConfirm('')
         event.preventDefault()
-        if (
-            email.length === 0 ||
-            password.length === 0 ||
-            passwordConfirm.length === 0
-        ) {
+        if (email.length === 0 || password.length === 0 || passwordConfirm.length === 0) {
             setInputValidation(true)
             MyToast(toast, 'Preencha todos os campos!', 'error')
             setLoading(false)
@@ -54,11 +50,7 @@ export default function Login() {
             password.length < 6 ||
             passwordConfirm.length < 6
         ) {
-            MyToast(
-                toast,
-                'A senha deve ter pelo menos 6 caracteres!',
-                'error'
-            )
+            MyToast(toast, 'A senha deve ter pelo menos 6 caracteres!', 'error')
             setLoading(false)
             return
         } else if (password === passwordConfirm) {
@@ -67,10 +59,7 @@ export default function Login() {
                 await createUser(email, password)
                 navigate('/')
             } catch (err) {
-                if (
-                    err.message ===
-                    'Firebase: Error (auth/email-already-in-use).'
-                )
+                if (err.message === 'Firebase: Error (auth/email-already-in-use).')
                     MyToast(toast, 'Email ou senha inválidos!', 'error')
             } finally {
                 setLoading(false)
@@ -90,12 +79,7 @@ export default function Login() {
             bgRepeat="no-repeat"
             bgSize="cover"
         >
-            <Center
-                w="25%"
-                minW="300px"
-                h="100vh"
-                flexDirection="column"
-            >
+            <Center w="25%" minW="300px" h="100vh" flexDirection="column">
                 <Stack
                     direction="row"
                     alignItems="center"
@@ -122,6 +106,7 @@ export default function Login() {
                 >
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <Input
+                        isDisabled={loading}
                         id="email"
                         type="email"
                         placeholder="Digite seu Email"
@@ -133,10 +118,9 @@ export default function Login() {
                         }}
                         value={email}
                     />
-                    <FormLabel htmlFor="senha">
-                        Crie uma senha:
-                    </FormLabel>
+                    <FormLabel htmlFor="senha">Crie uma senha:</FormLabel>
                     <PasswordInput
+                        isDisabled={loading}
                         id="senha"
                         placeholder="Digite sua senha"
                         onChange={(e) => {
@@ -149,6 +133,7 @@ export default function Login() {
                         Confirme a sua senha:
                     </FormLabel>
                     <PasswordInput
+                        isDisabled={loading}
                         id="confirmaçãoSenha"
                         placeholder="Digite sua senha novamente"
                         onChange={(e) => {
