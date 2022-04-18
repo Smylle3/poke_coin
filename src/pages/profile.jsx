@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {
+    Avatar,
     Box,
     Button,
     Flex,
@@ -7,7 +8,6 @@ import {
     FormLabel,
     Heading,
     IconButton,
-    Image,
     Input,
     Text,
     Textarea,
@@ -109,13 +109,14 @@ const Profile = () => {
                     bg="defaultColor.500"
                     padding={10}
                 >
-                    <Image
+                    <Box>
+                    <Avatar
                         borderRadius="full"
                         boxSize="200px"
                         src={user.photoURL}
                         alt={user.displayName}
                         margin="0px 0px 30px 0px"
-                    />
+                    /></Box>
                     {editPhoto ? (
                         <Flex
                             w="100%"
@@ -227,7 +228,7 @@ const Profile = () => {
                                 variant="ghost"
                                 arial-label="Edit"
                                 colorScheme="whiteAlpha"
-                                icon={<BiEditAlt color='white' />}
+                                icon={<BiEditAlt color="white" />}
                                 onClick={() => setEditProfile(true)}
                             />
                         </Flex>
