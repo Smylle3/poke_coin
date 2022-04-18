@@ -11,7 +11,9 @@ import {
     signOut,
     onAuthStateChanged,
     signInWithPopup,
-    updateProfile
+    updateProfile,
+    sendEmailVerification,
+    getAuth
 } from 'firebase/auth'
 import {
     auth,
@@ -25,6 +27,7 @@ export const AuthContext = createContext({})
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
     const [providerUser, setProviderUser] = useState(null)
+    const authUser = getAuth();
 
     const [pokemonList, setPokemonList] = useState([])
     const [pokemonHistory, setPokemonHistory] = useState([])
@@ -62,7 +65,9 @@ export const AuthProvider = (props) => {
     const loginWithTwitter = () => {
         return signInWithPopup(auth, twitterProvider)
     }
-
+    const emailVerification = () => {
+        return sendEmailVerification(authUser.currentUser)
+    }
     const logOut = () => {
         return signOut(auth)
     }
@@ -80,24 +85,25 @@ export const AuthProvider = (props) => {
     return (
         <AuthContext.Provider
             value={{
-                pokemonList,
-                setPokemonList,
-                bitcoinValue,
-                setBitcointValue,
-                pokemonName,
-                setPokemonName,
-                pokemonHistory,
-                setPokemonHistory,
-                createUser,
                 user,
                 providerUser,
-                logOut,
+                pokemonName,
+                pokemonList,
+                pokemonHistory,
+                bitcoinValue,
+                setPokemonName,
+                setPokemonList,
+                setPokemonHistory,
+                setBitcointValue,
+                createUser,
                 logIn,
                 loginWithGoogle,
                 loginWithGitHub,
                 loginWithTwitter,
                 updateUser,
-                updateAvatar
+                updateAvatar,
+                emailVerification,
+                logOut,
             }}
         >
             {props.children}
