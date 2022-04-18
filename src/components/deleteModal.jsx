@@ -6,12 +6,14 @@ import {
     ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton,
     Button,
-    Link
+    FormControl,
+    FormLabel,
+    Input
 } from '@chakra-ui/react'
-import { ImGithub, ImLinkedin2 } from 'react-icons/im'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
+import { RiDeleteBin2Line } from 'react-icons/ri'
+import PasswordInput from './passwordInput'
 
 const DeleteModal = (props) => {
     return (
@@ -25,31 +27,33 @@ const DeleteModal = (props) => {
                 bg="blackAlpha.500"
                 backdropFilter="blur(10px) hue-rotate(0deg)"
             />
-            <ModalContent>
-                <ModalHeader>Sobre Desenvolvedor</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody></ModalBody>
-                <ModalFooter justifyContent="space-between">
-                    <Link
-                        href="https://www.linkedin.com/in/jo%C3%A3o-pedro-smylle/"
-                        isExternal
+            <ModalContent border="3px solid red" bg="red.200" color="red.900">
+                <ModalHeader>Tem certeza que deseja DELETAR sua conta?</ModalHeader>
+                <ModalBody>
+                    <FormControl mt={4}>
+                        <FormLabel>Digite sua senha:</FormLabel>
+                        <PasswordInput
+                            isInvalid
+                            errorBorderColor="red.900"
+                        />
+                    </FormControl>
+                </ModalBody>
+                <ModalFooter flexDirection="column">
+                    <Button
+                        colorScheme="red"
+                        leftIcon={<RiDeleteBin2Line />}
+                        w="90%"
+                        margin={2}
                     >
-                        <Button leftIcon={<ImLinkedin2 />} colorScheme="linkedin">
-                            Perfil LinkedIn
-                        </Button>
-                    </Link>
-                    <Link href="https://github.com/Smylle3/poke_coin" isExternal>
-                        <Button leftIcon={<ImGithub />} colorScheme="blackAlpha">
-                            Rep Git
-                        </Button>
-                    </Link>
+                        Deletar conta
+                    </Button>
                     <Button
                         leftIcon={<IoIosCloseCircleOutline />}
-                        colorScheme="red"
-                        mr={3}
+                        colorScheme="green"
                         onClick={props.onClose}
+                        w="90%"
                     >
-                        Fechar
+                        Cancelar
                     </Button>
                 </ModalFooter>
             </ModalContent>
