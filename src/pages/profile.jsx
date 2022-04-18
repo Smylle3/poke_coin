@@ -30,8 +30,7 @@ const Profile = () => {
         updateAvatar,
         emailVerification,
         changePassword,
-        logIn,
-        deleteAccount
+        logIn
     } = useAuth()
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
@@ -117,14 +116,6 @@ const Profile = () => {
         setPassword('')
         setPasswordConfirm('')
         setLoading(false)
-    }
-
-    const deleteUser = async () => {
-        try {
-            await deleteAccount()
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     return (
