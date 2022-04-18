@@ -8,6 +8,7 @@ const PasswordInput = (props) => {
     return (
         <InputGroup>
             <Input
+                isDisabled = {props.isDisabled}
                 type={show ? 'text' : 'password'}
                 id={props.id}
                 placeholder={props.placeholder}
