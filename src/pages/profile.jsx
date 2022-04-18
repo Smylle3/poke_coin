@@ -22,7 +22,7 @@ import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
 
 const Profile = () => {
-    const { user, providerUser, updateAvatar } = useAuth()
+    const { user, providerUser, updateAvatar, emailVerification } = useAuth()
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
     const [editProfile, setEditProfile] = useState(null)
@@ -64,6 +64,15 @@ const Profile = () => {
             setEditPhoto(null)
         } catch (error) {
             console.log(error)
+            MyToast(toast, 'Algo deu errado, tente novamente!', 'error')
+        }
+    }
+
+    const sendEmailVerify = async () => {
+        try {
+            await emailVerification()
+            MyToast(toast, 'Enviamos o email de verificação!', 'success')
+        } catch (error) {
             MyToast(toast, 'Algo deu errado, tente novamente!', 'error')
         }
     }
@@ -110,13 +119,14 @@ const Profile = () => {
                     padding={10}
                 >
                     <Box>
-                    <Avatar
-                        borderRadius="full"
-                        boxSize="200px"
-                        src={user.photoURL}
-                        alt={user.displayName}
-                        margin="0px 0px 30px 0px"
-                    /></Box>
+                        <Avatar
+                            borderRadius="full"
+                            boxSize="200px"
+                            src={user.photoURL}
+                            alt={user.displayName}
+                            margin="0px 0px 30px 0px"
+                        />
+                    </Box>
                     {editPhoto ? (
                         <Flex
                             w="100%"
@@ -237,9 +247,13 @@ const Profile = () => {
                     {user.emailVerified ? (
                         <Text color="green.400">{user.email}</Text>
                     ) : (
-                        <Text color="red.400">
-                            {user.email} (Seu email não foi verificado!)
-                        </Text>
+                        <Box>
+                            <Text color="red.400">{user.email}</Text>
+                            <Text color="red.400">(Seu email não foi verificado!)</Text>
+                            <Button onClick={() => sendEmailVerify()} colorScheme="green" size="xs">
+                                Clique aqui para verificar!
+                            </Button>
+                        </Box>
                     )}
 
                     <Textarea
