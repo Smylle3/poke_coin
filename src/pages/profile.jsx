@@ -36,7 +36,9 @@ const Profile = () => {
     const toast = useToast()
 
     const KeyDown = (event, isUpdate) => {
-        if (event === 'Enter' || event === 'NumpadEnter') {
+        if ((event === 'Enter' || event === 'NumpadEnter') && isUpdate === 'password') {
+            changePass()
+        } else if (event === 'Enter' || event === 'NumpadEnter') {
             updateProfile(isUpdate)
         } else if (event === 'Escape' && user.displayName) {
             setEditProfile(null)
@@ -236,7 +238,7 @@ const Profile = () => {
                                 colorScheme="pink"
                                 arial-label="Erease"
                                 icon={<MdOutlineClear />}
-                                onClick={() => {
+                                onClick={(e) => {
                                     KeyDown('Escape')
                                 }}
                             />
@@ -289,7 +291,12 @@ const Profile = () => {
                     >
                         <Heading>Danger Zone</Heading>
                         {providerUser === 'password' ? (
-                            <FormControl onKeyDown={(e) => {}} marginTop="15px">
+                            <FormControl
+                                onKeyDown={(e) => {
+                                    KeyDown(e.code, 'password')
+                                }}
+                                marginTop="15px"
+                            >
                                 <FormLabel htmlFor="senhaAntiga">
                                     Digite a senha atual
                                 </FormLabel>
