@@ -1,10 +1,5 @@
 import { SearchBitcoin } from 'functions/searchBitcoin'
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useState
-} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -14,21 +9,17 @@ import {
     updateProfile,
     sendEmailVerification,
     updatePassword,
-    getAuth
+    getAuth,
+    deleteUser
 } from 'firebase/auth'
-import {
-    auth,
-    googleProvider,
-    gitProvider,
-    twitterProvider
-} from 'config/firebaseConfig'
+import { auth, googleProvider, gitProvider, twitterProvider } from 'config/firebaseConfig'
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
     const [providerUser, setProviderUser] = useState(null)
-    const authUser = getAuth();
+    const authUser = getAuth()
 
     const [pokemonList, setPokemonList] = useState([])
     const [pokemonHistory, setPokemonHistory] = useState([])
@@ -75,6 +66,9 @@ export const AuthProvider = (props) => {
     const logOut = () => {
         return signOut(auth)
     }
+    const deleteAccount = () => {
+        return deleteUser(user)
+    }
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
@@ -109,6 +103,7 @@ export const AuthProvider = (props) => {
                 emailVerification,
                 changePassword,
                 logOut,
+                deleteAccount
             }}
         >
             {props.children}
