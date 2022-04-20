@@ -7,52 +7,47 @@ import {
     ModalFooter,
     ModalBody,
     Button,
-    FormControl,
-    FormLabel,
-    useToast,
-    Input
+    useToast
 } from '@chakra-ui/react'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
 import { RiDeleteBin2Line } from 'react-icons/ri'
-import PasswordInput from './passwordInput'
-import deleteUser from 'functions/deleteUser'
+import { ImExit } from 'react-icons/im'
 import { useAuth } from 'context/authContext'
 import MyToast from './myToast'
+import deleteUser from 'functions/deleteUser'
 
 const DeleteModal = (props) => {
-    const { deleteAccount, logIn, user, providerUser } = useAuth()
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
+    const { logOut, deleteAccount } = useAuth()
     const [loading, setLoading] = useState(false)
     const toast = useToast()
 
-    const handleDelete = async () => {
+    const handleDelete = async (value) => {
         setLoading(true)
-        if (providerUser === 'password') {
+        if (value === 0) {
             try {
-                await logIn(user.email, password)
-                const deleteState = await deleteUser(deleteAccount)
-                if (deleteState === 'success')
-                    MyToast(toast, 'Conta deletada com sucesso!', 'success')
-                else if (deleteState === 'error')
-                    MyToast(toast, 'Erro ao deletar sua conta!', 'error')
+                await logOut()
+                MyToast(
+                    toast,
+                    'Agora faça login na sua conta novamente para deletar sua conta!',
+                    'success'
+                )
             } catch (error) {
-                MyToast(toast, 'Senha incorreta, tente novamente!', 'error')
+                MyToast(toast, 'Algo deu errado ao deslogar!', 'error')
             }
-        } else {
-            if (email === user.email) {
-                const deleteState = await deleteUser(deleteAccount)
-                if (deleteState === 'success')
-                    MyToast(toast, 'Conta deletada com sucesso!', 'success')
-                else if (deleteState === 'error')
-                    MyToast(toast, 'Erro ao deletar sua conta!', 'error')
-            } else {
-                MyToast(toast, 'Email incorreto, tente novamente!', 'error')
+        } else if (value === 1) {
+            try {
+                await deleteUser(deleteAccount)
+                MyToast(toast, 'Conta deletada com sucesso!', 'success')
+            } catch (error) {
+                console.log(error)
+                MyToast(
+                    toast,
+                    'Algo deu errado ao deletar sua conta, tente refazer o login!',
+                    'error'
+                )
             }
         }
         setLoading(false)
-        setEmail('')
-        setPassword('')
     }
 
     return (
@@ -69,46 +64,29 @@ const DeleteModal = (props) => {
             <ModalContent border="3px solid red" bg="red.100" color="red.900">
                 <ModalHeader>Tem certeza que deseja DELETAR sua conta?</ModalHeader>
                 <ModalBody>
-                    {providerUser === 'password' ? (
-                        <FormControl>
-                            <FormLabel htmlFor="pass">
-                                Para deletar, digite sua senha:
-                            </FormLabel>
-                            <PasswordInput
-                                isDisabled={loading}
-                                isInvalid
-                                errorBorderColor="red.900"
-                                id="pass"
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                            />
-                        </FormControl>
-                    ) : (
-                        <FormControl>
-                            <FormLabel htmlFor="email">
-                                Para deletar, digite seu email:
-                            </FormLabel>
-                            <Input
-                                isDisabled={loading}
-                                isInvalid
-                                errorBorderColor="red.900"
-                                id="email"
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                            />
-                        </FormControl>
-                    )}
+                    Caso não seja possivel deletar sua conta, refaça o login e tente
+                    novamente!
                 </ModalBody>
                 <ModalFooter flexDirection="column">
+                    <Button
+                        isLoading={loading}
+                        colorScheme="yellow"
+                        leftIcon={<ImExit />}
+                        w="100%"
+                        marginBottom={2}
+                        onClick={() => handleDelete(0)}
+                    >
+                        Refaça login
+                    </Button>
                     <Button
                         isLoading={loading}
                         colorScheme="red"
                         leftIcon={<RiDeleteBin2Line />}
                         w="100%"
                         marginBottom={2}
-                        onClick={() => handleDelete()}
+                        onClick={() => handleDelete(1)}
                     >
-                        Deletar conta
+                        Clique para deletar sua conta
                     </Button>
                     <Button
                         isLoading={loading}

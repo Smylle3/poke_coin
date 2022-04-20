@@ -29,31 +29,25 @@ export const AuthProvider = (props) => {
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
-
     const updateUser = (userName) => {
         return updateProfile(auth.currentUser, {
             displayName: userName
         })
     }
-
     const updateAvatar = (photoUrl) => {
         return updateProfile(auth.currentUser, {
             photoURL: photoUrl
         })
     }
-
     const logIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
-
     const loginWithGoogle = () => {
         return signInWithPopup(auth, googleProvider)
     }
-
     const loginWithGitHub = () => {
         return signInWithPopup(auth, gitProvider)
     }
-
     const loginWithTwitter = () => {
         return signInWithPopup(auth, twitterProvider)
     }
@@ -72,7 +66,9 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
-            setProviderUser(currentUser.providerData[0].providerId)
+            currentUser
+                ? setProviderUser(currentUser.providerData[0].providerId)
+                : setProviderUser(null)
             SearchBitcoin(setBitcointValue)
         })
         return () => {

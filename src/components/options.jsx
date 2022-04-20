@@ -23,7 +23,7 @@ import {
 } from 'react-icons/im'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { FaUserEdit } from 'react-icons/fa'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AboutUs from './aboutUs'
 
 function Options(props) {
@@ -32,7 +32,6 @@ function Options(props) {
     const handleLogOut = async () => {
         try {
             await props.logOut()
-            Navigate('/login')
         } catch (error) {
             console.log(error.message)
         }
