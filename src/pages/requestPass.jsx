@@ -7,16 +7,19 @@ import {
     Heading,
     Image,
     Input,
-    Stack
+    Stack,
+    useToast
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import { useAuth } from 'context/authContext'
+import MyToast from 'components/myToast'
 
 function RequestPass() {
     const { passRecovery } = useAuth()
+    const toast = useToast()
 
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
@@ -25,7 +28,9 @@ function RequestPass() {
         setLoading(true)
         try {
             await passRecovery(email)
+            MyToast(toast, 'Email enviado!', 'success')
         } catch (error) {
+            MyToast(toast, 'Erro ao enviar email!', 'error')
         }
         setEmail('')
         setLoading(false)
