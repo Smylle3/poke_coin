@@ -191,7 +191,7 @@ export default function Login() {
                         variant="outline"
                         colorScheme="whiteAlpha"
                     >
-                        <Link to={'/cadastro'}>ESQUECI A SENHA</Link>
+                        <Link to={'/password-recovery'}>ESQUECI A SENHA</Link>
                     </Button>
                 </FormControl>
             </Center>
