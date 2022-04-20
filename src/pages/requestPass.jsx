@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
     Button,
     Center,
@@ -8,14 +9,19 @@ import {
     Input,
     Stack
 } from '@chakra-ui/react'
-import React from 'react'
+import { Link } from 'react-router-dom'
 
 import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
-import PasswordInput from 'components/passwordInput'
-import { Link } from 'react-router-dom'
 
 function RequestPass() {
+    const [email, setEmail] = useState('')
+
+    const passRecovery = () => {
+        console.log(email)
+        setEmail('')
+    }
+
     return (
         <Center
             bg="defaultColor.500"
@@ -56,8 +62,15 @@ function RequestPass() {
                         margin="0px 0px 20px 0px"
                         bg="transparent"
                         color="defaultColor.400"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                     />
-                    <Button w="100%" margin="20px 0px 0px 0px" colorScheme="green">
+                    <Button
+                        w="100%"
+                        margin="20px 0px 0px 0px"
+                        colorScheme="green"
+                        onClick={() => passRecovery()}
+                    >
                         ENVIAR EMAIL DE RECUPERAÇÃO
                     </Button>
                     <Link to={'/login'}>
