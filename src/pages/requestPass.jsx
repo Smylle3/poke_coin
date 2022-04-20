@@ -5,15 +5,11 @@ import {
     FormControl,
     FormLabel,
     Heading,
-    Image,
     Input,
-    Stack,
     useToast
 } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
-import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
-import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import backGroundImage from 'assets/backGroundImage3.jpg'
 import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
@@ -55,7 +51,7 @@ function RequestPass() {
             <Center w="25%" minW="300px" h="100vh" flexDirection="column">
                 <FormControl
                     color="defaultColor.400"
-                    bg="defaultColor.500"
+                    bg="rgba(34, 34, 36, 0.9)"
                     w="100%"
                     padding={5}
                     borderRadius={10}
