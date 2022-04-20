@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 
 import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
+import backGroundImage from 'assets/backGroundImage3.jpg'
 import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
 
@@ -46,30 +47,19 @@ function RequestPass() {
             w="full"
             h="100vh"
             justify="end"
+            bgImage={backGroundImage}
             bgPosition="center"
             bgRepeat="no-repeat"
             bgSize="cover"
         >
             <Center w="25%" minW="300px" h="100vh" flexDirection="column">
-                <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="center"
-                    margin={10}
-                >
-                    <Image h={75} alt="Pokemon" src={pokemonLogo} />
-                    <Image h={65} alt="Bitcoin" src={bitcoinLogo} />
-                </Stack>
-                <Heading color="defaultColor.400" fontFamily="body">
-                    RECUPERAR SENHA
-                </Heading>
                 <FormControl
                     color="defaultColor.400"
                     bg="defaultColor.500"
                     w="100%"
                     padding={5}
                     borderRadius={10}
-                    margin="20px 0px 0px 0px"
+                    margin="0px 0px 20px 0px"
                     border="2px solid White"
                 >
                     <FormLabel htmlFor="email">Email:</FormLabel>
@@ -105,6 +95,9 @@ function RequestPass() {
                         </Button>
                     </Link>
                 </FormControl>
+                <Heading color="defaultColor.400" fontFamily="body">
+                    RECUPERAR SENHA
+                </Heading>
             </Center>
         </Center>
     )
