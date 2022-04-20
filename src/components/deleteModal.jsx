@@ -62,35 +62,6 @@ const DeleteModal = (props) => {
                 <ModalBody>
                     Caso não seja possivel deletar sua conta, refaça o login e tente
                     novamente!
-                    {/*{providerUser === 'password' ? (
-                        <FormControl>
-                            <FormLabel htmlFor="pass">
-                                Para deletar, digite sua senha:
-                            </FormLabel>
-                            <PasswordInput
-                                isDisabled={loading}
-                                isInvalid
-                                errorBorderColor="red.900"
-                                id="pass"
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                            />
-                        </FormControl>
-                    ) : (
-                        <FormControl>
-                            <FormLabel htmlFor="email">
-                                Para deletar, digite seu email:
-                            </FormLabel>
-                            <Input
-                                isDisabled={loading}
-                                isInvalid
-                                errorBorderColor="red.900"
-                                id="email"
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                            />
-                        </FormControl>
-                    )}*/}
                 </ModalBody>
                 <ModalFooter flexDirection="column">
                     <Button
