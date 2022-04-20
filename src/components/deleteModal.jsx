@@ -40,7 +40,7 @@ const DeleteModal = (props) => {
                 MyToast(toast, 'Conta deletada com sucesso!', 'success')
             } catch (error) {
                 console.log(error)
-                MyToast(toast, 'Algo deu errado ao deletar sua conta!', 'error')
+                MyToast(toast, 'Algo deu errado ao deletar sua conta, tente refazer o login!', 'error')
             }
         }
         setLoading(false)
