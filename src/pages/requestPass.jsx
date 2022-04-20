@@ -16,8 +16,10 @@ import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 
 function RequestPass() {
     const [email, setEmail] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const passRecovery = () => {
+        setLoading(true)
         console.log(email)
         setEmail('')
     }
@@ -56,6 +58,7 @@ function RequestPass() {
                 >
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <Input
+                        isDisabled={loading}
                         id="email"
                         type="email"
                         placeholder="Digite seu email"
@@ -66,6 +69,7 @@ function RequestPass() {
                         value={email}
                     />
                     <Button
+                        isLoading={loading}
                         w="100%"
                         margin="20px 0px 0px 0px"
                         colorScheme="green"
@@ -75,6 +79,7 @@ function RequestPass() {
                     </Button>
                     <Link to={'/login'}>
                         <Button
+                            isLoading={loading}
                             w="100%"
                             variant="outline"
                             colorScheme="whiteAlpha"
