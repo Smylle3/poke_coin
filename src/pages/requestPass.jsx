@@ -13,15 +13,22 @@ import { Link } from 'react-router-dom'
 
 import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
+import { useAuth } from 'context/authContext'
 
 function RequestPass() {
+    const { passRecovery } = useAuth()
+
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const passRecovery = () => {
+    const handleRecovery = async () => {
         setLoading(true)
-        console.log(email)
+        try {
+            await passRecovery(email)
+        } catch (error) {
+        }
         setEmail('')
+        setLoading(false)
     }
 
     return (
@@ -73,7 +80,7 @@ function RequestPass() {
                         w="100%"
                         margin="20px 0px 0px 0px"
                         colorScheme="green"
-                        onClick={() => passRecovery()}
+                        onClick={() => handleRecovery()}
                     >
                         ENVIAR EMAIL DE RECUPERAÇÃO
                     </Button>
