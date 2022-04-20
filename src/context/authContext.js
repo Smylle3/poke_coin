@@ -10,7 +10,8 @@ import {
     sendEmailVerification,
     updatePassword,
     getAuth,
-    deleteUser
+    deleteUser,
+    sendPasswordResetEmail
 } from 'firebase/auth'
 import { auth, googleProvider, gitProvider, twitterProvider } from 'config/firebaseConfig'
 
@@ -63,6 +64,9 @@ export const AuthProvider = (props) => {
     const deleteAccount = () => {
         return deleteUser(user)
     }
+    const passRecovery = (email) => {
+        return sendPasswordResetEmail(authUser, email)
+    }
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
@@ -99,7 +103,8 @@ export const AuthProvider = (props) => {
                 emailVerification,
                 changePassword,
                 logOut,
-                deleteAccount
+                deleteAccount,
+                passRecovery
             }}
         >
             {props.children}

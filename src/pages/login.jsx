@@ -184,15 +184,17 @@ export default function Login() {
                             CADASTRAR
                         </Button>
                     </Link>
-                    <Button
-                        isLoading={loading}
-                        w="100%"
-                        margin="10px 0px"
-                        variant="outline"
-                        colorScheme="whiteAlpha"
-                    >
-                        <Link to={'/cadastro'}>ESQUECI A SENHA</Link>
-                    </Button>
+                    <Link to={'/password-recovery'}>
+                        <Button
+                            isLoading={loading}
+                            w="100%"
+                            margin="10px 0px"
+                            variant="outline"
+                            colorScheme="whiteAlpha"
+                        >
+                            ESQUECI A SENHA
+                        </Button>
+                    </Link>
                 </FormControl>
             </Center>
         </Flex>

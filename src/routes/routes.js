@@ -5,6 +5,7 @@ import Home from 'pages/home'
 import Login from 'pages/login'
 import SignUp from 'pages/cadastro'
 import Profile from 'pages/profile'
+import RequestPass from 'pages/requestPass'
 import ProtectedRoutes from './protectedRoutes'
 
 function AppRoutes() {
@@ -29,6 +30,7 @@ function AppRoutes() {
                     }
                 />
                 <Route path="/login" element={<Login />} />
+                <Route path="/password-recovery" element={<RequestPass />} />
                 <Route path="/cadastro" element={<SignUp />} />
             </Routes>
         </BrowserRouter>
