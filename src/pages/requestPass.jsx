@@ -26,11 +26,15 @@ function RequestPass() {
 
     const handleRecovery = async () => {
         setLoading(true)
-        try {
-            await passRecovery(email)
-            MyToast(toast, 'Email enviado!', 'success')
-        } catch (error) {
-            MyToast(toast, 'Erro ao enviar email!', 'error')
+        if (email.length === 0) {
+            MyToast(toast, 'Digite seu email!', 'error')
+        } else {
+            try {
+                await passRecovery(email)
+                MyToast(toast, 'Email enviado!', 'success')
+            } catch (error) {
+                MyToast(toast, 'Erro ao enviar email!', 'error')
+            }
         }
         setEmail('')
         setLoading(false)
