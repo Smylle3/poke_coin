@@ -43,28 +43,6 @@ const DeleteModal = (props) => {
                 MyToast(toast, 'Algo deu errado ao deletar sua conta!', 'error')
             }
         }
-        //if (providerUser === 'password') {
-        //    try {
-        //        await logIn(user.email, password)
-        //        const deleteState = await deleteUser(reauthenticUser)
-        //        if (deleteState === 'success')
-        //            MyToast(toast, 'Conta deletada com sucesso!', 'success')
-        //        else if (deleteState === 'error')
-        //            MyToast(toast, 'Erro ao deletar sua conta!', 'error')
-        //    } catch (error) {
-        //        MyToast(toast, 'Senha incorreta, tente novamente!', 'error')
-        //    }
-        //} else {
-        //    if (email === user.email) {
-        //        const deleteState = await deleteUser(deleteAccount)
-        //        if (deleteState === 'success')
-        //            MyToast(toast, 'Conta deletada com sucesso!', 'success')
-        //        else if (deleteState === 'error')
-        //            MyToast(toast, 'Erro ao deletar sua conta!', 'error')
-        //    } else {
-        //        MyToast(toast, 'Email incorreto, tente novamente!', 'error')
-        //    }
-        //}
         setLoading(false)
     }
 
