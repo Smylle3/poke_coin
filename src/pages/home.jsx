@@ -22,19 +22,14 @@ import Header from 'components/header'
 import MyToast from 'components/myToast'
 
 export default function Home() {
-    const {
-        setPokemonList,
-        pokemonName,
-        setPokemonName,
-        setPokemonHistory
-    } = useAuth()
+    const { setPokemonList, pokemonName, setPokemonName, setPokemonHistory } = useAuth()
     const isError = pokemonName === ''
     const toast = useToast()
 
     function keyboardKey(event) {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
             if (pokemonName.length === 0) {
-                MyToast(toast, "Digite o nome do pokemon!", "error")
+                MyToast(toast, 'Digite o nome do pokemon!', 'error')
             } else buyPokemon(event)
         }
     }
@@ -76,10 +71,7 @@ export default function Home() {
                         flexDirection="column"
                         margin="40px 0px"
                     >
-                        <FormLabel
-                            htmlFor="pokename"
-                            color="defaultColor.400"
-                        >
+                        <FormLabel htmlFor="pokename" color="defaultColor.400">
                             Comprar pokemon
                         </FormLabel>
                         <InputGroup
@@ -89,9 +81,7 @@ export default function Home() {
                         >
                             <Input
                                 textTransform="lowercase"
-                                onChange={(e) =>
-                                    setPokemonName(e.target.value)
-                                }
+                                onChange={(e) => setPokemonName(e.target.value)}
                                 value={pokemonName}
                                 bg="defaultColor.400"
                                 placeholder="Digite o nome do pokemon que deseja comprar."
@@ -101,12 +91,7 @@ export default function Home() {
                             />
                             <InputRightElement>
                                 <IconButton
-                                    icon={
-                                        <FaBackspace
-                                            color="red"
-                                            size={25}
-                                        />
-                                    }
+                                    icon={<FaBackspace color="red" size={25} />}
                                     onClick={() => setPokemonName('')}
                                 />
                             </InputRightElement>
@@ -125,12 +110,7 @@ export default function Home() {
                     <a href="#orders">
                         <IconButton
                             colorScheme="red"
-                            icon={
-                                <FaArrowCircleDown
-                                    size={40}
-                                    color="#f0f0f0"
-                                />
-                            }
+                            icon={<FaArrowCircleDown size={40} color="#f0f0f0" />}
                             isRound
                             display={{ md: 'none' }}
                         />
