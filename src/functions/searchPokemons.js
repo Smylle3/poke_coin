@@ -44,7 +44,7 @@ const SearchPokemons = (
                 status: 'error',
                 isClosable: true,
                 duration: 3000,
-                position: "top-right"
+                position: 'top-right'
             })
         })
 }
