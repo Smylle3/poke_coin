@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Image } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from 'context/authContext'
@@ -37,13 +37,8 @@ export default function Header() {
                     </Flex>
                 </Link>
             </Flex>
-            <Text>Olá {user.displayName}!</Text>
             <Flex padding="0px 10px 0px 0px">
-                <Options
-                    isMobile={isMobile}
-                    user={user}
-                    logOut={logOut}
-                />
+                <Options isMobile={isMobile} user={user} logOut={logOut} />
             </Flex>
         </Box>
     )

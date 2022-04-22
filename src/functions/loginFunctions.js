@@ -1,11 +1,6 @@
 import MyToast from 'components/myToast'
 
-const logInGitHub = async (
-    setLoading,
-    setError,
-    navigate,
-    loginWithGitHub
-) => {
+const logInGitHub = async (setLoading, setError, navigate, loginWithGitHub) => {
     try {
         await loginWithGitHub()
         navigate('/')
@@ -17,12 +12,7 @@ const logInGitHub = async (
     }
 }
 
-const logInTwitter = async (
-    setLoading,
-    setError,
-    navigate,
-    loginWithTwitter
-) => {
+const logInTwitter = async (setLoading, setError, navigate, loginWithTwitter) => {
     try {
         await loginWithTwitter()
         navigate('/')
@@ -34,12 +24,7 @@ const logInTwitter = async (
     }
 }
 
-const logInGoogle = async (
-    setLoading,
-    setError,
-    navigate,
-    loginWithGoogle
-) => {
+const logInGoogle = async (setLoading, setError, navigate, loginWithGoogle) => {
     try {
         await loginWithGoogle()
         navigate('/')

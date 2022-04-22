@@ -1,5 +1,11 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, GithubAuthProvider, TwitterAuthProvider } from "firebase/auth";
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from "firebase/firestore";
+import {
+    getAuth,
+    GoogleAuthProvider,
+    GithubAuthProvider,
+    TwitterAuthProvider
+} from 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -12,10 +18,10 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app)
+const auth = getAuth(app)
+const googleProvider = new GoogleAuthProvider()
 const gitProvider = new GithubAuthProvider()
 const twitterProvider = new TwitterAuthProvider()
 
-export {auth, googleProvider, gitProvider, twitterProvider}
-export default app
+export { auth, googleProvider, gitProvider, twitterProvider, app, db }

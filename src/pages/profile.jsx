@@ -24,14 +24,8 @@ import MyToast from 'components/myToast'
 import DeleteModal from 'components/deleteModal'
 
 const Profile = () => {
-    const {
-        user,
-        providerUser,
-        updateAvatar,
-        emailVerification,
-        changePassword,
-        logIn
-    } = useAuth()
+    const { user, providerUser, updateAvatar, emailVerification, changePassword, logIn } =
+        useAuth()
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
     const [oldPassword, setOldPassword] = useState('')

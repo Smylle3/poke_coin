@@ -17,7 +17,7 @@ import MyToast from './myToast'
 import deleteUser from 'functions/deleteUser'
 
 const DeleteModal = (props) => {
-    const { logOut, deleteAccount } = useAuth()
+    const { logOut, deleteAccount, deleteData } = useAuth()
     const [loading, setLoading] = useState(false)
     const toast = useToast()
 
@@ -36,7 +36,7 @@ const DeleteModal = (props) => {
             }
         } else if (value === 1) {
             try {
-                await deleteUser(deleteAccount)
+                await deleteUser(deleteAccount, deleteData)
                 MyToast(toast, 'Conta deletada com sucesso!', 'success')
             } catch (error) {
                 console.log(error)

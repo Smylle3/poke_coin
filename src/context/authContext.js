@@ -13,13 +13,22 @@ import {
     deleteUser,
     sendPasswordResetEmail
 } from 'firebase/auth'
-import { auth, googleProvider, gitProvider, twitterProvider } from 'config/firebaseConfig'
+import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
+import {
+    auth,
+    googleProvider,
+    gitProvider,
+    twitterProvider,
+    db
+} from 'config/firebaseConfig'
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
     const [providerUser, setProviderUser] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
     const authUser = getAuth()
 
     const [pokemonList, setPokemonList] = useState([])
@@ -27,6 +36,7 @@ export const AuthProvider = (props) => {
     const [bitcoinValue, setBitcointValue] = useState(0)
     const [pokemonName, setPokemonName] = useState('')
 
+    /*FUNÇÕES REFERENTE AO TRATAMENTO DE USUÁRIOS*/
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
@@ -70,6 +80,11 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
+            if (authUser.currentUser === null) {
+                setIsLogin(false)
+            } else {
+                setIsLogin(true)
+            }
             currentUser
                 ? setProviderUser(currentUser.providerData[0].providerId)
                 : setProviderUser(null)
@@ -78,7 +93,57 @@ export const AuthProvider = (props) => {
         return () => {
             unSubscribe()
         }
-    }, [providerUser])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [providerUser, authUser.currentUser])
+
+    /*FUNÇÕES REFERENTE AO TRATAMENTO DO BANCO DE DADOS*/
+    useEffect(() => {
+        setPokemonList([])
+        setPokemonHistory([])
+        setLoading(true)
+        if (isLogin) {
+            if (user.uid !== undefined) {
+                setLoading(false)
+                getData()
+            } else {
+                setLoading(true)
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLogin])
+
+    useEffect(() => {
+        setData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pokemonList.length])
+
+    const getData = async () => {
+        if (user && user.uid !== undefined) {
+            const userInformations = doc(db, `users/${user.uid}`)
+            const userObject = await getDoc(userInformations)
+            setPokemonList(userObject.data().pokemonsOrders)
+            setPokemonHistory(userObject.data().pokemonsHistory)
+        }
+    }
+
+    const setData = async () => {
+        if (user && user.uid !== undefined) {
+            const userInformations = doc(db, `users/${user.uid}`)
+            const docData = {
+                UserInitialMoney: 0,
+                UserMoney: 0,
+                email: user.email,
+                pokemonsHistory: pokemonHistory,
+                pokemonsOrders: pokemonList,
+                userName: user.displayName
+            }
+            await setDoc(userInformations, docData)
+        }
+    }
+
+    const deleteData = async () => {
+        await deleteDoc(doc(db, 'users', user.uid))
+    }
 
     return (
         <AuthContext.Provider
@@ -104,7 +169,10 @@ export const AuthProvider = (props) => {
                 changePassword,
                 logOut,
                 deleteAccount,
-                passRecovery
+                passRecovery,
+                setData,
+                deleteData,
+                loading
             }}
         >
             {props.children}
