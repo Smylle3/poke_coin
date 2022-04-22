@@ -38,11 +38,7 @@ export default function Header() {
                 </Link>
             </Flex>
             <Flex padding="0px 10px 0px 0px">
-                <Options
-                    isMobile={isMobile}
-                    user={user}
-                    logOut={logOut}
-                />
+                <Options isMobile={isMobile} user={user} logOut={logOut} />
             </Flex>
         </Box>
     )

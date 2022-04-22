@@ -35,16 +35,13 @@ export default function Orders() {
                 padding="20px 10px"
             >
                 <Center marginBottom={5}>
-                    <Heading
-                        fontFamily="heading"
-                        color="defaultColor.500"
-                    >
+                    <Heading fontFamily="heading" color="defaultColor.500">
                         Ordens
                     </Heading>
                     <IconButton
                         onClick={(event) => {
                             SearchBitcoin(setBitcointValue)
-                            MyToast(toast, "Atualizado com sucesso", "success")
+                            MyToast(toast, 'Atualizado com sucesso', 'success')
                         }}
                         isRound
                         colorScheme="green"
@@ -79,11 +76,7 @@ export default function Orders() {
                                 Avatar={pokemon.avatar}
                                 Nome={pokemon.name}
                                 Action={pokemon.action}
-                                Valor={`$ ${(
-                                    pokemon.exp *
-                                    0.000001 *
-                                    bitcoinValue
-                                )
+                                Valor={`$ ${(pokemon.exp * 0.000001 * bitcoinValue)
                                     .toFixed(2)
                                     .replace('.', ',')}`}
                                 Sell="yes"
