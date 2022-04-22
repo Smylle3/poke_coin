@@ -13,11 +13,7 @@ import {
     deleteUser,
     sendPasswordResetEmail
 } from 'firebase/auth'
-import {
-    doc,
-    setDoc,
-    getDoc
-} from 'firebase/firestore'
+import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
 import {
     auth,
     googleProvider,
@@ -39,7 +35,7 @@ export const AuthProvider = (props) => {
     const [bitcoinValue, setBitcointValue] = useState(0)
     const [pokemonName, setPokemonName] = useState('')
 
-    /*FUNÇÕES REFENTE AO TRATAMENTO DE USUÁRIOS*/
+    /*FUNÇÕES REFERENTE AO TRATAMENTO DE USUÁRIOS*/
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
@@ -86,7 +82,6 @@ export const AuthProvider = (props) => {
             currentUser
                 ? setProviderUser(currentUser.providerData[0].providerId)
                 : setProviderUser(null)
-            user.uid ? getData() : setLoading(true)
             SearchBitcoin(setBitcointValue)
         })
         return () => {
@@ -95,25 +90,50 @@ export const AuthProvider = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [providerUser])
 
-    /*FUNÇÕES REFENTE AO TRATAMENTO DO BANCO DE DADOS*/
+    /*FUNÇÕES REFERENTE AO TRATAMENTO DO BANCO DE DADOS*/
+    useEffect(() => {
+        if (user) {
+            if (user.uid !== undefined) {
+                setLoading(false)
+                getData()
+            } else {
+                setLoading(true)
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
+
+    useEffect(() => {
+        setData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pokemonList.length])
+
     const getData = async () => {
-        const userInformations = doc(db, `users/${user.uid}`)
-        const userObject = await getDoc(userInformations)
-        setPokemonList(userObject.data().pokemonsOrders)
-        setPokemonHistory(userObject.data().pokemonsHistory)
+        if (user && user.uid !== undefined) {
+            const userInformations = doc(db, `users/${user.uid}`)
+            const userObject = await getDoc(userInformations)
+            setPokemonList(userObject.data().pokemonsOrders)
+            setPokemonHistory(userObject.data().pokemonsHistory)
+        }
     }
 
     const setData = async () => {
-        const userInformations = doc(db, `users/${user.uid}`)
-        const docData = {
-            UserInitialMoney: 0,
-            UserMoney: 0,
-            email: user.email,
-            pokemonsHistory: pokemonHistory,
-            pokemonsOrders: pokemonList,
-            userName: user.displayName
+        if (user && user.uid !== undefined) {
+            const userInformations = doc(db, `users/${user.uid}`)
+            const docData = {
+                UserInitialMoney: 0,
+                UserMoney: 0,
+                email: user.email,
+                pokemonsHistory: pokemonHistory,
+                pokemonsOrders: pokemonList,
+                userName: user.displayName
+            }
+            await setDoc(userInformations, docData)
         }
-        await setDoc(userInformations, docData)
+    }
+
+    const deleteData = async () => {
+        await deleteDoc(doc(db, 'users', user.uid))
     }
 
     return (
@@ -142,6 +162,7 @@ export const AuthProvider = (props) => {
                 deleteAccount,
                 passRecovery,
                 setData,
+                deleteData,
                 loading
             }}
         >
