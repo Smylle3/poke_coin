@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAuth } from 'context/authContext'
 
 import {
@@ -19,15 +19,10 @@ import AlertSale from './alertDialog'
 import MyToast from './myToast'
 
 export default function Orders() {
-    const { pokemonList, bitcoinValue, setBitcointValue, setData } = useAuth()
+    const { pokemonList, bitcoinValue, setBitcointValue } = useAuth()
     const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [pokeNameSell, setPokeNameSell] = useState('')
-
-    useEffect(() => {
-        setData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pokemonList])
 
     return (
         <>
