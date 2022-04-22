@@ -1,9 +1,14 @@
-const deleteUser = async (deleteAccount) => {
+const deleteUser = async (deleteAccount, deleteData) => {
+    try {
+        await deleteData()
+    } catch (error) {
+        return 'error'
+    }
     try {
         await deleteAccount()
-        return "success"
+        return 'success'
     } catch (error) {
-        return "error"
+        return 'error'
     }
 }
 
