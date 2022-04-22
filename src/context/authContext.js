@@ -28,6 +28,7 @@ export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
     const [providerUser, setProviderUser] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
     const authUser = getAuth()
 
     const [pokemonList, setPokemonList] = useState([])
@@ -79,6 +80,11 @@ export const AuthProvider = (props) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
+            if (authUser.currentUser === null) {
+                setIsLogin(false)
+            } else {
+                setIsLogin(true)
+            }
             currentUser
                 ? setProviderUser(currentUser.providerData[0].providerId)
                 : setProviderUser(null)
@@ -88,11 +94,14 @@ export const AuthProvider = (props) => {
             unSubscribe()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [providerUser])
+    }, [providerUser, authUser.currentUser])
 
     /*FUNÇÕES REFERENTE AO TRATAMENTO DO BANCO DE DADOS*/
     useEffect(() => {
-        if (user) {
+        setPokemonList([])
+        setPokemonHistory([])
+        setLoading(true)
+        if (isLogin) {
             if (user.uid !== undefined) {
                 setLoading(false)
                 getData()
@@ -101,7 +110,7 @@ export const AuthProvider = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user])
+    }, [isLogin])
 
     useEffect(() => {
         setData()
