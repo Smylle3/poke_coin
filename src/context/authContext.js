@@ -21,12 +21,16 @@ import {
     twitterProvider,
     db
 } from 'config/firebaseConfig'
+import FullValue from 'functions/fullValletValue'
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
     const [providerUser, setProviderUser] = useState(null)
+    const [userInitialValue, setUserInitialValue] = useState(0)
+    const [userCurrentValue, setUserCurrentValue] = useState(0)
+    const [valuePokemonsUser, setValuePokemonsUser] = useState(0)
     const [loading, setLoading] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
     const authUser = getAuth()
@@ -35,7 +39,6 @@ export const AuthProvider = (props) => {
     const [pokemonHistory, setPokemonHistory] = useState([])
     const [bitcoinValue, setBitcointValue] = useState(0)
     const [pokemonName, setPokemonName] = useState('')
-
     /*FUNÇÕES REFERENTE AO TRATAMENTO DE USUÁRIOS*/
     const createUser = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -105,6 +108,7 @@ export const AuthProvider = (props) => {
             if (user.uid !== undefined) {
                 setLoading(false)
                 getData()
+                SearchBitcoin(setBitcointValue)
             } else {
                 setLoading(true)
             }
@@ -114,6 +118,7 @@ export const AuthProvider = (props) => {
 
     useEffect(() => {
         setData()
+        FullValue(setValuePokemonsUser, pokemonList, bitcoinValue)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pokemonList.length])
 
@@ -130,8 +135,8 @@ export const AuthProvider = (props) => {
         if (user && user.uid !== undefined) {
             const userInformations = doc(db, `users/${user.uid}`)
             const docData = {
-                UserInitialMoney: 0,
-                UserMoney: 0,
+                UserInitialMoney: userInitialValue,
+                UserMoney: userCurrentValue,
                 email: user.email,
                 pokemonsHistory: pokemonHistory,
                 pokemonsOrders: pokemonList,
@@ -172,7 +177,12 @@ export const AuthProvider = (props) => {
                 passRecovery,
                 setData,
                 deleteData,
-                loading
+                loading,
+                userInitialValue,
+                setUserInitialValue,
+                setValuePokemonsUser,
+                valuePokemonsUser,
+                setUserCurrentValue
             }}
         >
             {props.children}
