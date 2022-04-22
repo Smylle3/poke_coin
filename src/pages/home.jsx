@@ -23,8 +23,14 @@ import MyToast from 'components/myToast'
 import LoadingPage from 'components/loadingPage'
 
 export default function Home() {
-    const { setPokemonList, pokemonName, setPokemonName, setPokemonHistory, loading } =
-        useAuth()
+    const {
+        setPokemonList,
+        pokemonName,
+        setPokemonName,
+        setPokemonHistory,
+        loading,
+        userInitialValue
+    } = useAuth()
     const isError = pokemonName === ''
     const toast = useToast()
 
@@ -37,6 +43,10 @@ export default function Home() {
     }
 
     function buyPokemon(event) {
+        if (userInitialValue === '0,00' || parseFloat(userInitialValue) < 0) {
+            MyToast(toast, 'Adicione uma quantia à sua carteira', 'error')
+            return
+        }
         SearchPokemons(
             event,
             pokemonName,
