@@ -6,9 +6,10 @@ import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import Options from './options'
 import useMobile from 'functions/useMobile'
+import MyPopover from './myPopover/myPopover'
 
 export default function Header() {
-    const { user, logOut } = useAuth()
+    const { user, logOut, valuePokemonsUser } = useAuth()
     const isMobile = useMobile()
 
     return (
@@ -26,7 +27,8 @@ export default function Header() {
             <Flex
                 direction="row"
                 h="100%"
-                w="160px"
+                w="170px"
+                minW="170px"
                 alignItems="center"
                 padding="5px 5px 5px 10px"
             >
@@ -37,7 +39,24 @@ export default function Header() {
                     </Flex>
                 </Link>
             </Flex>
-            <Flex padding="0px 10px 0px 0px">
+            {isMobile ? null : (
+                <Flex
+                    w="30%"
+                    minW="350px"
+                    h="90%"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    borderRadius={7}
+                    border="1px solid #fff"
+                    padding="0px 15px"
+                >
+                    Valor em Pokémons: $ {valuePokemonsUser}
+                    <Flex alignItems="center">
+                        <MyPopover />
+                    </Flex>
+                </Flex>
+            )}
+            <Flex padding="0px 10px 0px 10px">
                 <Options isMobile={isMobile} user={user} logOut={logOut} />
             </Flex>
         </Box>
