@@ -125,10 +125,26 @@ export const AuthProvider = (props) => {
     const getData = async () => {
         if (user && user.uid !== undefined) {
             const userInformations = doc(db, `users/${user.uid}`)
-            const userObject = await getDoc(userInformations)
-            setPokemonList(userObject.data().pokemonsOrders)
-            setPokemonHistory(userObject.data().pokemonsHistory)
-            setUserInitialValue(userObject.data().UserInitialMoney)
+            try {
+                const userObject = await getDoc(userInformations)
+                setPokemonList(userObject.data().pokemonsOrders)
+                setPokemonHistory(userObject.data().pokemonsHistory)
+                setUserInitialValue(userObject.data().UserInitialMoney)
+            } catch (error) {
+                if (error) {
+                    try {
+                        const docData = {
+                            UserInitialMoney: userInitialValue,
+                            UserMoney: userCurrentValue,
+                            email: user.email,
+                            pokemonsHistory: pokemonHistory,
+                            pokemonsOrders: pokemonList,
+                            userName: user.displayName
+                        }
+                        await setDoc(userInformations, docData)
+                    } catch (error2) {}
+                }
+            }
         }
     }
 
@@ -151,9 +167,21 @@ export const AuthProvider = (props) => {
         if (user && user.uid !== undefined) {
             const userInformations = doc(db, `users/${user.uid}`)
             const docData = {
-                UserInitialMoney: userInitialValue
+                UserInitialMoney: userInitialValue,
+                pokemonsHistory: pokemonHistory,
+                pokemonsOrders: pokemonList
             }
-            await updateDoc(userInformations, docData)
+            try {
+                await updateDoc(userInformations, docData)
+            } catch (error) {
+                if (error.code === 'not-found') {
+                    try {
+                        await setDoc(userInformations, docData)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }
         }
     }
 
