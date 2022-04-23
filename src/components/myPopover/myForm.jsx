@@ -4,7 +4,7 @@ import { useAuth } from 'context/authContext'
 import React from 'react'
 import MyInput from './myInput'
 
-function MyForm({ onCancel, setValue }) {
+function MyForm({ onCancel }) {
     const toast = useToast()
     const { setUserInitialValue, userInitialValue, updateData } = useAuth()
 
@@ -13,7 +13,6 @@ function MyForm({ onCancel, setValue }) {
             MyToast(toast, 'Valor inválido', 'error')
             return
         }
-        setValue(userInitialValue)
         updateData()
         onCancel()
     }

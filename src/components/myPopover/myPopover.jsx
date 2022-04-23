@@ -8,18 +8,20 @@ import {
     PopoverTrigger,
     useDisclosure
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React from 'react'
 import MyForm from './myForm'
 import { RiMenuFoldLine } from 'react-icons/ri'
+import { useAuth } from 'context/authContext'
 
 function MyPopover() {
     const { onOpen, onClose, isOpen } = useDisclosure()
-    const [valueProvisory, setValueProvisory] = useState('0,00')
+    const { userInitialValue } = useAuth()
+
 
     return (
         <>
             <Box d="inline-block" mr={3}>
-                $ {valueProvisory}
+                $ {userInitialValue}
             </Box>
             <Popover
                 isOpen={isOpen}
@@ -40,7 +42,7 @@ function MyPopover() {
                 <PopoverContent p={5} bg="defaultColor.500">
                     <PopoverArrow />
                     <PopoverCloseButton />
-                    <MyForm onCancel={onClose} setValue={setValueProvisory} />
+                    <MyForm onCancel={onClose} />
                 </PopoverContent>
             </Popover>
         </>
