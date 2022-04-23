@@ -6,7 +6,7 @@ import MyInput from './myInput'
 
 function MyForm({ onCancel, setValue }) {
     const toast = useToast()
-    const { setUserInitialValue, userInitialValue } = useAuth()
+    const { setUserInitialValue, userInitialValue, updateData } = useAuth()
 
     const validateInicialValue = () => {
         if(userInitialValue === 0 || userInitialValue < 0){
@@ -14,6 +14,7 @@ function MyForm({ onCancel, setValue }) {
             return
         }
         setValue(userInitialValue)
+        updateData()
         onCancel()
     }
 
@@ -26,7 +27,7 @@ function MyForm({ onCancel, setValue }) {
                 onChange = {(e) => setUserInitialValue(e.target.value)}
             />
             <ButtonGroup d="flex" justifyContent="flex-end">
-                <Button variant="outline" onClick={onCancel}>
+                <Button colorScheme="red" onClick={onCancel}>
                     Cancel
                 </Button>
                 <Button onClick={validateInicialValue} colorScheme="green">
