@@ -10,7 +10,6 @@ import {
     IconButton,
     Input,
     InputGroup,
-    InputRightElement,
     useToast
 } from '@chakra-ui/react'
 
@@ -21,6 +20,7 @@ import SearchPokemons from 'functions/searchPokemons'
 import Header from 'components/header'
 import MyToast from 'components/myToast'
 import LoadingPage from 'components/loadingPage'
+import ValueMobilePopover from 'components/ValueMobilePopover/valueMobilePopover'
 
 export default function Home() {
     const {
@@ -111,12 +111,11 @@ export default function Home() {
                                     type="text"
                                     margin="0px 0px 15px 0px"
                                 />
-                                <InputRightElement>
-                                    <IconButton
-                                        icon={<FaBackspace color="red" size={25} />}
-                                        onClick={() => setPokemonName('')}
-                                    />
-                                </InputRightElement>
+                                <IconButton
+                                    zIndex={0}
+                                    icon={<FaBackspace color="red" size={25} />}
+                                    onClick={() => setPokemonName('')}
+                                />
                             </InputGroup>
                             <Button
                                 width="75%"
@@ -147,6 +146,9 @@ export default function Home() {
                         <Orders />
                         <History />
                     </Center>
+                    <Flex position="fixed" bottom={8} right={8}>
+                        <ValueMobilePopover />
+                    </Flex>
                 </Flex>
             )}
         </Flex>
