@@ -6,7 +6,7 @@ import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import Options from './options'
 import useMobile from 'functions/useMobile'
-import MyPopover from './myPopover/myPopover'
+import MyPopover from './ValuePopover/valuePopover'
 
 export default function Header() {
     const { user, logOut, valuePokemonsUser } = useAuth()
@@ -43,7 +43,7 @@ export default function Header() {
                 <Flex
                     w="30%"
                     minW="350px"
-                    h="90%"
+                    h="80%"
                     alignItems="center"
                     justifyContent="space-between"
                     borderRadius={7}

@@ -9,11 +9,11 @@ import {
     useDisclosure
 } from '@chakra-ui/react'
 import React from 'react'
-import MyForm from './myForm'
+import MyForm from './valueForm'
 import { RiMenuFoldLine } from 'react-icons/ri'
 import { useAuth } from 'context/authContext'
 
-function MyPopover() {
+function ValuePopover() {
     const { onOpen, onClose, isOpen } = useDisclosure()
     const { userInitialValue } = useAuth()
 
@@ -49,4 +49,4 @@ function MyPopover() {
     )
 }
 
-export default MyPopover
+export default ValuePopover

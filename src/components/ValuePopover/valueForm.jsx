@@ -2,9 +2,9 @@ import { Button, ButtonGroup, Stack, useToast } from '@chakra-ui/react'
 import MyToast from 'components/myToast'
 import { useAuth } from 'context/authContext'
 import React from 'react'
-import MyInput from './myInput'
+import MyInput from './valueInput'
 
-function MyForm({ onCancel }) {
+function ValueForm({ onCancel }) {
     const toast = useToast()
     const { setUserInitialValue, userInitialValue, updateData } = useAuth()
 
@@ -37,4 +37,4 @@ function MyForm({ onCancel }) {
     )
 }
 
-export default MyForm
+export default ValueForm
