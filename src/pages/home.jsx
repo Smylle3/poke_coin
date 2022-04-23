@@ -81,7 +81,7 @@ export default function Home() {
                         bg="defaultColor.600"
                     >
                         <Heading fontFamily="body" color="defaultColor.400">
-                            PokeCoin
+                            PokéCoin
                         </Heading>
                         <Heading fontFamily="body" color="defaultColor.400">
                             HUB de Negociação
@@ -96,7 +96,7 @@ export default function Home() {
                             margin="40px 0px"
                         >
                             <FormLabel htmlFor="pokename" color="defaultColor.400">
-                                Comprar pokemon
+                                Comprar pokémon
                             </FormLabel>
                             <InputGroup
                                 width="75%"
@@ -108,7 +108,7 @@ export default function Home() {
                                     onChange={(e) => setPokemonName(e.target.value)}
                                     value={pokemonName}
                                     bg="defaultColor.400"
-                                    placeholder="Digite o nome do pokemon que deseja comprar."
+                                    placeholder="Digite o nome do pokémon que deseja comprar."
                                     id="pokename"
                                     type="text"
                                     margin="0px 0px 15px 0px"
