@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from 'context/authContext'
@@ -6,10 +6,10 @@ import pokemonLogo from 'assets/logoImages/pokemonLogo.png'
 import bitcoinLogo from 'assets/logoImages/bitcoinLogo.png'
 import Options from './options'
 import useMobile from 'functions/useMobile'
-import MyPopover from './myPopover/myPopover'
+import ValuePopover from './ValuePopover/valuePopover'
 
 export default function Header() {
-    const { user, logOut, valuePokemonsUser } = useAuth()
+    const { user, logOut, valuePokemonsUser, userInitialValue } = useAuth()
     const isMobile = useMobile()
 
     return (
@@ -39,11 +39,15 @@ export default function Header() {
                     </Flex>
                 </Link>
             </Flex>
-            {isMobile ? null : (
+            {isMobile ? (
+                <Text>
+                    Seu dinheiro: $ {(userInitialValue * 1).toFixed(2).replace('.', ',')}
+                </Text>
+            ) : (
                 <Flex
                     w="30%"
                     minW="350px"
-                    h="90%"
+                    h="80%"
                     alignItems="center"
                     justifyContent="space-between"
                     borderRadius={7}
@@ -52,7 +56,7 @@ export default function Header() {
                 >
                     Valor em Pokémons: $ {valuePokemonsUser}
                     <Flex alignItems="center">
-                        <MyPopover />
+                        <ValuePopover />
                     </Flex>
                 </Flex>
             )}

@@ -13,7 +13,7 @@ import {
     deleteUser,
     sendPasswordResetEmail
 } from 'firebase/auth'
-import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import {
     auth,
     googleProvider,
@@ -21,7 +21,7 @@ import {
     twitterProvider,
     db
 } from 'config/firebaseConfig'
-import FullValue from 'functions/fullValletValue'
+import FullValue from 'functions/fullWalletValue'
 
 export const AuthContext = createContext({})
 
@@ -125,9 +125,26 @@ export const AuthProvider = (props) => {
     const getData = async () => {
         if (user && user.uid !== undefined) {
             const userInformations = doc(db, `users/${user.uid}`)
-            const userObject = await getDoc(userInformations)
-            setPokemonList(userObject.data().pokemonsOrders)
-            setPokemonHistory(userObject.data().pokemonsHistory)
+            try {
+                const userObject = await getDoc(userInformations)
+                setPokemonList(userObject.data().pokemonsOrders)
+                setPokemonHistory(userObject.data().pokemonsHistory)
+                setUserInitialValue(userObject.data().UserInitialMoney)
+            } catch (error) {
+                if (error) {
+                    try {
+                        const docData = {
+                            UserInitialMoney: userInitialValue,
+                            UserMoney: userCurrentValue,
+                            email: user.email,
+                            pokemonsHistory: pokemonHistory,
+                            pokemonsOrders: pokemonList,
+                            userName: user.displayName
+                        }
+                        await setDoc(userInformations, docData)
+                    } catch (error2) {}
+                }
+            }
         }
     }
 
@@ -143,6 +160,28 @@ export const AuthProvider = (props) => {
                 userName: user.displayName
             }
             await setDoc(userInformations, docData)
+        }
+    }
+
+    const updateData = async () => {
+        if (user && user.uid !== undefined) {
+            const userInformations = doc(db, `users/${user.uid}`)
+            const docData = {
+                UserInitialMoney: userInitialValue,
+                pokemonsHistory: pokemonHistory,
+                pokemonsOrders: pokemonList
+            }
+            try {
+                await updateDoc(userInformations, docData)
+            } catch (error) {
+                if (error.code === 'not-found') {
+                    try {
+                        await setDoc(userInformations, docData)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            }
         }
     }
 
@@ -175,6 +214,7 @@ export const AuthProvider = (props) => {
                 logOut,
                 deleteAccount,
                 passRecovery,
+                updateData,
                 setData,
                 deleteData,
                 loading,

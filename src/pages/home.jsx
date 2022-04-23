@@ -10,7 +10,6 @@ import {
     IconButton,
     Input,
     InputGroup,
-    InputRightElement,
     useToast
 } from '@chakra-ui/react'
 
@@ -21,6 +20,7 @@ import SearchPokemons from 'functions/searchPokemons'
 import Header from 'components/header'
 import MyToast from 'components/myToast'
 import LoadingPage from 'components/loadingPage'
+import ValueMobilePopover from 'components/ValueMobilePopover/valueMobilePopover'
 
 export default function Home() {
     const {
@@ -29,7 +29,9 @@ export default function Home() {
         setPokemonName,
         setPokemonHistory,
         loading,
-        userInitialValue
+        userInitialValue,
+        setUserInitialValue,
+        bitcoinValue
     } = useAuth()
     const isError = pokemonName === ''
     const toast = useToast()
@@ -38,22 +40,27 @@ export default function Home() {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
             if (pokemonName.length === 0) {
                 MyToast(toast, 'Digite o nome do pokemon!', 'error')
-            } else buyPokemon(event)
+            } else {
+                buyPokemon(event)
+            }
         }
     }
 
     function buyPokemon(event) {
-        if (userInitialValue === '0,00' || parseFloat(userInitialValue) < 0) {
+        if (userInitialValue === 0 || parseFloat(userInitialValue) < 0) {
             MyToast(toast, 'Adicione uma quantia à sua carteira', 'error')
             return
         }
         SearchPokemons(
             event,
-            pokemonName,
+            pokemonName.toLowerCase(),
             setPokemonName,
             setPokemonList,
             setPokemonHistory,
-            toast
+            toast,
+            userInitialValue,
+            setUserInitialValue,
+            bitcoinValue
         )
     }
 
@@ -104,12 +111,11 @@ export default function Home() {
                                     type="text"
                                     margin="0px 0px 15px 0px"
                                 />
-                                <InputRightElement>
-                                    <IconButton
-                                        icon={<FaBackspace color="red" size={25} />}
-                                        onClick={() => setPokemonName('')}
-                                    />
-                                </InputRightElement>
+                                <IconButton
+                                    zIndex={0}
+                                    icon={<FaBackspace color="red" size={25} />}
+                                    onClick={() => setPokemonName('')}
+                                />
                             </InputGroup>
                             <Button
                                 width="75%"
@@ -140,6 +146,9 @@ export default function Home() {
                         <Orders />
                         <History />
                     </Center>
+                    <Flex position="fixed" bottom={8} right={8}>
+                        <ValueMobilePopover />
+                    </Flex>
                 </Flex>
             )}
         </Flex>

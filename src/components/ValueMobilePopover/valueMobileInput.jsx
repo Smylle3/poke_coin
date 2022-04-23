@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react'
 import React from 'react'
 
-function MyInput(props) {
+function ValueMobileInput(props) {
   return (
     <FormControl>
       <FormLabel htmlFor={props.id}>{props.label}</FormLabel>
@@ -10,4 +10,4 @@ function MyInput(props) {
   )
 }
 
-export default MyInput
+export default ValueMobileInput
