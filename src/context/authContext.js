@@ -13,7 +13,7 @@ import {
     deleteUser,
     sendPasswordResetEmail
 } from 'firebase/auth'
-import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore'
 import {
     auth,
     googleProvider,
@@ -21,7 +21,7 @@ import {
     twitterProvider,
     db
 } from 'config/firebaseConfig'
-import FullValue from 'functions/fullValletValue'
+import FullValue from 'functions/fullWalletValue'
 
 export const AuthContext = createContext({})
 
@@ -146,6 +146,16 @@ export const AuthProvider = (props) => {
         }
     }
 
+    const updateData = async () => {
+        if (user && user.uid !== undefined) {
+            const userInformations = doc(db, `users/${user.uid}`)
+            const docData = {
+                UserInitialMoney: userInitialValue
+            }
+            await updateDoc(userInformations, docData)
+        }
+    }
+
     const deleteData = async () => {
         await deleteDoc(doc(db, 'users', user.uid))
     }
@@ -175,6 +185,7 @@ export const AuthProvider = (props) => {
                 logOut,
                 deleteAccount,
                 passRecovery,
+                updateData,
                 setData,
                 deleteData,
                 loading,
