@@ -53,7 +53,7 @@ export default function Home() {
         }
         SearchPokemons(
             event,
-            pokemonName,
+            pokemonName.toLowerCase(),
             setPokemonName,
             setPokemonList,
             setPokemonHistory,
