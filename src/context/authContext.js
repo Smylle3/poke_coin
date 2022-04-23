@@ -128,6 +128,7 @@ export const AuthProvider = (props) => {
             const userObject = await getDoc(userInformations)
             setPokemonList(userObject.data().pokemonsOrders)
             setPokemonHistory(userObject.data().pokemonsHistory)
+            setUserInitialValue(userObject.data().UserInitialMoney)
         }
     }
 
