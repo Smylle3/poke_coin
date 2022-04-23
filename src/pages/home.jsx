@@ -29,7 +29,9 @@ export default function Home() {
         setPokemonName,
         setPokemonHistory,
         loading,
-        userInitialValue
+        userInitialValue,
+        setUserInitialValue,
+        bitcoinValue
     } = useAuth()
     const isError = pokemonName === ''
     const toast = useToast()
@@ -38,12 +40,14 @@ export default function Home() {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
             if (pokemonName.length === 0) {
                 MyToast(toast, 'Digite o nome do pokemon!', 'error')
-            } else buyPokemon(event)
+            } else {
+                buyPokemon(event)
+            }
         }
     }
 
     function buyPokemon(event) {
-        if (userInitialValue === '0,00' || parseFloat(userInitialValue) < 0) {
+        if (userInitialValue === 0 || parseFloat(userInitialValue) < 0) {
             MyToast(toast, 'Adicione uma quantia à sua carteira', 'error')
             return
         }
@@ -53,7 +57,10 @@ export default function Home() {
             setPokemonName,
             setPokemonList,
             setPokemonHistory,
-            toast
+            toast,
+            userInitialValue,
+            setUserInitialValue,
+            bitcoinValue
         )
     }
 
