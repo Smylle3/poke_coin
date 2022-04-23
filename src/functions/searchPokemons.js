@@ -29,10 +29,7 @@ const SearchPokemons = (
                     'error'
                 )
             } else {
-                setUserInitialValue(
-                    userInitialValue -
-                        (data.base_experience * 0.000001 * bitcoinValue).toFixed(2)
-                )
+                setUserInitialValue(userInitialValue - data.base_experience * Cotacao)
                 setPokemonList((arr) => [
                     ...arr,
                     {
@@ -56,11 +53,7 @@ const SearchPokemons = (
             }
         })
         .catch((err) => {
-            MyToast(
-                toast,
-                'Pokemon não encontrado!',
-                'error'
-            )
+            MyToast(toast, 'Pokemon não encontrado!', 'error')
         })
 }
 

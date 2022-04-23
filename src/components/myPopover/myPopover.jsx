@@ -21,7 +21,7 @@ function MyPopover() {
     return (
         <>
             <Box d="inline-block" mr={3}>
-                $ {userInitialValue}
+                $ {(userInitialValue * 1).toFixed(2)}
             </Box>
             <Popover
                 isOpen={isOpen}
