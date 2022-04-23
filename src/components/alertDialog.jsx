@@ -12,7 +12,7 @@ import { DeletePokemons } from 'functions/deletePokemons'
 import React from 'react'
 
 export default function AlertSale(props) {
-    const { pokemonList, setPokemonHistory } = useAuth()
+    const { pokemonList, setPokemonHistory, bitcoinValue, setUserInitialValue, userInitialValue } = useAuth()
     const cancelRef = React.useRef()
 
     function deletePokemon() {
@@ -20,7 +20,10 @@ export default function AlertSale(props) {
         DeletePokemons(
             props.pokeNameSell,
             pokemonList,
-            setPokemonHistory
+            setPokemonHistory,
+            bitcoinValue,
+            setUserInitialValue,
+            userInitialValue
         )
     }
     
