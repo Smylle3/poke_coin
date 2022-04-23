@@ -21,6 +21,7 @@ import Header from 'components/header'
 import MyToast from 'components/myToast'
 import LoadingPage from 'components/loadingPage'
 import ValueMobilePopover from 'components/ValueMobilePopover/valueMobilePopover'
+import useMobile from 'functions/useMobile'
 
 export default function Home() {
     const {
@@ -35,6 +36,7 @@ export default function Home() {
     } = useAuth()
     const isError = pokemonName === ''
     const toast = useToast()
+    const isMobile = useMobile()
 
     function keyboardKey(event) {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
@@ -146,9 +148,11 @@ export default function Home() {
                         <Orders />
                         <History />
                     </Center>
-                    <Flex position="fixed" bottom={8} right={8}>
-                        <ValueMobilePopover />
-                    </Flex>
+                    {isMobile ? (
+                        <Flex position="fixed" bottom={8} right={8}>
+                            <ValueMobilePopover />
+                        </Flex>
+                    ) : null}
                 </Flex>
             )}
         </Flex>
