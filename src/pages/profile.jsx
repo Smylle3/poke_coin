@@ -122,7 +122,7 @@ const Profile = () => {
             <Flex h={providerUser === 'password' ? '6vh' : '7vh'} />
             <Flex
                 w="100%"
-                h="93%"
+                h="95%"
                 bg="defaultColor.400"
                 display={{ md: 'flex' }}
                 justifyContent="center"
