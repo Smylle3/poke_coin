@@ -105,6 +105,7 @@ export const AuthProvider = (props) => {
         setPokemonList([])
         setPokemonHistory([])
         setLoading(true)
+        setUserInitialValue(0)
         if (isLogin) {
             if (user.uid !== undefined) {
                 setLoading(false)
