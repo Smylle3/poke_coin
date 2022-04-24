@@ -10,7 +10,6 @@ import {
     IconButton,
     Input,
     Text,
-    Textarea,
     useDisclosure,
     useToast
 } from '@chakra-ui/react'
@@ -113,27 +112,22 @@ const Profile = () => {
     }
 
     return (
-        <Flex
-            w="100%"
-            h={providerUser === 'password' ? '100%' : '100vh'}
-            direction="column"
-        >
+        <Flex w="100%" justify="center">
             <Header />
-            <Flex h={providerUser === 'password' ? '6vh' : '7vh'} />
             <Flex
-                w="100%"
-                h="95%"
-                bg="defaultColor.400"
-                display={{ md: 'flex' }}
-                justifyContent="center"
+                align="center"
+                direction="column"
+                w={{ md: '70%', base: '100%' }}
+                padding="40px"
+                marginTop={10}
             >
-                <Box
-                    w={{ base: 'full', md: '70%' }}
+                <Flex
+                    padding="15px 10px"
+                    w="100%"
                     align="center"
-                    flexDirection="column"
-                    h="100%"
-                    bg="defaultColor.500"
-                    padding={10}
+                    direction="column"
+                    border="1px solid black"
+                    borderRadius={10}
                 >
                     <Box>
                         <Avatar
@@ -148,6 +142,8 @@ const Profile = () => {
                         <Flex
                             w="100%"
                             justify="center"
+                            align="center"
+                            direction="column"
                             margin="0px 0px 20px 0px"
                             onKeyDown={(e) => {
                                 KeyDown(e.code, 'photo')
@@ -155,8 +151,8 @@ const Profile = () => {
                             }}
                         >
                             <Input
-                                w={{ base: '60%', md: '50%' }}
-                                color="defaultColor.400"
+                                w={{ base: '75%', md: '45%' }}
+                                color="defaultColor.500"
                                 variant="flushed"
                                 placeholder="Coloque aqui o link da imagem"
                                 textAlign="center"
@@ -166,34 +162,36 @@ const Profile = () => {
                                 }}
                                 value={userAvatar}
                             />
-                            <IconButton
-                                isRound
-                                variant="link"
-                                colorScheme="green"
-                                aria-label="Send"
-                                icon={<FcCheckmark />}
-                                marginRight="5px"
-                                onClick={() => {
-                                    updateProfile('photo')
-                                    setEditProfile(false)
-                                }}
-                            />
-                            <IconButton
-                                isRound
-                                variant="link"
-                                colorScheme="pink"
-                                arial-label="Erease"
-                                icon={<MdOutlineClear />}
-                                onClick={() => {
-                                    KeyDown('Escape')
-                                }}
-                            />
+                            <Flex marginTop={2}>
+                                <IconButton
+                                    isRound
+                                    variant="link"
+                                    colorScheme="green"
+                                    aria-label="Send"
+                                    icon={<FcCheckmark />}
+                                    marginRight="5px"
+                                    onClick={() => {
+                                        updateProfile('photo')
+                                        setEditProfile(false)
+                                    }}
+                                />
+                                <IconButton
+                                    isRound
+                                    variant="link"
+                                    colorScheme="pink"
+                                    arial-label="Erease"
+                                    icon={<MdOutlineClear />}
+                                    onClick={() => {
+                                        KeyDown('Escape')
+                                    }}
+                                />
+                            </Flex>
                         </Flex>
                     ) : (
                         <Button
                             margin="0px 0px 20px 0px"
                             variant="outline"
-                            color="defaultColor.400"
+                            color="defaultColor.500"
                             colorScheme="blackAlpha"
                             rightIcon={<MdPhotoCamera />}
                             onClick={() => setEditPhoto(true)}
@@ -204,7 +202,8 @@ const Profile = () => {
                     {user.displayName === null || editProfile ? (
                         <Flex
                             w="100%"
-                            justify="center"
+                            align="center"
+                            direction="column"
                             margin="0px 0px 20px 0px"
                             onKeyDown={(e) => {
                                 KeyDown(e.code, 'username')
@@ -213,7 +212,7 @@ const Profile = () => {
                         >
                             <Input
                                 w={{ base: '75%', md: '45%' }}
-                                color="defaultColor.400"
+                                color="defaultColor.500"
                                 variant="flushed"
                                 placeholder="Defina aqui seu nome de usuário."
                                 textAlign="center"
@@ -224,38 +223,40 @@ const Profile = () => {
                                 }}
                                 value={userName}
                             />
-                            <IconButton
-                                isRound
-                                variant="link"
-                                colorScheme="green"
-                                aria-label="Send"
-                                icon={<FcCheckmark />}
-                                marginRight="5px"
-                                onClick={() => {
-                                    updateProfile('username')
-                                }}
-                            />
-                            <IconButton
-                                isRound
-                                variant="link"
-                                colorScheme="pink"
-                                arial-label="Erease"
-                                icon={<MdOutlineClear />}
-                                onClick={(e) => {
-                                    KeyDown('Escape')
-                                }}
-                            />
+                            <Flex marginTop={2}>
+                                <IconButton
+                                    isRound
+                                    variant="link"
+                                    colorScheme="green"
+                                    aria-label="Send"
+                                    icon={<FcCheckmark />}
+                                    marginRight="5px"
+                                    onClick={() => {
+                                        updateProfile('username')
+                                    }}
+                                />
+                                <IconButton
+                                    isRound
+                                    variant="link"
+                                    colorScheme="pink"
+                                    arial-label="Erease"
+                                    icon={<MdOutlineClear />}
+                                    onClick={(e) => {
+                                        KeyDown('Escape')
+                                    }}
+                                />
+                            </Flex>
                         </Flex>
                     ) : (
                         <Flex w="100%" justify="center" margin="0px 0px 20px 0px">
-                            <Heading color="defaultColor.400">{user.displayName}</Heading>
+                            <Heading color="defaultColor.500">{user.displayName}</Heading>
                             <IconButton
                                 marginLeft="5px"
                                 isRound
                                 variant="ghost"
                                 arial-label="Edit"
-                                colorScheme="whiteAlpha"
-                                icon={<BiEditAlt color="white" />}
+                                colorScheme="blackAlpha"
+                                icon={<BiEditAlt color="black" />}
                                 onClick={() => setEditProfile(true)}
                             />
                         </Flex>
@@ -264,7 +265,7 @@ const Profile = () => {
                     {user.emailVerified ? (
                         <Text color="green.400">{user.email}</Text>
                     ) : (
-                        <Box>
+                        <Flex align="center" direction="column">
                             <Text color="red.400">{user.email}</Text>
                             <Text color="red.400">(Seu email não foi verificado!)</Text>
                             <Button
@@ -274,89 +275,79 @@ const Profile = () => {
                             >
                                 Clique aqui para verificar!
                             </Button>
-                        </Box>
+                        </Flex>
                     )}
-
-                    <Textarea
-                        marginTop="30px"
-                        placeholder="Descreva-se"
-                        resize="vertical"
-                        isDisabled
-                    />
-
-                    <Box
-                        margin="30px 0px"
-                        padding="15px 10px"
-                        w="100%"
-                        color="red.500"
-                        border="1px solid "
-                        borderRadius={10}
-                    >
-                        <Heading>Danger Zone</Heading>
-                        {providerUser === 'password' ? (
-                            <FormControl
-                                onKeyDown={(e) => {
-                                    KeyDown(e.code, 'password')
-                                }}
-                                marginTop="15px"
-                            >
-                                <FormLabel htmlFor="senhaAntiga">
-                                    Digite a senha atual
-                                </FormLabel>
-                                <PasswordInput
-                                    isDisabled={loading}
-                                    id="senhaAntiga"
-                                    placeholder="Digite sua senha atual"
-                                    onChange={(e) => {
-                                        setOldPassword(e.target.value)
-                                    }}
-                                    value={oldPassword}
-                                />
-                                <FormLabel htmlFor="senha">
-                                    Crie uma nova senha:
-                                </FormLabel>
-                                <PasswordInput
-                                    isDisabled={loading}
-                                    id="senha"
-                                    placeholder="Digite a nova senha"
-                                    onChange={(e) => {
-                                        setPassword(e.target.value)
-                                    }}
-                                    value={password}
-                                />
-                                <FormLabel htmlFor="confirmaçãoSenha">
-                                    Confirme a nova senha:
-                                </FormLabel>
-                                <PasswordInput
-                                    isDisabled={loading}
-                                    id="confirmaçãoSenha"
-                                    placeholder="Digite a nova senha novamente"
-                                    onChange={(e) => {
-                                        setPasswordConfirm(e.target.value)
-                                    }}
-                                    value={passwordConfirm}
-                                />
-                                <Button
-                                    isLoading={loading}
-                                    w="100%"
-                                    margin="10px 0px"
-                                    colorScheme="yellow"
-                                    onClick={() => changePass()}
-                                >
-                                    MUDAR SENHA
-                                </Button>
-                            </FormControl>
-                        ) : null}
-                        <Button
-                            w="100%"
-                            margin="10px 0px"
-                            colorScheme="red"
-                            isLoading={loading}
-                            onClick={onOpen}
+                </Flex>
+                <Box
+                    margin="30px 0px"
+                    padding="15px 10px"
+                    w="100%"
+                    color="red.500"
+                    border="1px solid "
+                    borderRadius={10}
+                >
+                    <Heading>Danger Zone</Heading>
+                    {providerUser === 'password' ? (
+                        <FormControl
+                            onKeyDown={(e) => {
+                                KeyDown(e.code, 'password')
+                            }}
+                            marginTop="15px"
                         >
-                            DELETAR MINHA CONTA
-                        </Button>
-                    </Box>
+                            <FormLabel htmlFor="senhaAntiga">
+                                Digite a senha atual
+                            </FormLabel>
+                            <PasswordInput
+                                isDisabled={loading}
+                                id="senhaAntiga"
+                                placeholder="Digite sua senha atual"
+                                onChange={(e) => {
+                                    setOldPassword(e.target.value)
+                                }}
+                                value={oldPassword}
+                            />
+                            <FormLabel htmlFor="senha">Crie uma nova senha:</FormLabel>
+                            <PasswordInput
+                                isDisabled={loading}
+                                id="senha"
+                                placeholder="Digite a nova senha"
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                }}
+                                value={password}
+                            />
+                            <FormLabel htmlFor="confirmaçãoSenha">
+                                Confirme a nova senha:
+                            </FormLabel>
+                            <PasswordInput
+                                isDisabled={loading}
+                                id="confirmaçãoSenha"
+                                placeholder="Digite a nova senha novamente"
+                                onChange={(e) => {
+                                    setPasswordConfirm(e.target.value)
+                                }}
+                                value={passwordConfirm}
+                            />
+                            <Button
+                                isLoading={loading}
+                                w="100%"
+                                margin="10px 0px"
+                                colorScheme="yellow"
+                                onClick={() => changePass()}
+                            >
+                                MUDAR SENHA
+                            </Button>
+                        </FormControl>
+                    ) : null}
+                    <Button
+                        w="100%"
+                        margin="10px 0px"
+                        colorScheme="red"
+                        isLoading={loading}
+                        onClick={onOpen}
+                    >
+                        DELETAR MINHA CONTA
+                    </Button>
                 </Box>
             </Flex>
             <DeleteModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
