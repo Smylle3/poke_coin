@@ -33,6 +33,7 @@ export const AuthProvider = (props) => {
     const [valuePokemonsUser, setValuePokemonsUser] = useState(0)
     const [loading, setLoading] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
+    const [openAbout, setOpenAbout] = useState(true)
     const authUser = getAuth()
 
     const [pokemonList, setPokemonList] = useState([])
@@ -222,7 +223,9 @@ export const AuthProvider = (props) => {
                 setUserInitialValue,
                 setValuePokemonsUser,
                 valuePokemonsUser,
-                setUserCurrentValue
+                setUserCurrentValue,
+                openAbout,
+                setOpenAbout
             }}
         >
             {props.children}

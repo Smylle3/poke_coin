@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaBtc, FaBackspace, FaArrowCircleDown } from 'react-icons/fa'
 import {
     Button,
@@ -10,6 +10,7 @@ import {
     IconButton,
     Input,
     InputGroup,
+    useDisclosure,
     useToast
 } from '@chakra-ui/react'
 
@@ -22,8 +23,10 @@ import MyToast from 'components/myToast'
 import LoadingPage from 'components/loadingPage'
 import ValueMobilePopover from 'components/ValueMobilePopover/valueMobilePopover'
 import useMobile from 'functions/useMobile'
+import AboutUs from 'components/aboutUs'
 
 export default function Home() {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const {
         setPokemonList,
         pokemonName,
@@ -32,11 +35,20 @@ export default function Home() {
         loading,
         userInitialValue,
         setUserInitialValue,
-        bitcoinValue
+        bitcoinValue,
+        openAbout,
+        setOpenAbout
     } = useAuth()
     const isError = pokemonName === ''
     const toast = useToast()
     const isMobile = useMobile()
+
+    useEffect(() => {
+        if (openAbout) {
+            onOpen()
+            setOpenAbout(false)
+        }
+    }, [onOpen, openAbout, setOpenAbout])
 
     function keyboardKey(event) {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
@@ -155,6 +167,7 @@ export default function Home() {
                     ) : null}
                 </Flex>
             )}
+            <AboutUs isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
         </Flex>
     )
 }

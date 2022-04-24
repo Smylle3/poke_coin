@@ -29,7 +29,8 @@ import PasswordInput from 'components/passwordInput'
 import MyToast from 'components/myToast'
 
 export default function Login() {
-    const { logIn, loginWithGoogle, loginWithGitHub, loginWithTwitter } = useAuth()
+    const { logIn, loginWithGoogle, loginWithGitHub, loginWithTwitter, setOpenAbout } =
+        useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
@@ -45,6 +46,7 @@ export default function Login() {
     }
 
     const loginFunction = (isProvider) => {
+        setOpenAbout(true)
         setLoading(true)
         setPassword('')
         setEmail('')
@@ -84,12 +86,12 @@ export default function Login() {
             bgRepeat="no-repeat"
             bgSize="cover"
         >
-            <Center w="25%" minW="300px" h="90%" flexDirection="column">
+            <Center w="25%" minW="300px" h="95%" flexDirection="column">
                 <Stack
                     direction="row"
                     alignItems="center"
                     justifyContent="center"
-                    margin={10}
+                    margin={7}
                 >
                     <Image h={75} alt="Pokemon" src={pokemonLogo} />
                     <Image h={65} alt="Bitcoin" src={bitcoinLogo} />
