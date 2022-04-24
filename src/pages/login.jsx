@@ -84,7 +84,7 @@ export default function Login() {
             bgRepeat="no-repeat"
             bgSize="cover"
         >
-            <Center w="25%" minW="300px" h="100vh" flexDirection="column">
+            <Center w="25%" minW="300px" h="90%" flexDirection="column">
                 <Stack
                     direction="row"
                     alignItems="center"
