@@ -143,14 +143,14 @@ function Options(props) {
                             />
                         </MenuButton>
                         <MenuList
-                            border="2px solid #222224"
                             padding={2}
+                            border="1px solid #222224"
                         >
                             <Link to="/profile">
                                 <MenuItem
                                     icon={<FaUserEdit />}
                                     color="defaultColor.500"
-                                    border="2px solid #222224"
+                                    border="1px solid #222224"
                                     borderRadius={5}
                                 >
                                     Editar perfil
@@ -161,7 +161,7 @@ function Options(props) {
                                 marginTop={2}
                                 color="defaultColor.600"
                                 onClick={handleLogOut}
-                                border="2px solid #222224"
+                                border="1px solid #222224"
                                 borderRadius={5}
                             >
                                 Sair
