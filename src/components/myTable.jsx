@@ -8,6 +8,7 @@ export default function MyTable(props) {
             gap={0}
             w={props.Width}
             margin="2px 0px"
+            onClick={props.onClick}
         >
             <GridItem
                 display="flex"
@@ -25,7 +26,7 @@ export default function MyTable(props) {
                 {props.Avatar === null ? (
                     <>Avatar</>
                 ) : (
-                    <Image name={props.Name} src={props.Avatar} boxSize={50}/>
+                    <Image name={props.Name} src={props.Avatar} boxSize={50} />
                 )}
             </GridItem>
             <GridItem
@@ -54,11 +55,7 @@ export default function MyTable(props) {
                 color={props.Color}
                 bg={props.BGColor}
             >
-                {props.Action === null ? (
-                    <>Compra/Venda</>
-                ) : (
-                    props.Action
-                )}
+                {props.Action === null ? <>Compra/Venda</> : props.Action}
             </GridItem>
             <GridItem
                 display="flex"
