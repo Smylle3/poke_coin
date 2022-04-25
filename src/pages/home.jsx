@@ -21,7 +21,7 @@ import SearchPokemons from 'functions/searchPokemons'
 import Header from 'components/header'
 import MyToast from 'components/myToast'
 import LoadingPage from 'components/loadingPage'
-import ValueMobilePopover from 'components/ValueMobilePopover/valueMobilePopover'
+import ValueMobilePopover from 'components/ValuePopover/valueMobilePopover'
 import useMobile from 'functions/useMobile'
 import AboutUs from 'components/aboutUs'
 

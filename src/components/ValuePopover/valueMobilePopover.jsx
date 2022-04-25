@@ -9,9 +9,9 @@ import {
     useDisclosure
 } from '@chakra-ui/react'
 import React from 'react'
-import ValueMobileForm from './valueMobileForm'
 import { BsMenuButtonWideFill } from 'react-icons/bs'
 import { useAuth } from 'context/authContext'
+import ValueForm from './valueForm'
 
 function ValueMobilePopover() {
     const { onOpen, onClose, isOpen } = useDisclosure()
@@ -35,16 +35,14 @@ function ValueMobilePopover() {
                         border="2px solid white"
                     />
                 </PopoverTrigger>
-                <PopoverContent p={5} bg="defaultColor.500" color="white"zIndex={788}>
+                <PopoverContent p={5} bg="defaultColor.500" color="white" zIndex={788}>
                     <PopoverArrow />
                     <PopoverCloseButton />
-                    <Box color="yellow.300">
-                        Valor em Pokémons: $ {valuePokemonsUser}
-                    </Box>
+                    <Box color="yellow.300">Valor em Pokémons: $ {valuePokemonsUser}</Box>
                     <Box color="green.500">
                         Valor depositado: $ {(userInitialValue * 1).toFixed(2)}
                     </Box>
-                    <ValueMobileForm onCancel={onClose} />
+                    <ValueForm onCancel={onClose} whatPopover="mobile"/>
                 </PopoverContent>
             </Popover>
         </>
