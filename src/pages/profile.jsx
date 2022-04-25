@@ -126,8 +126,10 @@ const Profile = () => {
                     w="100%"
                     align="center"
                     direction="column"
-                    border="1px solid black"
+                    boxShadow="5px 5px 20px 3px gray"
+                    border="1px solid white"
                     borderRadius={10}
+                    bg="defaultColor.500"
                 >
                     <Box>
                         <Avatar
@@ -152,7 +154,7 @@ const Profile = () => {
                         >
                             <Input
                                 w={{ base: '75%', md: '45%' }}
-                                color="defaultColor.500"
+                                color="defaultColor.400"
                                 variant="flushed"
                                 placeholder="Coloque aqui o link da imagem"
                                 textAlign="center"
@@ -191,7 +193,7 @@ const Profile = () => {
                         <Button
                             margin="0px 0px 20px 0px"
                             variant="outline"
-                            color="defaultColor.500"
+                            color="defaultColor.400"
                             colorScheme="blackAlpha"
                             rightIcon={<MdPhotoCamera />}
                             onClick={() => setEditPhoto(true)}
@@ -212,7 +214,7 @@ const Profile = () => {
                         >
                             <Input
                                 w={{ base: '75%', md: '45%' }}
-                                color="defaultColor.500"
+                                color="defaultColor.400"
                                 variant="flushed"
                                 placeholder="Defina aqui seu nome de usuário."
                                 textAlign="center"
@@ -249,14 +251,14 @@ const Profile = () => {
                         </Flex>
                     ) : (
                         <Flex w="100%" justify="center" margin="0px 0px 20px 0px">
-                            <Heading color="defaultColor.500">{user.displayName}</Heading>
+                            <Heading color="defaultColor.400">{user.displayName}</Heading>
                             <IconButton
                                 marginLeft="5px"
                                 isRound
                                 variant="ghost"
                                 arial-label="Edit"
                                 colorScheme="blackAlpha"
-                                icon={<BiEditAlt color="black" />}
+                                icon={<BiEditAlt color="white" />}
                                 onClick={() => setEditProfile(true)}
                             />
                         </Flex>
@@ -285,6 +287,8 @@ const Profile = () => {
                     color="red.500"
                     border="1px solid "
                     borderRadius={10}
+                    bg="red.100"
+                    boxShadow="5px 5px 20px 3px pink"
                 >
                     <Heading>Danger Zone</Heading>
                     {providerUser === 'password' ? (
