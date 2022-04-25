@@ -6,6 +6,7 @@ import {
     Flex,
     Heading,
     IconButton,
+    Text,
     useDisclosure,
     useToast
 } from '@chakra-ui/react'
@@ -17,12 +18,42 @@ import MyTable from './myTable'
 import { SearchBitcoin } from 'functions/searchBitcoin'
 import AlertSale from './alertDialog'
 import MyToast from './myToast'
+import InfoModal from './infoModal'
+import SearchPokemons from 'functions/searchPokemons'
+import useMobile from 'functions/useMobile'
 
 export default function Orders() {
-    const { pokemonList, bitcoinValue, setBitcointValue } = useAuth()
-    const toast = useToast()
+    const { pokemonList, bitcoinValue, setBitcointValue, setPokemonName } = useAuth()
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const toast = useToast()
+    const isMobile = useMobile()
+
     const [pokeNameSell, setPokeNameSell] = useState('')
+    const [infoPokemon, setInfoPokemon] = useState(null)
+    const [infoTimePokemon, setInfoTimePokemon] = useState(null)
+    const [isOpenInfo, setIsOpenInfo] = useState(false)
+
+    const getInfoPokemon = (name, event, pokemon) => {
+        setInfoTimePokemon({
+            date: pokemon.dateBuy,
+            hour: pokemon.timeBuy,
+            buy: pokemon.valueBuy
+        })
+        SearchPokemons(
+            event,
+            name,
+            setPokemonName,
+            'setPokemonList',
+            'setPokemonHistory',
+            'toast',
+            'userInitialValue',
+            'setUserInitialValue',
+            'bitcoinValue',
+            true,
+            setInfoPokemon
+        )
+        setIsOpenInfo(true)
+    }
 
     return (
         <>
@@ -39,7 +70,7 @@ export default function Orders() {
                         Ordens
                     </Heading>
                     <IconButton
-                        onClick={(event) => {
+                        onClick={() => {
                             SearchBitcoin(setBitcointValue)
                             MyToast(toast, 'Atualizado com sucesso', 'success')
                         }}
@@ -50,6 +81,25 @@ export default function Orders() {
                         size="sm"
                         margin="0px 10px"
                     />
+                    {isMobile ? (
+                        <Text
+                            border="1px solid green"
+                            color="green"
+                            padding="2px 7px"
+                            borderRadius={25}
+                        >
+                            Toque em um pokémon
+                        </Text>
+                    ) : (
+                        <Text
+                            border="1px solid green"
+                            color="green"
+                            padding="2px 7px"
+                            borderRadius={25}
+                        >
+                            Clique em um Pokémon para mais detalhes!
+                        </Text>
+                    )}
                 </Center>
                 <MyTable
                     Avatar={null}
@@ -71,8 +121,15 @@ export default function Orders() {
                     maxH="90%"
                 >
                     {pokemonList.map((pokemon) => (
-                        <Flex alignItems="center" key={pokemon.id}>
+                        <Flex alignItems="center" cursor="pointer" key={pokemon.id}>
                             <MyTable
+                                onClick={(event) => {
+                                    getInfoPokemon(
+                                        pokemon.name.toLowerCase(),
+                                        event,
+                                        pokemon
+                                    )
+                                }}
                                 Avatar={pokemon.avatar}
                                 Nome={pokemon.name}
                                 Action={pokemon.action}
@@ -98,6 +155,17 @@ export default function Orders() {
                         </Flex>
                     ))}
                 </Flex>
+                <InfoModal
+                    isOpenInfo={isOpenInfo}
+                    onClose={onClose}
+                    setIsOpenInfo={setIsOpenInfo}
+                    infoPokemon={infoPokemon}
+                    setInfoPokemon={setInfoPokemon}
+                    infoTimePokemon={infoTimePokemon}
+                    isOpen={isOpen}
+                    onOpen={onOpen}
+                    useAuth={useAuth}
+                />
                 <AlertSale
                     isOpen={isOpen}
                     onOpen={onOpen}
