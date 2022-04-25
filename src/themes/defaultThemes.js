@@ -6,6 +6,34 @@ const theme = extendTheme({
             400: '#f0f0f0',
             500: '#222224',
             600: '#ee1515'
+        },
+        bgPokedex: {
+            normal:     "#BABAAE",
+            fighting:   "#A75543",
+            flying:     "#78A2FF",
+            poison:     "#A95CA0",              
+            ground:     "#EECC55",
+            rock:       "#CCBD72",
+            bug:        "#C2D21E",
+            ghost:      "#7975D7",
+            steel:      "#C4C2DB",
+            fire:       "#FA5643",
+            water:      "#56ADFF",
+            grass:      "#8CD750",
+            electric:   "#FDE139",
+            psychic:    "#FA65B4",
+            ice:        "#96F1FF",
+            dragon:     "#8673FF",
+            dark:       "#8D6855",
+            fairy:      "#F9AEFF"
+        },
+        trackColor: {
+            hp:         "#8CD750",
+            attack:     "#FA5643",
+            "special-attack":     "#FA65B4",
+            defense:    "#56ADFF",
+            "special-defense":    "#BABAAE",
+            speed:      "#8D6855",
         }
     },
     breakingPoints: {
