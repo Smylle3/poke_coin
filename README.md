@@ -1,3 +1,5 @@
+<img width="50%" alt="pokémon" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/logoImages/pokemonLogo.png"/>
+
 # PokeCoin
 
 Projeto desenvolvido em React Js e simula uma calculadora de trades de pokémon e também uma pokédex, onde o usuário possa
@@ -39,10 +41,50 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 ## 🛠️ Construído com
 
 * [React Js](https://pt-br.reactjs.org/) - O framework web usado
-* Tempo de produção em aproximadamente 7 horas dispostas da seguinte forma:
-* * 01/04/22 das 12:20 às 14:40 e das 16:00 às 17:22
-* * 03/04/22 das 14:49 às 18:25
+
+Data de início: 01/04/22
+
+Finalização: 27/04/22
 
 ## ✒️ Autor
 
 * **João Pedro** - *Trabalho Inicial* - [João Pedro](https://github.com/Smylle3)
+
+## 📷 Imagens do projeto
+
+<div>
+  <table border=0>
+    <tr>
+      <td>
+        <img alt="01" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/01.png"/>
+      </td>
+      <td>
+        <img alt="02" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/02.png"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img alt="03" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/03.png"/>
+      </td>
+      <td>
+        <img alt="04" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/04.png"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img alt="05" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/05.png"/>
+      </td>
+      <td>
+        <img alt="06" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/06.png"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img alt="07" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/07.png"/>
+      </td>
+      <td>
+        <img alt="video" src="https://raw.githubusercontent.com/Smylle3/poke_coin/master/src/assets/screenShots/video.gif"/>
+      </td>
+    </tr>
+  </table>
+</div>
