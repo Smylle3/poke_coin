@@ -14,6 +14,7 @@ import {
     sendPasswordResetEmail
 } from 'firebase/auth'
 import { doc, setDoc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore'
+
 import {
     auth,
     googleProvider,
@@ -29,7 +30,6 @@ export const AuthProvider = (props) => {
     const [user, setUser] = useState({})
     const [providerUser, setProviderUser] = useState(null)
     const [userInitialValue, setUserInitialValue] = useState(0)
-    const [userCurrentValue, setUserCurrentValue] = useState(0)
     const [valuePokemonsUser, setValuePokemonsUser] = useState(0)
     const [loading, setLoading] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
@@ -137,7 +137,6 @@ export const AuthProvider = (props) => {
                     try {
                         const docData = {
                             UserInitialMoney: userInitialValue,
-                            UserMoney: userCurrentValue,
                             email: user.email,
                             pokemonsHistory: pokemonHistory,
                             pokemonsOrders: pokemonList,
@@ -155,7 +154,6 @@ export const AuthProvider = (props) => {
             const userInformations = doc(db, `users/${user.uid}`)
             const docData = {
                 UserInitialMoney: userInitialValue,
-                UserMoney: userCurrentValue,
                 email: user.email,
                 pokemonsHistory: pokemonHistory,
                 pokemonsOrders: pokemonList,
@@ -224,7 +222,6 @@ export const AuthProvider = (props) => {
                 setUserInitialValue,
                 setValuePokemonsUser,
                 valuePokemonsUser,
-                setUserCurrentValue,
                 openAbout,
                 setOpenAbout
             }}
