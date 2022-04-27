@@ -1,10 +1,10 @@
 # PokeCoin
 
-Projeto desenvolvido em React Js e simula uma calculadora de trades de pokémon, onde o usuário possa
+Projeto desenvolvido em React Js e simula uma calculadora de trades de pokémon e também uma pokédex, onde o usuário possa
 calcular se sua carteira de Pokémon está valorizando.
 
-O deploy dessa aplicação foi feita através do [Heroku](https://www.heroku.com) e pode ser acessado através do link:
-[https://poke-coin.herokuapp.com/](https://poke-coin.herokuapp.com/)
+O deploy dessa aplicação foi feita através do [Vercel](https://vercel.com/) e pode ser acessado através do link:
+[https://poke-coin.vercel.app/](https://poke-coin.vercel.app/)
 
 ## 🚀 Começando
 
