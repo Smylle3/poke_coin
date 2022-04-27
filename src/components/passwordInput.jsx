@@ -18,6 +18,7 @@ const PasswordInput = (props) => {
                 color={props.color}
                 value={props.value}
                 onChange={props.onChange}
+                borderColor={props.borderColor}
             />
             <InputRightElement
                 onClick={handleClick}
