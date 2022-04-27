@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import {
-    Avatar,
     Box,
     Button,
     Flex,
@@ -14,24 +13,22 @@ import {
     useToast
 } from '@chakra-ui/react'
 import { FcCheckmark } from 'react-icons/fc'
-import { MdOutlineClear, MdPhotoCamera } from 'react-icons/md'
+import { MdOutlineClear } from 'react-icons/md'
 import { BiEditAlt } from 'react-icons/bi'
 import Header from 'components/header'
 import PasswordInput from 'components/passwordInput'
 import { useAuth } from 'context/authContext'
 import MyToast from 'components/myToast'
 import DeleteModal from 'components/deleteModal'
+import PersonalAvatar from 'components/personalAvatar'
 
 const Profile = () => {
-    const { user, providerUser, updateAvatar, emailVerification, changePassword, logIn } =
-        useAuth()
+    const { user, providerUser, emailVerification, changePassword, logIn } = useAuth()
     const [userName, setUserName] = useState('')
-    const [userAvatar, setUserAvatar] = useState('')
     const [oldPassword, setOldPassword] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
     const [editProfile, setEditProfile] = useState(null)
-    const [editPhoto, setEditPhoto] = useState(null)
     const [loading, setLoading] = useState(false)
     const { updateUser } = useAuth()
     const toast = useToast()
@@ -44,30 +41,20 @@ const Profile = () => {
             updateProfile(isUpdate)
         } else if (event === 'Escape' && user.displayName) {
             setEditProfile(null)
-            setEditPhoto(null)
         }
     }
 
     const updateProfile = async (isUpdate) => {
         setUserName('')
-        setUserAvatar('')
         try {
-            if (isUpdate === 'photo' && userAvatar.length !== 0) {
-                await updateAvatar(userAvatar)
-                MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
-                setEditProfile(null)
-                setEditPhoto(null)
-                return
-            } else if (isUpdate === 'username' && userName.length !== 0) {
+            if (isUpdate === 'username' && userName.length !== 0) {
                 await updateUser(userName)
                 MyToast(toast, 'Perfil atualizado com sucesso!', 'success')
                 setEditProfile(null)
-                setEditPhoto(null)
                 return
             }
             MyToast(toast, 'Preencha os campos corretamente!', 'error')
             setEditProfile(null)
-            setEditPhoto(null)
         } catch (error) {
             console.log(error)
             MyToast(toast, 'Algo deu errado, tente novamente!', 'error')
@@ -131,86 +118,14 @@ const Profile = () => {
                     borderRadius={10}
                     bg="defaultColor.500"
                 >
-                    <Box>
-                        <Avatar
-                            borderRadius="full"
-                            boxSize="200px"
-                            src={user.photoURL}
-                            alt={user.displayName}
-                            margin="0px 0px 30px 0px"
-                        />
-                    </Box>
-                    {editPhoto ? (
-                        <Flex
-                            w="100%"
-                            justify="center"
-                            align="center"
-                            direction="column"
-                            margin="0px 0px 20px 0px"
-                            onKeyDown={(e) => {
-                                KeyDown(e.code, 'photo')
-                                setEditProfile(false)
-                            }}
-                        >
-                            <Input
-                                w={{ base: '75%', md: '45%' }}
-                                color="defaultColor.400"
-                                variant="flushed"
-                                placeholder="Coloque aqui o link da imagem"
-                                textAlign="center"
-                                colorScheme="blackAlpha"
-                                onChange={(e) => {
-                                    setUserAvatar(e.target.value)
-                                }}
-                                value={userAvatar}
-                            />
-                            <Flex marginTop={2}>
-                                <IconButton
-                                    isRound
-                                    variant="link"
-                                    colorScheme="green"
-                                    aria-label="Send"
-                                    icon={<FcCheckmark />}
-                                    marginRight="5px"
-                                    onClick={() => {
-                                        updateProfile('photo')
-                                        setEditProfile(false)
-                                    }}
-                                />
-                                <IconButton
-                                    isRound
-                                    variant="link"
-                                    colorScheme="pink"
-                                    arial-label="Erease"
-                                    icon={<MdOutlineClear />}
-                                    onClick={() => {
-                                        KeyDown('Escape')
-                                    }}
-                                />
-                            </Flex>
-                        </Flex>
-                    ) : (
-                        <Button
-                            margin="0px 0px 20px 0px"
-                            variant="outline"
-                            color="defaultColor.400"
-                            colorScheme="blackAlpha"
-                            rightIcon={<MdPhotoCamera />}
-                            onClick={() => setEditPhoto(true)}
-                        >
-                            Mudar foto de perfil via URL
-                        </Button>
-                    )}
+                    <PersonalAvatar />
                     {user.displayName === null || editProfile ? (
                         <Flex
                             w="100%"
                             align="center"
                             direction="column"
                             margin="0px 0px 20px 0px"
-                            onKeyDown={(e) => {
-                                KeyDown(e.code, 'username')
-                                setEditProfile(false)
-                            }}
+                            onKeyDown={(e) => KeyDown(e.code, 'username')}
                         >
                             <Input
                                 w={{ base: '75%', md: '45%' }}
@@ -220,9 +135,7 @@ const Profile = () => {
                                 textAlign="center"
                                 colorScheme="blackAlpha"
                                 marginRight="5px"
-                                onChange={(e) => {
-                                    setUserName(e.target.value)
-                                }}
+                                onChange={(e) => setUserName(e.target.value)}
                                 value={userName}
                             />
                             <Flex marginTop={2}>
@@ -233,9 +146,7 @@ const Profile = () => {
                                     aria-label="Send"
                                     icon={<FcCheckmark />}
                                     marginRight="5px"
-                                    onClick={() => {
-                                        updateProfile('username')
-                                    }}
+                                    onClick={() => updateProfile('username')}
                                 />
                                 <IconButton
                                     isRound
@@ -243,9 +154,7 @@ const Profile = () => {
                                     colorScheme="pink"
                                     arial-label="Erease"
                                     icon={<MdOutlineClear />}
-                                    onClick={(e) => {
-                                        KeyDown('Escape')
-                                    }}
+                                    onClick={(e) => KeyDown('Escape')}
                                 />
                             </Flex>
                         </Flex>
@@ -302,6 +211,7 @@ const Profile = () => {
                                 Digite a senha atual
                             </FormLabel>
                             <PasswordInput
+                                borderColor="red"
                                 isDisabled={loading}
                                 id="senhaAntiga"
                                 placeholder="Digite sua senha atual"
@@ -312,6 +222,7 @@ const Profile = () => {
                             />
                             <FormLabel htmlFor="senha">Crie uma nova senha:</FormLabel>
                             <PasswordInput
+                                borderColor="red"
                                 isDisabled={loading}
                                 id="senha"
                                 placeholder="Digite a nova senha"
@@ -324,6 +235,7 @@ const Profile = () => {
                                 Confirme a nova senha:
                             </FormLabel>
                             <PasswordInput
+                                borderColor="red"
                                 isDisabled={loading}
                                 id="confirmaçãoSenha"
                                 placeholder="Digite a nova senha novamente"
